@@ -8,6 +8,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
+import conexao.Conexao;
 import decoracao.Decoracao;
 import festa.CadastroFesta;
 
@@ -18,7 +19,7 @@ public class Main extends JFrame {
 		JButton btnCadastrarNovaFesta = new JButton("Cadastrar nova festa");
 		btnCadastrarNovaFesta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CadastroFesta festa = new CadastroFesta();
+				CadastroFesta festa = new CadastroFesta("Time teste", "RS", "Amador", "45");
 				festa.setVisible(true);
 				//festa.close();
 			}
@@ -70,6 +71,8 @@ public class Main extends JFrame {
 	}
 
 	public static void main(String[] args) {
+		
+		Conexao banco = new Conexao(); // faz uma conexão assim que começa a execução
 		// TODO Auto-generated method stub
 		Main m = new Main();
 		m.setSize(500, 500);

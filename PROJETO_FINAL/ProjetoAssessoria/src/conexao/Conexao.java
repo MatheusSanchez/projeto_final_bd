@@ -7,17 +7,20 @@ import java.sql.SQLException;
 public class Conexao {
 	private static Connection conn;
 
-	private Conexao() {
+	public Conexao() {
+		this.conn = getInstance();
 	}
 
 	public synchronized static Connection getInstance() {
 		if (conn == null) {
 			try {
-				conn = DriverManager.getConnection("jdbc:oracle:thin:@192.168.183.15:1521:orcl", "B9763050", "/*COLOQUE A SENHA AQUI*/");
+				conn = DriverManager.getConnection("jdbc:oracle:thin:@192.168.183.15:1521:orcl", "M9081453", "matxd96114974!!!");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
+		
+		System.out.println("Conectou com o banco");
 		return conn;
 	}
 
