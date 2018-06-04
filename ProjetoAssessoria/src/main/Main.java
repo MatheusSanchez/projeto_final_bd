@@ -9,7 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 
 import decoracao.Decoracao;
-import festa.CadastroFesta;
+import festa.FestaSQL;
 
 public class Main extends JFrame {
 	public Main() {
@@ -18,7 +18,7 @@ public class Main extends JFrame {
 		JButton btnCadastrarNovaFesta = new JButton("Cadastrar nova festa");
 		btnCadastrarNovaFesta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CadastroFesta festa = new CadastroFesta();
+				FestaSQL festa = new FestaSQL();
 				festa.setVisible(true);
 				//festa.close();
 			}
