@@ -1,10 +1,7 @@
 # Compiled source #
 ###################
-metadata
-*settings
-*.com
-*.dll
-*.exe
+**.metadata
+**.settings
 *.o
 *.so
 
