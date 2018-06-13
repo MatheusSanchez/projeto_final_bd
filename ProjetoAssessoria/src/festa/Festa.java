@@ -8,8 +8,8 @@ import javax.swing.JFrame;
 
 import conexao.Conexao;
 
-public class FestaSQL extends JFrame {
-	public FestaSQL() {
+public class Festa extends JFrame {
+	public Festa() {
 				
 	}
 	

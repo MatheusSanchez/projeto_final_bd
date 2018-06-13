@@ -13,7 +13,7 @@ public class Conexao {
 	public synchronized static Connection getInstance() {
 		if (conn == null) {
 			try {
-				conn = DriverManager.getConnection("jdbc:oracle:thin:@192.168.183.15:1521:orcl", "B9763050", "/*COLOQUE A SENHA AQUI*/");
+				conn = DriverManager.getConnection("jdbc:oracle:thin:@192.168.183.15:1521:orcl", "B9763050", "tantufas");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
