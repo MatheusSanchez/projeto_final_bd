@@ -266,7 +266,7 @@ public class TelaContratante extends JFrame {
 					textFieldNumero.setText("");
 					textFieldBairro.setText("");
 					textFieldCep.setText("");
-					System.out.println("Individuo nao encontrado");
+					JOptionPane.showMessageDialog(null, "Contratante nao encontrado");
 				}
 			}
 		});

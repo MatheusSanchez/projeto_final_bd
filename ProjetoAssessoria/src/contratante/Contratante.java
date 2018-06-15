@@ -21,9 +21,9 @@ public class Contratante {
 				for (int i = 0; i < 8; i++) {
 					pstm.setString(i + 1, form[i]);
 				}
-				System.out.println("ex");
+				//System.out.println("ex");
 				pstm.execute();
-				System.out.println("f ex");
+				//System.out.println("f ex");
 				
 				pstm.close();
 
@@ -32,8 +32,6 @@ public class Contratante {
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(null, "Erro ao inserir contratante");
 			}
-			
-			System.out.println("fim");
 	}
 	
 	static public void update(String[] form) {
