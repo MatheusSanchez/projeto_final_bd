@@ -1,9 +1,12 @@
 package conexao;
 
+import java.awt.Component;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Scanner;
+
+import javax.swing.JOptionPane;
 
 public class Conexao {
 	private static Connection conn;
@@ -26,7 +29,7 @@ public class Conexao {
 				conn = DriverManager.getConnection("jdbc:oracle:thin:@" + host + ":" + port + ":orcl", user, password);
 				System.out.println("conectou");
 			} catch (Exception e) {
-				e.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Nao foi possivel conectar");
 			}
 		}
 		return conn;

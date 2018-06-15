@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 public class TelaContratante extends JFrame {
@@ -24,6 +25,7 @@ public class TelaContratante extends JFrame {
 	public TelaContratante() {
 		cadastroContratante();
 		//alteracaoContratante();
+		//apagarContratante();
 	}
 	
 	public void cadastroContratante() {
@@ -134,7 +136,6 @@ public class TelaContratante extends JFrame {
 		getContentPane().add(lblCadasroDeNovo);
 	}
 
-	
 
 	public void alteracaoContratante() {
 		getContentPane().setLayout(null);
@@ -247,7 +248,7 @@ public class TelaContratante extends JFrame {
 		btnRetornaContratante.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String cpf = textFieldCpf.getText();
-				String[] rs = Contratante.selectContratante(cpf);
+				String[] rs = Contratante.select(cpf);
 				//System.out.println("rs " + rs.toString());
 				if (rs != null) {
 					textFieldNome.setText(rs[0]);
@@ -272,5 +273,66 @@ public class TelaContratante extends JFrame {
 		btnRetornaContratante.setBounds(392, 46, 182, 23);
 		getContentPane().add(btnRetornaContratante);
 	}
+	
+
+	public void apagarContratante() {
+		getContentPane().setLayout(null);
+		
+		JLabel lblNomeCompleto = new JLabel("Nome Completo");
+		lblNomeCompleto.setBounds(86, 82, 115, 39);
+		lblNomeCompleto.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		getContentPane().add(lblNomeCompleto);
+		
+		textFieldNome = new JTextField();
+		textFieldNome.setBounds(234, 93, 136, 20);
+		getContentPane().add(textFieldNome);
+		textFieldNome.setColumns(10);
+		
+		JLabel lblCpf = new JLabel("CPF");
+		lblCpf.setBounds(86, 41, 41, 29);
+		lblCpf.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		getContentPane().add(lblCpf);
+		
+		textFieldCpf = new JTextField();
+		textFieldCpf.setToolTipText("xxx.xxx.xxx-xx");
+		textFieldCpf.setColumns(10);
+		textFieldCpf.setBounds(234, 47, 136, 20);
+		getContentPane().add(textFieldCpf);
+		
+		JButton btnCadastrar = new JButton("REMOVER");
+		btnCadastrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String s;
+				s = textFieldCpf.getText();
+				Contratante.remove(s);
+			}
+		});
+		btnCadastrar.setBounds(459, 256, 115, 46);
+		getContentPane().add(btnCadastrar);
+		
+		JLabel lblCadasroDeNovo = new JLabel("Remocao de Contratante");
+		lblCadasroDeNovo.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblCadasroDeNovo.setBounds(184, 0, 285, 29);
+		getContentPane().add(lblCadasroDeNovo);
+		
+		JButton btnRetornaContratante = new JButton("Pesquisar por CPF");
+		btnRetornaContratante.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String cpf = textFieldCpf.getText();
+				String[] rs = Contratante.select(cpf);
+				//System.out.println("rs " + rs.toString());
+				if (rs != null) {
+					textFieldNome.setText(rs[0]);
+				} else {
+					textFieldNome.setText("");
+					JOptionPane.showMessageDialog(null, "Contrante nao encontrado");
+				}
+			}
+		});
+		btnRetornaContratante.setBounds(392, 46, 182, 23);
+		getContentPane().add(btnRetornaContratante);
+	}
+	
+	
 
 }
