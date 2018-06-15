@@ -1,6 +1,8 @@
+/atracao/
+/buffet/
 /conexao/
+/contratante/
 /decoracao/
-/empresa/
 /festa/
 /main/
 /ojdbc5.jar
@@ -10,6 +12,3 @@
 /simplefan.jar
 /ucp.jar
 /xdb6.jar
-/contratante/
-/atracao/
-/buffet/

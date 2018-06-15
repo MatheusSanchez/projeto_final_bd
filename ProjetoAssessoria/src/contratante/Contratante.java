@@ -15,17 +15,22 @@ public class Contratante {
 			
 			try {
 				PreparedStatement pstm = c.prepareStatement(sql);
-				
+				System.out.println("preparando");
 				for (int i = 0; i < 8; i++) {
 					pstm.setString(i + 1, form[i]);
 				}
+				System.out.println("ex");
 				pstm.execute();
+				System.out.println("f ex");
+				
 				pstm.close();
 				
 			} catch (Exception e) {
 				e.printStackTrace();
 				//botar tela de alerta
 			}
+			
+			System.out.println("fim");
 	}
 	
 	static public void update(String[] form) {

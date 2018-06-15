@@ -3,6 +3,7 @@ package conexao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Scanner;
 
 public class Conexao {
 	private static Connection conn;
@@ -13,7 +14,17 @@ public class Conexao {
 	public synchronized static Connection getInstance() {
 		if (conn == null) {
 			try {
-				conn = DriverManager.getConnection("jdbc:oracle:thin:@192.168.183.15:1521:orcl", "B9763050", "tantufas");
+				Scanner s = new Scanner(System.in);
+				System.out.printf("Host: ");
+				String host = s.nextLine();
+				System.out.printf("Port: ");
+				String port = s.nextLine();
+				System.out.printf("User: ");
+				String user = s.nextLine();
+				System.out.printf("Password: ");
+				String password = s.nextLine();
+				conn = DriverManager.getConnection("jdbc:oracle:thin:@" + host + ":" + port + ":orcl", user, password);
+				System.out.println("conectou");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

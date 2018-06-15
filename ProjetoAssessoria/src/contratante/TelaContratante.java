@@ -22,8 +22,8 @@ public class TelaContratante extends JFrame {
 	private JTextField textFieldEmail;
 	
 	public TelaContratante() {
-		//cadastroContratante();
-		alteracaoContratante();
+		cadastroContratante();
+		//alteracaoContratante();
 	}
 	
 	public void cadastroContratante() {
@@ -248,6 +248,7 @@ public class TelaContratante extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String cpf = textFieldCpf.getText();
 				String[] rs = Contratante.selectContratante(cpf);
+				//System.out.println("rs " + rs.toString());
 				if (rs != null) {
 					textFieldNome.setText(rs[0]);
 					textFieldTelefone.setText(rs[1]);
