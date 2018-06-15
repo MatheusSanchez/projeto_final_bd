@@ -8,9 +8,7 @@ import contratante.TelaContratante;
 public class Main {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		Conexao.getInstance();
-		System.out.println("testando");
+		Conexao.getInstance(); //pede os dados da conexao antes de rodar
 		TelaContratante c = new TelaContratante();
 		c.setSize(768, 480);
 		c.setVisible(true);
