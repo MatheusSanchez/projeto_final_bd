@@ -3,6 +3,7 @@ package decoracao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,6 +98,56 @@ public class DecoracaoCasamento {
 		}
 		
 		return s;
+	}
+	
+	public static void update(String[] form) {
+		Connection c = Conexao.getInstance();
+		
+		String sql = "delete from decoracaocasamento where tema = ?";
+		
+		
+		try {
+			//Statement s = c.createStatement();
+			//ResultSet rs = s.executeQuery("select * from decoracaocasamento where tema = 'classico'");
+			//if (rs.next())
+			//	System.out.println(rs.getString(1) + " / " + rs.getString(2));
+			
+			PreparedStatement pstm = c.prepareStatement(sql);
+			pstm.setString(1, form[0]);
+			pstm.execute();
+			
+			//s = c.createStatement();
+			//rs = s.executeQuery("select * from decoracaocasamento where tema = 'classico'");
+			//if (rs.next())
+			//	System.out.println(rs.getString(1) + " / " + rs.getString(2));
+			//rs = s.executeQuery("select * from tiposflores where decoracao = 'classico'");
+			//while (rs.next()) {
+			//	System.out.println(rs.getString(1) + " / " + rs.getString(2));
+			//}
+			
+			sql = "insert into decoracaocasamento(tema, qtde_flores) values(?, ?)";
+			pstm = c.prepareStatement(sql);
+			pstm.setString(1, form[0]);
+			pstm.setString(2, form[1]);
+			pstm.execute();
+			
+			sql = "insert into tiposflores(decoracao, tipo_flor) values(?, ?)";
+			pstm = c.prepareStatement(sql);
+			pstm.setString(1, form[0]);
+			
+			for (int i = 2; i < form.length; i++) {
+				pstm.setString(2, form[i]);
+				pstm.execute();
+			}
+			
+			pstm.close();
+
+			JOptionPane.showMessageDialog(null, "Decoracao alterada com sucesso");
+		} catch (Exception e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Erro ao alterar decoracao");
+		}
+
 	}
 	
 	public static void remove(String tema) {

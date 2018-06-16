@@ -24,7 +24,9 @@ public class TelaDecoracaoCasamento extends JFrame {
 	private JLabel lblQuantidadeDeFlores;
 	
 	public TelaDecoracaoCasamento() {
-		apagarDecoracaoCasamento();
+		inserirDecoracaoCasamento();
+		//alterarDecoracaoCasamento();
+		//removerDecoracaoCasamento();
 	}
 	public void inserirDecoracaoCasamento() {
 		getContentPane().setLayout(null);
@@ -141,14 +143,21 @@ public class TelaDecoracaoCasamento extends JFrame {
 				String tema = textFieldTema.getText();
 				String qtde = textFieldQtdeFlores.getText();
 				
-				boolean ok = DecoracaoCasamento.insert(tema, qtde);
-				
 				String tipos[] = textFieldTipoFlor.getText().split(",");
 				for (int i = 0; i < tipos.length; i++) {
 					tipos[i] = tipos[i].trim();
 				}
 				
-				if (ok) DecoracaoCasamento.insertTipo(tema, tipos);
+				String[] form = new String[2 + tipos.length];
+			
+				form[0] = tema;
+				form[1] = qtde;
+				
+				for (int i = 2; i < 2 + tipos.length; i++) {
+					form[i] = tipos[i - 2];
+				}
+				
+				DecoracaoCasamento.update(form);
 			}
 		});
 		btnCadastrar.setBounds(356, 228, 117, 25);
