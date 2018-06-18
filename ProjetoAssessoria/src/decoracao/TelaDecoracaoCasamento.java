@@ -24,8 +24,8 @@ public class TelaDecoracaoCasamento extends JFrame {
 	private JLabel lblQuantidadeDeFlores;
 	
 	public TelaDecoracaoCasamento() {
-		//inserirDecoracaoCasamento();
-		alterarDecoracaoCasamento();
+		inserirDecoracaoCasamento();
+		//alterarDecoracaoCasamento();
 		//apagarDecoracaoCasamento();
 	}
 	public void inserirDecoracaoCasamento() {
@@ -59,6 +59,7 @@ public class TelaDecoracaoCasamento extends JFrame {
 		getContentPane().add(textFieldQtdeFlores);
 		
 		textFieldTipoFlor = new JTextField();
+		textFieldTipoFlor.setToolTipText("tipo1, tipo2");
 		textFieldTipoFlor.setColumns(10);
 		textFieldTipoFlor.setBounds(230, 166, 140, 19);
 		getContentPane().add(textFieldTipoFlor);
@@ -132,6 +133,7 @@ public class TelaDecoracaoCasamento extends JFrame {
 		textFieldQtdeFlores.setVisible(false);
 		
 		textFieldTipoFlor = new JTextField();
+		textFieldTipoFlor.setToolTipText("tipo1, tipo2");
 		textFieldTipoFlor.setColumns(10);
 		textFieldTipoFlor.setBounds(230, 166, 140, 19);
 		getContentPane().add(textFieldTipoFlor);

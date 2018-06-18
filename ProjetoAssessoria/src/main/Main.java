@@ -11,7 +11,8 @@ public class Main {
 		Conexao.getInstance(); //pede os dados da conexao antes de rodar
 
 		//TelaContratante c = new TelaContratante();
-		TelaDecoracaoCasamento c = new TelaDecoracaoCasamento();
+		//TelaDecoracaoCasamento c = new TelaDecoracaoCasamento();
+		TelaDecoracaoInfantil c = new TelaDecoracaoInfantil();
 		c.setSize(768, 480);
 		c.setVisible(true);
 	}

@@ -40,38 +40,58 @@ public class TelaDecoracaoInfantil extends JFrame {
 		getContentPane().add(lblCadastroDeNovaDecoracaoInfantil);
 		
 		JLabel lblTema = new JLabel("Tema");
-		lblTema.setBounds(49, 114, 70, 15);
+		lblTema.setBounds(49, 81, 70, 15);
 		getContentPane().add(lblTema);
 		
 		JLabel lblQtdBaloes = new JLabel("Quantidade de Balões");
-		lblQtdBaloes.setBounds(49, 141, 153, 15);
+		lblQtdBaloes.setBounds(49, 108, 153, 15);
 		getContentPane().add(lblQtdBaloes);
 		
 		textFieldTema = new JTextField();
-		textFieldTema.setBounds(230, 112, 140, 19);
+		textFieldTema.setBounds(230, 79, 140, 19);
 		getContentPane().add(textFieldTema);
 		textFieldTema.setColumns(10);
 		
 		textFieldQtdeBaloes = new JTextField();
 		textFieldQtdeBaloes.setColumns(10);
-		textFieldQtdeBaloes.setBounds(230, 139, 140, 19);
+		textFieldQtdeBaloes.setBounds(230, 106, 140, 19);
 		getContentPane().add(textFieldQtdeBaloes);
+		
+		JLabel lblCorBaloes= new JLabel("Cores dos baloes");
+		lblCorBaloes.setBounds(49, 162, 153, 15);
+		getContentPane().add(lblCorBaloes);
+		
+		JTextField textFieldCorBaloes= new JTextField();
+		textFieldCorBaloes.setToolTipText("cor1, cor2");
+		textFieldCorBaloes.setColumns(10);
+		textFieldCorBaloes.setBounds(230, 160, 140, 19);
+		getContentPane().add(textFieldCorBaloes);
+		
+		JLabel lblDigiteTodosOs = new JLabel("(Digite todas as cores desejadas separadas por virgulas)");
+		lblDigiteTodosOs.setFont(new Font("Dialog", Font.PLAIN, 9));
+		lblDigiteTodosOs.setBounds(49, 179, 308, 20);
+		getContentPane().add(lblDigiteTodosOs);
 		
 		JButton btnCadastrar = new JButton("CADASTRAR");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String tema = textFieldTema.getText();
 				String qtdeBaloes = textFieldQtdeBaloes.getText();
-				Boolean pinata = chckbxPinata.isSelected(); 
+				boolean pinata = chckbxPinata.isSelected(); 
 				
-				boolean ok = DecoracaoInfantil.insert(tema, qtdeBaloes, pinata);
+				String cores[] = textFieldCorBaloes.getText().split(",");
+				for (int i = 0; i < cores.length; i++) {
+					cores[i] = cores[i].trim();
+				}
+				
+				boolean ok = DecoracaoInfantil.insert(tema, qtdeBaloes, pinata, cores);
 			}
 		});
 		btnCadastrar.setBounds(356, 228, 117, 25);
 		getContentPane().add(btnCadastrar);
 		
 		chckbxPinata = new JCheckBox("Pinata");
-		chckbxPinata.setBounds(43, 168, 128, 23);
+		chckbxPinata.setBounds(49, 131, 128, 23);
 		getContentPane().add(chckbxPinata);
 		
 	}
