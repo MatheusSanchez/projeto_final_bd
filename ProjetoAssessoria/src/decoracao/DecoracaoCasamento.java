@@ -103,7 +103,7 @@ public class DecoracaoCasamento {
 	public static void update(String[] form) {
 		Connection c = Conexao.getInstance();
 		
-		String sql = "delete from decoracaocasamento where tema = ?";
+		String sql = "delete from tiposflores where decoracao = ?";
 		
 		
 		try {
@@ -125,10 +125,10 @@ public class DecoracaoCasamento {
 			//	System.out.println(rs.getString(1) + " / " + rs.getString(2));
 			//}
 			
-			sql = "insert into decoracaocasamento(tema, qtde_flores) values(?, ?)";
+			sql = "update decoracaocasamento set qtde_flores = ? where tema = ?";
 			pstm = c.prepareStatement(sql);
-			pstm.setString(1, form[0]);
-			pstm.setString(2, form[1]);
+			pstm.setString(1, form[1]);
+			pstm.setString(2, form[0]);
 			pstm.execute();
 			
 			sql = "insert into tiposflores(decoracao, tipo_flor) values(?, ?)";

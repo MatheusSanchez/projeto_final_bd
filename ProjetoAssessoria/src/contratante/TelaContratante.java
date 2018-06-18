@@ -3,6 +3,8 @@ package contratante;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -21,17 +23,48 @@ public class TelaContratante extends JFrame {
 	private JTextField textFieldRua;
 	private JTextField textFieldNumero;
 	private JTextField textFieldEmail;
+
+	private JLabel lblNomeCompleto;
+	private JLabel lblCpf;
+	private JLabel lblTelefone;
+	private JLabel lblBairro;
+	private JLabel lblCep;
+	private JLabel lblRua;
+	private JLabel lblNumero;
+	private JLabel lblEmail;
+	
+	private JButton btnCadastrar;
 	
 	public TelaContratante() {
-		cadastroContratante();
+		//cadastroContratante();
 		//alteracaoContratante();
-		//apagarContratante();
+		remocaoContratante();
+	}
+	
+	public void changeVisibility(boolean flag) {
+		textFieldNome.setVisible(flag);
+		textFieldTelefone.setVisible(flag);
+		textFieldBairro.setVisible(flag);
+		textFieldCep.setVisible(flag);
+		textFieldRua.setVisible(flag);
+		textFieldNumero.setVisible(flag);
+		textFieldEmail.setVisible(flag);
+		
+		lblNomeCompleto.setVisible(flag);
+		lblTelefone.setVisible(flag);
+		lblBairro.setVisible(flag);
+		lblCep.setVisible(flag);
+		lblRua.setVisible(flag);
+		lblNumero.setVisible(flag);
+		lblEmail.setVisible(flag);
+		
+		btnCadastrar.setVisible(flag);
 	}
 	
 	public void cadastroContratante() {
 		getContentPane().setLayout(null);
 		
-		JLabel lblNomeCompleto = new JLabel("Nome Completo");
+		lblNomeCompleto = new JLabel("Nome Completo");
 		lblNomeCompleto.setBounds(86, 50, 115, 39);
 		lblNomeCompleto.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		getContentPane().add(lblNomeCompleto);
@@ -41,37 +74,37 @@ public class TelaContratante extends JFrame {
 		getContentPane().add(textFieldNome);
 		textFieldNome.setColumns(10);
 		
-		JLabel lblEmail = new JLabel("Email");
+		lblEmail = new JLabel("Email");
 		lblEmail.setBounds(86, 148, 41, 39);
 		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		getContentPane().add(lblEmail);
 		
-		JLabel lblCpf = new JLabel("CPF");
+		lblCpf = new JLabel("CPF");
 		lblCpf.setBounds(86, 86, 41, 29);
 		lblCpf.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		getContentPane().add(lblCpf);
 		
-		JLabel lblTelefone = new JLabel("Telefone");
+		lblTelefone = new JLabel("Telefone");
 		lblTelefone.setBounds(86, 112, 70, 39);
 		lblTelefone.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		getContentPane().add(lblTelefone);
 		
-		JLabel lblCep = new JLabel("Cep");
+		lblCep = new JLabel("Cep");
 		lblCep.setBounds(86, 209, 41, 39);
 		lblCep.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		getContentPane().add(lblCep);
 		
-		JLabel lblRua = new JLabel("Rua");
+		lblRua = new JLabel("Rua");
 		lblRua.setBounds(86, 244, 41, 39);
 		lblRua.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		getContentPane().add(lblRua);
 		
-		JLabel lblNumero = new JLabel("Numero");
+		lblNumero = new JLabel("Numero");
 		lblNumero.setBounds(86, 276, 57, 39);
 		lblNumero.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		getContentPane().add(lblNumero);
 		
-		JLabel lblBairro = new JLabel("Bairro");
+		lblBairro = new JLabel("Bairro");
 		lblBairro.setBounds(86, 178, 51, 39);
 		lblBairro.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		getContentPane().add(lblBairro);
@@ -83,6 +116,7 @@ public class TelaContratante extends JFrame {
 		getContentPane().add(textFieldCpf);
 		
 		textFieldTelefone = new JTextField();
+		textFieldTelefone.setToolTipText("(xx)xxxx-xxxx ou (xx)xxxxx-xxxx");
 		textFieldTelefone.setColumns(10);
 		textFieldTelefone.setBounds(234, 124, 136, 20);
 		getContentPane().add(textFieldTelefone);
@@ -93,6 +127,7 @@ public class TelaContratante extends JFrame {
 		getContentPane().add(textFieldBairro);
 		
 		textFieldCep = new JTextField();
+		textFieldCep.setToolTipText("xxxxx-xxx");
 		textFieldCep.setColumns(10);
 		textFieldCep.setBounds(234, 221, 136, 20);
 		getContentPane().add(textFieldCep);
@@ -140,7 +175,7 @@ public class TelaContratante extends JFrame {
 	public void alteracaoContratante() {
 		getContentPane().setLayout(null);
 		
-		JLabel lblNomeCompleto = new JLabel("Nome Completo");
+		lblNomeCompleto = new JLabel("Nome Completo");
 		lblNomeCompleto.setBounds(86, 82, 115, 39);
 		lblNomeCompleto.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		getContentPane().add(lblNomeCompleto);
@@ -150,37 +185,37 @@ public class TelaContratante extends JFrame {
 		getContentPane().add(textFieldNome);
 		textFieldNome.setColumns(10);
 		
-		JLabel lblEmail = new JLabel("Email");
+		lblEmail = new JLabel("Email");
 		lblEmail.setBounds(86, 148, 41, 39);
 		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		getContentPane().add(lblEmail);
 		
-		JLabel lblCpf = new JLabel("CPF");
+		lblCpf = new JLabel("CPF");
 		lblCpf.setBounds(86, 41, 41, 29);
 		lblCpf.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		getContentPane().add(lblCpf);
 		
-		JLabel lblTelefone = new JLabel("Telefone");
+		lblTelefone = new JLabel("Telefone");
 		lblTelefone.setBounds(86, 112, 70, 39);
 		lblTelefone.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		getContentPane().add(lblTelefone);
 		
-		JLabel lblCep = new JLabel("Cep");
+		lblCep = new JLabel("Cep");
 		lblCep.setBounds(86, 209, 41, 39);
 		lblCep.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		getContentPane().add(lblCep);
 		
-		JLabel lblRua = new JLabel("Rua");
+		lblRua = new JLabel("Rua");
 		lblRua.setBounds(86, 244, 41, 39);
 		lblRua.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		getContentPane().add(lblRua);
 		
-		JLabel lblNumero = new JLabel("Numero");
+		lblNumero = new JLabel("Numero");
 		lblNumero.setBounds(86, 276, 57, 39);
 		lblNumero.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		getContentPane().add(lblNumero);
 		
-		JLabel lblBairro = new JLabel("Bairro");
+		lblBairro = new JLabel("Bairro");
 		lblBairro.setBounds(86, 178, 51, 39);
 		lblBairro.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		getContentPane().add(lblBairro);
@@ -192,6 +227,7 @@ public class TelaContratante extends JFrame {
 		getContentPane().add(textFieldCpf);
 		
 		textFieldTelefone = new JTextField();
+		textFieldTelefone.setToolTipText("(xx)xxxx-xxxx ou (xx)xxxxx-xxxx");
 		textFieldTelefone.setColumns(10);
 		textFieldTelefone.setBounds(234, 124, 136, 20);
 		getContentPane().add(textFieldTelefone);
@@ -202,6 +238,7 @@ public class TelaContratante extends JFrame {
 		getContentPane().add(textFieldBairro);
 		
 		textFieldCep = new JTextField();
+		textFieldCep.setToolTipText("xxxxx-xxx");
 		textFieldCep.setColumns(10);
 		textFieldCep.setBounds(234, 221, 136, 20);
 		getContentPane().add(textFieldCep);
@@ -221,7 +258,8 @@ public class TelaContratante extends JFrame {
 		textFieldEmail.setBounds(234, 160, 136, 20);
 		getContentPane().add(textFieldEmail);
 		
-		JButton btnCadastrar = new JButton("ALTERAR");
+		
+		btnCadastrar = new JButton("ALTERAR");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String[] s = new String[8];
@@ -244,6 +282,8 @@ public class TelaContratante extends JFrame {
 		lblCadasroDeNovo.setBounds(184, 0, 285, 29);
 		getContentPane().add(lblCadasroDeNovo);
 		
+		changeVisibility(false);
+		
 		JButton btnRetornaContratante = new JButton("Pesquisar por CPF");
 		btnRetornaContratante.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -258,6 +298,7 @@ public class TelaContratante extends JFrame {
 					textFieldNumero.setText(rs[4]);
 					textFieldBairro.setText(rs[5]);
 					textFieldCep.setText(rs[6]);
+					changeVisibility(true);
 				} else {
 					textFieldNome.setText("");
 					textFieldTelefone.setText("");
@@ -266,19 +307,31 @@ public class TelaContratante extends JFrame {
 					textFieldNumero.setText("");
 					textFieldBairro.setText("");
 					textFieldCep.setText("");
+					changeVisibility(false);
 					JOptionPane.showMessageDialog(null, "Contratante nao encontrado");
 				}
 			}
 		});
 		btnRetornaContratante.setBounds(392, 46, 182, 23);
 		getContentPane().add(btnRetornaContratante);
+		
+		textFieldCpf.addFocusListener(new FocusListener() {
+			
+			@Override
+			public void focusLost(FocusEvent e){}
+			
+			@Override
+			public void focusGained(FocusEvent e) {
+				changeVisibility(false);
+			}
+		});
 	}
 	
 
-	public void apagarContratante() {
+	public void remocaoContratante() {
 		getContentPane().setLayout(null);
 		
-		JLabel lblNomeCompleto = new JLabel("Nome Completo");
+		lblNomeCompleto = new JLabel("Nome Completo");
 		lblNomeCompleto.setBounds(86, 82, 115, 39);
 		lblNomeCompleto.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		getContentPane().add(lblNomeCompleto);
@@ -287,11 +340,42 @@ public class TelaContratante extends JFrame {
 		textFieldNome.setBounds(234, 93, 136, 20);
 		getContentPane().add(textFieldNome);
 		textFieldNome.setColumns(10);
+		textFieldNome.setEditable(false);
 		
-		JLabel lblCpf = new JLabel("CPF");
+		lblEmail = new JLabel("Email");
+		lblEmail.setBounds(86, 148, 41, 39);
+		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		getContentPane().add(lblEmail);
+		
+		lblCpf = new JLabel("CPF");
 		lblCpf.setBounds(86, 41, 41, 29);
 		lblCpf.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		getContentPane().add(lblCpf);
+		
+		lblTelefone = new JLabel("Telefone");
+		lblTelefone.setBounds(86, 112, 70, 39);
+		lblTelefone.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		getContentPane().add(lblTelefone);
+		
+		lblCep = new JLabel("Cep");
+		lblCep.setBounds(86, 209, 41, 39);
+		lblCep.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		getContentPane().add(lblCep);
+		
+		lblRua = new JLabel("Rua");
+		lblRua.setBounds(86, 244, 41, 39);
+		lblRua.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		getContentPane().add(lblRua);
+		
+		lblNumero = new JLabel("Numero");
+		lblNumero.setBounds(86, 276, 57, 39);
+		lblNumero.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		getContentPane().add(lblNumero);
+		
+		lblBairro = new JLabel("Bairro");
+		lblBairro.setBounds(86, 178, 51, 39);
+		lblBairro.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		getContentPane().add(lblBairro);
 		
 		textFieldCpf = new JTextField();
 		textFieldCpf.setToolTipText("xxx.xxx.xxx-xx");
@@ -299,12 +383,52 @@ public class TelaContratante extends JFrame {
 		textFieldCpf.setBounds(234, 47, 136, 20);
 		getContentPane().add(textFieldCpf);
 		
-		JButton btnCadastrar = new JButton("REMOVER");
+		textFieldTelefone = new JTextField();
+		textFieldTelefone.setToolTipText("(xx)xxxx-xxxx ou (xx)xxxxx-xxxx");
+		textFieldTelefone.setColumns(10);
+		textFieldTelefone.setBounds(234, 124, 136, 20);
+		textFieldTelefone.setEditable(false);
+		getContentPane().add(textFieldTelefone);
+		
+		textFieldBairro = new JTextField();
+		textFieldBairro.setColumns(10);
+		textFieldBairro.setBounds(234, 190, 136, 20);
+		textFieldBairro.setEditable(false);
+		getContentPane().add(textFieldBairro);
+		
+		textFieldCep = new JTextField();
+		textFieldCep.setToolTipText("xxxxx-xxx");
+		textFieldCep.setColumns(10);
+		textFieldCep.setBounds(234, 221, 136, 20);
+		textFieldCep.setEditable(false);
+		getContentPane().add(textFieldCep);
+		
+		textFieldRua = new JTextField();
+		textFieldRua.setColumns(10);
+		textFieldRua.setBounds(234, 256, 136, 20);
+		textFieldRua.setEditable(false);
+		getContentPane().add(textFieldRua);
+		
+		textFieldNumero = new JTextField();
+		textFieldNumero.setColumns(10);
+		textFieldNumero.setBounds(234, 288, 136, 20);
+		textFieldNumero.setEditable(false);
+		getContentPane().add(textFieldNumero);
+		
+		textFieldEmail = new JTextField();
+		textFieldEmail.setColumns(10);
+		textFieldEmail.setBounds(234, 160, 136, 20);
+		textFieldEmail.setEditable(false);
+		getContentPane().add(textFieldEmail);
+		
+		
+		btnCadastrar = new JButton("REMOVER");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String s;
 				s = textFieldCpf.getText();
 				Contratante.remove(s);
+				changeVisibility(false);
 			}
 		});
 		btnCadastrar.setBounds(459, 256, 115, 46);
@@ -315,6 +439,8 @@ public class TelaContratante extends JFrame {
 		lblCadasroDeNovo.setBounds(184, 0, 285, 29);
 		getContentPane().add(lblCadasroDeNovo);
 		
+		changeVisibility(false);
+		
 		JButton btnRetornaContratante = new JButton("Pesquisar por CPF");
 		btnRetornaContratante.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -323,16 +449,38 @@ public class TelaContratante extends JFrame {
 				//System.out.println("rs " + rs.toString());
 				if (rs != null) {
 					textFieldNome.setText(rs[0]);
+					textFieldTelefone.setText(rs[1]);
+					textFieldEmail.setText(rs[2]);
+					textFieldRua.setText(rs[3]);
+					textFieldNumero.setText(rs[4]);
+					textFieldBairro.setText(rs[5]);
+					textFieldCep.setText(rs[6]);
+					changeVisibility(true);
 				} else {
 					textFieldNome.setText("");
-					JOptionPane.showMessageDialog(null, "Contrante nao encontrado");
+					textFieldTelefone.setText("");
+					textFieldEmail.setText("");
+					textFieldRua.setText("");
+					textFieldNumero.setText("");
+					textFieldBairro.setText("");
+					textFieldCep.setText("");
+					changeVisibility(false);
+					JOptionPane.showMessageDialog(null, "Contratante nao encontrado");
 				}
 			}
 		});
 		btnRetornaContratante.setBounds(392, 46, 182, 23);
 		getContentPane().add(btnRetornaContratante);
+		
+		textFieldCpf.addFocusListener(new FocusListener() {
+			
+			@Override
+			public void focusLost(FocusEvent e){}
+			
+			@Override
+			public void focusGained(FocusEvent e) {
+				changeVisibility(false);
+			}
+		});
 	}
-	
-	
-
 }

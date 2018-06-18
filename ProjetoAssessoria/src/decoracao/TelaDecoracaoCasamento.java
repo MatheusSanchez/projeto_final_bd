@@ -24,9 +24,9 @@ public class TelaDecoracaoCasamento extends JFrame {
 	private JLabel lblQuantidadeDeFlores;
 	
 	public TelaDecoracaoCasamento() {
-		inserirDecoracaoCasamento();
-		//alterarDecoracaoCasamento();
-		//removerDecoracaoCasamento();
+		//inserirDecoracaoCasamento();
+		alterarDecoracaoCasamento();
+		//apagarDecoracaoCasamento();
 	}
 	public void inserirDecoracaoCasamento() {
 		getContentPane().setLayout(null);
