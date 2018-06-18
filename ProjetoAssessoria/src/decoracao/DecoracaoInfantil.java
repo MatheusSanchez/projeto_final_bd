@@ -8,6 +8,11 @@ import javax.swing.JOptionPane;
 import conexao.Conexao;
 
 public class DecoracaoInfantil {
+	
+	public DecoracaoInfantil(){
+		
+	}
+	
 	static public boolean insert(String tema, String qtdeBaloes, boolean pinata, String[] cores) {
 		Connection c = Conexao.getInstance();
 		
