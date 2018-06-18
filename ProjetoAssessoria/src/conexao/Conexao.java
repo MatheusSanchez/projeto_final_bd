@@ -17,6 +17,7 @@ public class Conexao {
 	public synchronized static Connection getInstance() {
 		if (conn == null) {
 			try {
+				//conn = DriverManager.getConnection("jdbc:oracle:thin:@192.168.183.15:1521:orcl", "B9763050", "tantufas");
 				Scanner s = new Scanner(System.in);
 				System.out.print("Host: ");
 				String host = s.nextLine();
