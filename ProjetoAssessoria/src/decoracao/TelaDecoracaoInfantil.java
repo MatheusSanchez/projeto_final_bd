@@ -107,6 +107,7 @@ public class TelaDecoracaoInfantil extends JFrame {
 		lblCorBaloes.setVisible(flag);
 		chckbxPinata.setVisible(flag);
 		textFieldCorBaloes.setVisible(flag);
+		lblDigiteTodosOs.setVisible(flag);
 	}
 	
 	public void alterarDecoracaoInfantil() {
@@ -159,10 +160,27 @@ public class TelaDecoracaoInfantil extends JFrame {
 		btnCadastrar = new JButton("ALTERAR");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String tema = textFieldTema.getText();
+				String qtde = textFieldQtdeBaloes.getText();
+				String pinata = chckbxPinata.isSelected()? "1" : "0";
+				String cores[] = textFieldCorBaloes.getText().split(",");
+				for (int i = 0; i < cores.length; i++) {
+					cores[i] = cores[i].trim();
+				}
+				
+				String[] form = new String[3 + cores.length];
+			
+				form[0] = tema;
+				form[1] = qtde;
+				form[2] = pinata;
+				
+				for (int i = 3; i < 3 + cores.length; i++) {
+					form[i] = cores[i - 3];
+				}
 				//String tema = textFieldTema.getText();
 				//String qtde = textFieldQtdeBaloes.getText();
 
-				//DecoracaoCasamento.update(form);
+				DecoracaoInfantil.update(form);
 			}
 		});
 		btnCadastrar.setBounds(356, 228, 117, 25);
@@ -188,7 +206,8 @@ public class TelaDecoracaoInfantil extends JFrame {
 				List<String> rs = DecoracaoInfantil.select(tema);
 				if (rs != null && rs.size() > 0) {
 					textFieldQtdeBaloes.setText(rs.get(0));
-					chckbxPinata.setSelected(rs.get(1) == "1"? true : false);
+					
+					chckbxPinata.setSelected(rs.get(1).equals("1")? true : false);
 					String cores = "";
 					for (int i = 2; i < rs.size(); i++) {
 						cores += rs.get(i);

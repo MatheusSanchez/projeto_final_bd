@@ -65,7 +65,7 @@ public class DecoracaoInfantil {
 			ResultSet rs = pstm.executeQuery();
 			while (rs.next()){
 				s.add(rs.getString(2)); //adiciona qtdeBaloes
-				s.add(rs.getString(3)); //adiciona pinata
+				s.add(rs.getString(3).trim()); //adiciona pinata
 			}
 			
 			pstm.close();
@@ -97,39 +97,27 @@ public class DecoracaoInfantil {
 	public static void update(String[] form) {
 		Connection c = Conexao.getInstance();
 		
-		String sql = "delete from tiposflores where decoracao = ?";
-		
-		
 		try {
-			//Statement s = c.createStatement();
-			//ResultSet rs = s.executeQuery("select * from decoracaocasamento where tema = 'classico'");
-			//if (rs.next())
-			//	System.out.println(rs.getString(1) + " / " + rs.getString(2));
+			String sql = "delete from corbaloes where decoracao = ?";
 			
 			PreparedStatement pstm = c.prepareStatement(sql);
 			pstm.setString(1, form[0]);
 			pstm.execute();
 			
-			//s = c.createStatement();
-			//rs = s.executeQuery("select * from decoracaocasamento where tema = 'classico'");
-			//if (rs.next())
-			//	System.out.println(rs.getString(1) + " / " + rs.getString(2));
-			//rs = s.executeQuery("select * from tiposflores where decoracao = 'classico'");
-			//while (rs.next()) {
-			//	System.out.println(rs.getString(1) + " / " + rs.getString(2));
-			//}
+			for(int i = 0; i < form.length; ++i) System.out.println(form[i]);
 			
-			sql = "update decoracaocasamento set qtde_flores = ? where tema = ?";
+			sql = "update decoracaoinfantil set qtde_baloes = ?, pinata = ? where tema = ?";
 			pstm = c.prepareStatement(sql);
 			pstm.setString(1, form[1]);
-			pstm.setString(2, form[0]);
+			pstm.setString(2, form[2]);
+			pstm.setString(3, form[0]);
 			pstm.execute();
 			
-			sql = "insert into tiposflores(decoracao, tipo_flor) values(?, ?)";
+			sql = "insert into corbaloes(decoracao, cor) values(?, ?)";
 			pstm = c.prepareStatement(sql);
-			pstm.setString(1, form[0]);
 			
-			for (int i = 2; i < form.length; i++) {
+			pstm.setString(1, form[0]);
+			for (int i = 3; i < form.length; i++) {
 				pstm.setString(2, form[i]);
 				pstm.execute();
 			}
