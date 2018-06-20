@@ -131,4 +131,24 @@ public class DecoracaoInfantil {
 		}
 
 	}
+	
+	public static void remove(String tema) {
+		Connection c = Conexao.getInstance();
+		
+		String sql = "delete from decoracaoinfantil where tema = ?";
+		
+		try {
+			PreparedStatement pstm = c.prepareStatement(sql);
+			pstm.setString(1, tema);
+			
+			pstm.execute();
+			pstm.close();
+
+			JOptionPane.showMessageDialog(null, "Decoracao removida com sucesso");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Erro ao remover decoracao");
+		}
+	}
 }

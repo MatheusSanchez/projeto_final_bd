@@ -31,8 +31,8 @@ public class TelaDecoracaoInfantil extends JFrame {
 	
 	public TelaDecoracaoInfantil() {
 		//inserirDecoracaoInfantil();
-		alterarDecoracaoInfantil();
-		//removerDecoracaoCasamento();
+		//alterarDecoracaoInfantil();
+		removerDecoracaoCasamento();
 	}
 	public void inserirDecoracaoInfantil() {
 		getContentPane().setLayout(null);
@@ -118,7 +118,7 @@ public class TelaDecoracaoInfantil extends JFrame {
 		lblAltTitle.setBounds(35, 6, 409, 74);
 		getContentPane().add(lblAltTitle);
 		
-		JLabel lblTema = new JLabel("Tema");
+		lblTema = new JLabel("Tema");
 		lblTema.setBounds(49, 77, 70, 15);
 		getContentPane().add(lblTema);
 		
@@ -230,27 +230,22 @@ public class TelaDecoracaoInfantil extends JFrame {
 		
 	}
 
-	public void apagarDecoracaoCasamento() {
+	public void removerDecoracaoCasamento() {
 		getContentPane().setLayout(null);
 		
-		JLabel lblCadastroDeNova = new JLabel("Remocao de decoracao de casamento");
-		lblCadastroDeNova.setFont(new Font("Dialog", Font.PLAIN, 20));
-		lblCadastroDeNova.setBounds(64, 33, 409, 15);
-		getContentPane().add(lblCadastroDeNova);
+		JLabel lblAltTitle = new JLabel("<html><center>Remoção de decoração de Aniversário Infantil</center></html>");
+		lblAltTitle.setFont(new Font("Dialog", Font.PLAIN, 20));
+		lblAltTitle.setBounds(35, 6, 409, 74);
+		getContentPane().add(lblAltTitle);
 		
-		JLabel lblTema = new JLabel("Tema");
+		lblTema = new JLabel("Tema");
 		lblTema.setBounds(49, 77, 70, 15);
 		getContentPane().add(lblTema);
 		
-		lblQtdeBaloes = new JLabel("Quantidade de Flores");
-		lblQtdeBaloes.setBounds(49, 141, 153, 15);
+		lblQtdeBaloes = new JLabel("Quantidade de Balões");
+		lblQtdeBaloes.setBounds(49, 130, 153, 15);
 		getContentPane().add(lblQtdeBaloes);
 		lblQtdeBaloes.setVisible(false);
-		
-		/*lblTipoDeFlor = new JLabel("Tipos de Flor");
-		lblTipoDeFlor.setBounds(49, 168, 153, 15);
-		getContentPane().add(lblTipoDeFlor);
-		lblTipoDeFlor.setVisible(false);*/
 		
 		textFieldTema = new JTextField();
 		textFieldTema.setBounds(137, 77, 140, 19);
@@ -259,29 +254,43 @@ public class TelaDecoracaoInfantil extends JFrame {
 		
 		textFieldQtdeBaloes = new JTextField();
 		textFieldQtdeBaloes.setColumns(10);
-		textFieldQtdeBaloes.setBounds(230, 139, 140, 19);
+		textFieldQtdeBaloes.setBounds(230, 127, 140, 19);
 		getContentPane().add(textFieldQtdeBaloes);
 		textFieldQtdeBaloes.setVisible(false);
 		textFieldQtdeBaloes.setEditable(false);
 		
+		lblCorBaloes= new JLabel("Cores dos balões");
+		lblCorBaloes.setBounds(49, 168, 153, 15);
+		getContentPane().add(lblCorBaloes);
+		
+		textFieldCorBaloes= new JTextField();
+		textFieldCorBaloes.setToolTipText("cor1, cor2");
+		textFieldCorBaloes.setColumns(10);
+		textFieldCorBaloes.setBounds(230, 165, 140, 19);
+		getContentPane().add(textFieldCorBaloes);
+		textFieldCorBaloes.setEditable(false);
+		
+		lblDigiteTodosOs = new JLabel("(Digite todas as cores desejadas separadas por virgulas)");
+		lblDigiteTodosOs.setFont(new Font("Dialog", Font.PLAIN, 9));
+		lblDigiteTodosOs.setBounds(49, 183, 308, 20);
+		getContentPane().add(lblDigiteTodosOs);
+		
+		chckbxPinata = new JCheckBox("Piñata");
+		chckbxPinata.setBounds(49, 215, 128, 23);
+		chckbxPinata.setEnabled(false);
+		getContentPane().add(chckbxPinata);
 		
 		btnCadastrar = new JButton("REMOVER");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String tema = textFieldTema.getText();
-				DecoracaoCasamento.remove(tema);
+				DecoracaoInfantil.remove(tema);
 				changeVisibility(false);
 			}
 		});
 		btnCadastrar.setBounds(356, 228, 117, 25);
 		getContentPane().add(btnCadastrar);
 		btnCadastrar.setVisible(false);
-		
-		lblDigiteTodosOs = new JLabel("(Digite todos os tipos desejados separados por virgulas)");
-		lblDigiteTodosOs.setFont(new Font("Dialog", Font.PLAIN, 9));
-		lblDigiteTodosOs.setBounds(49, 179, 308, 20);
-		getContentPane().add(lblDigiteTodosOs);
-		lblDigiteTodosOs.setVisible(false);
 		
 		textFieldTema.addFocusListener(new FocusListener() {
 			
@@ -299,20 +308,24 @@ public class TelaDecoracaoInfantil extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				String tema = textFieldTema.getText();
-				List<String> rs = DecoracaoCasamento.select(tema);
+				List<String> rs = DecoracaoInfantil.select(tema);
 				if (rs != null && rs.size() > 0) {
 					textFieldQtdeBaloes.setText(rs.get(0));
-					String tipos = "";
-					for (int i = 1; i < rs.size(); i++) {
-						tipos += rs.get(i);
-						if (i != rs.size() - 1) tipos += ", ";
+					
+					chckbxPinata.setSelected(rs.get(1).equals("1")? true : false);
+					String cores = "";
+					for (int i = 2; i < rs.size(); i++) {
+						cores += rs.get(i);
+						if (i != rs.size() - 1) cores += ", ";
 					}
-					//textFieldTipoFlor.repaint();
-
+					
 					changeVisibility(true);
 					
+					textFieldCorBaloes.setText(cores);
 				} else {
 					textFieldQtdeBaloes.setText("");
+					textFieldCorBaloes.setText("");
+					chckbxPinata.setSelected(false);
 					changeVisibility(false);	
 					JOptionPane.showMessageDialog(null, "Tema nao encontrado");
 				}
