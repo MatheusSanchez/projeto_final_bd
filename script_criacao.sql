@@ -102,3 +102,337 @@ create table Casamento(
 		references DecoracaoCasamento(tema)
 		on delete set null
 );
+
+create table EmpresaCriterio(
+	empresa char(18) not null, -- 99.999.999/9999-99
+	tipo varchar2(10) not null,
+
+	constraint pk_EmpresaCriterio primary key (empresa),
+	constraint ck_EmpresaCriterio check (upper(tipo) in ('SEGURANCA', 'FOTOGRAFIA')),
+	constraint ck_empresa check (regexp_like(empresa, '[0-9]{2}\.[0-9]{3}\.[0-9]{3}\/[0-9]{4}\-[0-9]{2}'))
+);
+
+create table EmpresaSeguranca(
+	CNPJ char(18) not null,
+	nome varchar2(50),
+
+	constraint pk_EmpresaSeguranca primary key (CNPJ),
+	constraint fk_EmpresaSeguranca foreign key (CNPJ)
+		references EmpresaCriterio(empresa)
+		on delete cascade
+);
+
+create table ContratoSeguranca(
+	nro_contrato varchar2(25) not null,
+	empresa_seguranca char(18) not null,
+	casamento varchar2(25) not null,
+	preco number(7, 2),
+	PDF_contrato varchar2(50),
+
+	constraint pk_ContratoSeguranca primary key (nro_contrato),
+	constraint uk_ContratoSeguranca unique (casamento),
+	constraint fk_ContratoSeguranca1 foreign key (empresa_seguranca)
+		references EmpresaSeguranca(CNPJ)
+		on delete cascade,
+	constraint fk_ContratoSeguranca2 foreign key (casamento)
+		references Casamento(nro_contrato)
+		on delete cascade
+);
+
+create table FuncionarioCriterio(
+	funcionario char(14) not null,
+	tipo char(9) not null,
+
+	constraint pk_FuncionarioCriterio primary key (funcionario),
+	constraint ck_tipo2 check (upper(tipo) in ('SEGURANCA', 'FOTOGRAFO')),
+	constraint ck_funcionario check(regexp_like(funcionario, '[0-9]{3}\.[0-9]{3}\.[0-9]{3}\-[0-9]{2}'))
+);
+
+create table Seguranca(
+	CPF char(14) not null,
+	nome varchar2(50),
+
+	constraint pk_Seguranca primary key (CPF),
+	constraint fk_Seguranca foreign key (CPF)
+		references FuncionarioCriterio(funcionario)
+		on delete cascade
+);
+
+create table ServicoSeguranca(
+	data date not null,
+	seguranca char(14) not null, 
+	contrato_seguranca varchar2(25) not null,
+
+	constraint pk_ServicoSeguranca primary key (data, seguranca),
+	constraint uk_ServicoSeguranca unique (contrato_seguranca),
+	constraint fk_ServicoSeguranca1 foreign key (seguranca)
+		references Seguranca(CPF)
+		on delete cascade,
+	constraint fk_ServicoSeguranca2 foreign key (contrato_seguranca)
+		references ContratoSeguranca(nro_contrato)
+		on delete cascade
+);
+
+create table EmpresaFotografia(
+	CNPJ char(18) not null,
+	nome varchar2(50),
+
+	constraint pk_EmpresaFotografia primary key (CNPJ),
+	constraint fk_EmpresaFotografia foreign key (CNPJ)
+		references EmpresaCriterio(empresa)
+		on delete cascade
+);
+
+create table ContratoFotografia(
+	nro_contrato varchar2(25) not null,
+	empresa_fotografia char(18) not null,
+	festa varchar2(25) not null,
+	preco number(7, 2),
+	PDF_contrato varchar2(50),
+	qtde_fotos number(4),
+
+	constraint pk_ContratoFotografo primary key (nro_contrato),
+	constraint uk_ContratoFotografo unique (festa),
+	constraint fk_ContratoFotografia1 foreign key (empresa_fotografia)
+		references EmpresaFotografia(CNPJ)
+		on delete cascade,
+	constraint fk_ContratoFotografia2 foreign key (festa)
+		references Festa(nro_contrato)
+		on delete cascade
+);
+
+create table Fotografo(
+	CPF char(14) not null,
+	nome varchar2(50),
+
+	constraint pk_Fotografo primary key (CPF),
+	constraint fk_Fotografo foreign key (CPF)
+		references FuncionarioCriterio(funcionario)
+		on delete cascade
+);
+
+create table ServicoFotografo(
+	data date not null,
+	fotografo char(14) not null, 
+	contrato_fotografia varchar2(25) not null,
+
+	constraint pk_ServicoFotografia primary key (data, fotografo),
+	constraint uk_ServicoFotografia unique (contrato_fotografia),
+	constraint fk_ServicoFotografia1 foreign key (fotografo)
+		references fotografo(CPF)
+		on delete cascade,
+	constraint fk_ServicoFotografia2 foreign key (contrato_fotografia)
+		references ContratoFotografia(nro_contrato)
+		on delete cascade
+);
+
+CREATE TABLE ATRACAOCRITERIO (
+	ATRACAO VARCHAR2(50) NOT NULL,
+	TIPO CHAR(8),
+
+	CONSTRAINT PK_ATRACAOCRITERIO PRIMARY KEY (ATRACAO),
+	CONSTRAINT CK_TIPO3 CHECK (TIPO IN ('ANIMADOR', 'BANDA'))
+);
+
+CREATE TABLE ANIMADOR (
+	NOME VARCHAR2(50) NOT NULL,
+	INICIO DATE,
+	FIM DATE,
+	TELEFONE VARCHAR2(14),
+	EMAIL VARCHAR2(50),
+	TIPO_ANIMACAO VARCHAR2(50),
+
+	CONSTRAINT PK_ANIMADOR PRIMARY KEY (NOME),
+	CONSTRAINT FK_ANIMADOR FOREIGN KEY (NOME) 
+		REFERENCES ATRACAOCRITERIO 
+		ON DELETE CASCADE,
+	CONSTRAINT CK_ANIMADOR_TELEFONE CHECK(REGEXP_LIKE(TELEFONE, '[0-9]{2}[0−9]2[0-9]{4,5}\-[0-9]{4}')),
+	CONSTRAINT CK_ANIMADOR_DATA CHECK (INICIO < FIM)
+);
+
+CREATE TABLE BANDA (
+	NOME VARCHAR2(50) NOT NULL,
+	INICIO DATE,
+	FIM DATE,
+	TELEFONE VARCHAR2(14),
+	EMAIL VARCHAR2(50),
+
+	CONSTRAINT PK_BANDA PRIMARY KEY (NOME),
+	CONSTRAINT FK_BANDA FOREIGN KEY (NOME) 
+		REFERENCES ATRACAOCRITERIO 
+		ON DELETE CASCADE,
+	CONSTRAINT CK_BANDA_TELEFONE CHECK(REGEXP_LIKE(TELEFONE, '[0-9]{2}[0−9]2[0-9]{4,5}\-[0-9]{4}')),
+	CONSTRAINT CK_BANDA_DATA CHECK (INICIO < FIM)
+);
+
+CREATE TABLE GENEROSMUSICAIS (
+	BANDA VARCHAR2(50) NOT NULL,
+	GENERO VARCHAR2(50) NOT NULL,
+
+	CONSTRAINT PK_GENEROSMUSICAIS PRIMARY KEY (BANDA, GENERO),
+	CONSTRAINT FK_GENEROSMUSICAIS FOREIGN KEY (BANDA)
+		REFERENCES BANDA
+		ON DELETE CASCADE
+);
+
+CREATE TABLE INTEGRANTES (
+	BANDA VARCHAR2(50) NOT NULL,
+	INTEGRANTE VARCHAR2(50) NOT NULL,
+
+	CONSTRAINT PK_INTEGRANTES PRIMARY KEY (BANDA, INTEGRANTE),
+	CONSTRAINT FK_INTEGRANTES FOREIGN KEY (BANDA)
+		REFERENCES BANDA
+);
+
+CREATE TABLE CONTRATOANIMADOR (
+	DATA DATE NOT NULL,
+	ANIMADOR VARCHAR2(50) NOT NULL,
+	ANIVERSARIO_INFANTIL NOT NULL,
+
+	CONSTRAINT PK_CONTRATOANIMADOR PRIMARY KEY (DATA, ANIMADOR),
+	CONSTRAINT FK_CONTRATOANIMADOR1 FOREIGN KEY (ANIMADOR)
+		REFERENCES ANIMADOR
+		ON DELETE CASCADE,
+	CONSTRAINT FK_CONTRATOANIMADOR2 FOREIGN KEY (ANIVERSARIO_INFANTIL)
+		REFERENCES ANIVERSARIOINFANTIL
+		ON DELETE CASCADE,
+	CONSTRAINT UN_ANIVERSARIOINFANTIL UNIQUE(ANIVERSARIO_INFANTIL)
+);
+
+CREATE TABLE CONTRATOBANDA (
+	DATA DATE NOT NULL,
+	BANDA VARCHAR2(50) NOT NULL,
+	CASAMENTO NOT NULL,
+
+	CONSTRAINT PK_CONTRATOBANDA PRIMARY KEY (DATA, BANDA),
+	CONSTRAINT FK_CONTRATOBANDA1 FOREIGN KEY (BANDA)
+		REFERENCES BANDA
+		ON DELETE CASCADE,
+	CONSTRAINT FK_CONTRATOBANDA2 FOREIGN KEY (CASAMENTO)
+		REFERENCES CASAMENTO
+		ON DELETE CASCADE,
+	CONSTRAINT UN_CONTRATOBANDA UNIQUE (CASAMENTO)
+);
+
+CREATE TABLE LINEUP (
+	DATA DATE NOT NULL,
+	BANDA VARCHAR2(50) NOT NULL,
+	MUSICA VARCHAR2(50) NOT NULL,
+
+	CONSTRAINT PK_LINEUP PRIMARY KEY (DATA, BANDA, MUSICA),
+	CONSTRAINT FK_LINEUP FOREIGN KEY (DATA, BANDA)
+		REFERENCES CONTRATOBANDA
+		ON DELETE CASCADE
+);
+
+CREATE TABLE EQUIPAMENTOS (
+	DATA DATE NOT NULL,
+	BANDA VARCHAR2(50) NOT NULL,
+	EQUIPAMENTO VARCHAR2(50) NOT NULL,
+
+	CONSTRAINT PK_EQUIPAMENTOS PRIMARY KEY (DATA, BANDA, EQUIPAMENTO),
+	CONSTRAINT FK_EQUIPAMENTOS FOREIGN KEY (DATA, BANDA)
+		REFERENCES CONTRATOBANDA
+		ON DELETE CASCADE
+);
+
+CREATE TABLE BUFFETCRITERIO (
+	BUFFET CHAR(18) NOT NULL,
+	TIPO CHAR(18) NOT NULL,
+
+	CONSTRAINT PK_BUFFETCRITERIO PRIMARY KEY (BUFFET),
+	CONSTRAINT CK_BUFFET CHECK (REGEXP_LIKE(BUFFET, '[0-9]{2}\.[0-9]{3}\.[0-9]{3}\/[0-9]{4}\-[0-9]{2}')),
+	CONSTRAINT CK_BUFFETCRITERIO CHECK (TIPO IN ('INFANTIL', 'CASAMENTO'))
+);
+
+CREATE TABLE BUFFETINFANTIL (
+	CNPJ CHAR(18) NOT NULL,
+	NOME VARCHAR2(50),
+	RUA VARCHAR2(50),
+	NUMERO NUMBER(5),
+	CEP CHAR(9),
+	CAPACIDADE NUMBER(3),
+
+	CONSTRAINT PK_BUFFETINFANTIL PRIMARY KEY (CNPJ),
+	CONSTRAINT FK_BUFFETINFANTIL FOREIGN KEY (CNPJ)
+		REFERENCES BUFFETCRITERIO 
+		ON DELETE CASCADE,
+	CONSTRAINT CK_BUFFETINFANTIL_CEP CHECK(REGEXP_LIKE(CEP, '[0-9]{5}\-[0-9]{3}')),
+	CONSTRAINT CK_BUFFETINFANTIL_CAPACIDADE CHECK (CAPACIDADE > 0)
+);
+
+CREATE TABLE BRINQUEDOS (
+	BUFFET_INFANTIL CHAR(18) NOT NULL,
+	BRINQUEDO VARCHAR2(50) NOT NULL,
+
+	CONSTRAINT PK_BRINQUEDOS PRIMARY KEY (BUFFET_INFANTIL, BRINQUEDO),
+	CONSTRAINT FK_BRINQUEDOS FOREIGN KEY (BUFFET_INFANTIL)
+		REFERENCES BUFFETINFANTIL
+		ON DELETE CASCADE
+);
+
+CREATE TABLE BUFFETCASAMENTO (
+	CNPJ CHAR(18) NOT NULL,
+	NOME VARCHAR2(50),
+	RUA VARCHAR2(50),
+	NUMERO NUMBER(5),
+	CEP CHAR(9),
+	CAPACIDADE NUMBER(3),
+
+	CONSTRAINT PK_BUFFETCASAMENTO PRIMARY KEY (CNPJ),
+	CONSTRAINT FK_BUFFETCASAMENTO FOREIGN KEY (CNPJ)
+		REFERENCES BUFFETCRITERIO 
+		ON DELETE CASCADE,
+	CONSTRAINT CK_BUFFETCASAMENTO_CEP CHECK(REGEXP_LIKE(CEP, '[0-9]{5}\-[0-9]{3}')),
+	CONSTRAINT CK_BUFFETCASAMENTO_CAPACIDADE CHECK (CAPACIDADE > 0)
+);
+
+CREATE TABLE CONTRATOBUFFETINFANTIL (
+	DATA DATE NOT NULL,
+	BUFFET_INFANTIL CHAR(18) NOT NULL,
+	ANIVERSARIO_INFANTIL VARCHAR2(25) NOT NULL,
+	PRECO NUMBER(3),
+
+	CONSTRAINT PK_CONTRATOBUFFETINFANTIL PRIMARY KEY (DATA, BUFFET_INFANTIL),
+	CONSTRAINT FK_CONTRATOBUFFETINFANTIL FOREIGN KEY (BUFFET_INFANTIL)
+		REFERENCES BUFFETINFANTIL
+		ON DELETE CASCADE,
+	CONSTRAINT UN_CONTRATOBI_AI UNIQUE(ANIVERSARIO_INFANTIL),
+	CONSTRAINT CK_CONTRATOBI_PRECO CHECK (PRECO > 0)
+);
+
+CREATE TABLE CARDAPIOINFANTIL (
+	DATA DATE NOT NULL,
+	BUFFET_INFANTIL CHAR(18) NOT NULL,
+	PRATO VARCHAR2(50) NOT NULL,
+
+	CONSTRAINT PK_CARDAPIOINFANTIL PRIMARY KEY (DATA, BUFFET_INFANTIL, PRATO),
+	CONSTRAINT FK_CARDAPIOINFANTIL FOREIGN KEY (DATA, BUFFET_INFANTIL)
+		REFERENCES CONTRATOBUFFETINFANTIL
+		ON DELETE CASCADE
+);
+
+CREATE TABLE CONTRATOBUFFETCASAMENTO (
+	DATA DATE NOT NULL,
+	BUFFET_CASAMENTO CHAR(18) NOT NULL,
+	CASAMENTO VARCHAR2(25)NOT NULL,
+	PRECO NUMBER(3),
+
+	CONSTRAINT PK_CONTRATOBUFFETCASAMENTO PRIMARY KEY (DATA, BUFFET_CASAMENTO),
+	CONSTRAINT FK_CONTRATOBUFFETCASAMENTO FOREIGN KEY (BUFFET_CASAMENTO)
+		REFERENCES BUFFETINFANTIL
+		ON DELETE CASCADE,
+	CONSTRAINT UN_CASAMENTO UNIQUE(CASAMENTO),
+	CONSTRAINT CK_PRECO CHECK (PRECO > 0)
+);
+
+CREATE TABLE CARDAPIOCASAMENTO (
+	DATA DATE NOT NULL,
+	BUFFET_CASAMENTO CHAR(18) NOT NULL,
+	PRATO VARCHAR2(50) NOT NULL,
+
+	CONSTRAINT PK_CARDAPIOCASAMENTO PRIMARY KEY (DATA, BUFFET_CASAMENTO, PRATO),
+	CONSTRAINT FK_CARDAPIOCASAMENTO FOREIGN KEY (DATA, BUFFET_CASAMENTO)
+		REFERENCES CONTRATOBUFFETCASAMENTO
+		ON DELETE CASCADE
+);
