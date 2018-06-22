@@ -16,10 +16,17 @@ public class Banda {
 		Connection c = Conexao.getInstance();
 		
 		
-		String sql = "insert into banda(nome, telefone, email) values(?, ?, ?)";
+		
 		
 		try {
+			String sql = "insert into AtracaoCriterio(atracao, tipo) values (?, ?)";
 			PreparedStatement pstm = c.prepareStatement(sql);
+			pstm.setString(1, nome);
+			pstm.setString(2, "BANDA");	
+			pstm.execute();
+			
+			sql = "insert into banda(nome, telefone, email) values(?, ?, ?)";
+			pstm = c.prepareStatement(sql);
 			pstm.setString(1, nome);
 			pstm.setString(2, telefone);
 			pstm.setString(3, email);
@@ -63,7 +70,7 @@ public class Banda {
 			pstm.close();
 			
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Erro ao procurar tema");
+			JOptionPane.showMessageDialog(null, "Erro ao procurar banda");
 		}
 		
 		sql = "select integrante from integrantes where banda = (?)";
@@ -86,29 +93,29 @@ public class Banda {
 		return s;
 	}
 	
-	public static void update(String[] form) {
+	public static void update(String nome, String telefone, String email, String[] integrantes) {
 		Connection c = Conexao.getInstance();
 		
 		try {
 			String sql = "delete from integrantes where banda = ?";
 			
 			PreparedStatement pstm = c.prepareStatement(sql);
-			pstm.setString(1, form[0]);
+			pstm.setString(1, nome);
 			pstm.execute();
 			
 			sql = "update banda set telefone = ?, email = ? where nome = ?";
 			pstm = c.prepareStatement(sql);
-			pstm.setString(1, form[1]);
-			pstm.setString(2, form[2]);
-			pstm.setString(3, form[0]);
+			pstm.setString(1, telefone);
+			pstm.setString(2, email);
+			pstm.setString(3, nome);
 			pstm.execute();
 			
 			sql = "insert into integrantes(banda, integrante) values(?, ?)";
 			pstm = c.prepareStatement(sql);
 			
-			pstm.setString(1, form[0]);
-			for (int i = 3; i < form.length; i++) {
-				pstm.setString(2, form[i]);
+			pstm.setString(1, nome);
+			for (int i = 0; i < integrantes.length; i++) {
+				pstm.setString(2, integrantes[i]);
 				pstm.execute();
 			}
 			
