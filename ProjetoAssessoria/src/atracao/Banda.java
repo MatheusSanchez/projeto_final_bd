@@ -46,7 +46,7 @@ public class Banda {
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, "Erro ao inserir decoracao");
+			JOptionPane.showMessageDialog(null, "Erro ao inserir banda");
 			return false;
 		}
 	}
