@@ -16,7 +16,7 @@ public class DecoracaoInfantil {
 		
 	}
 	
-	static public boolean insert(String tema, String qtdeBaloes, boolean pinata, String[] cores) {
+	static public void insert(String tema, String qtdeBaloes, boolean pinata, String[] cores) {
 		Connection c = Conexao.getInstance();
 		
 		System.out.println(tema + " " + qtdeBaloes + " " + pinata + " " + cores.length);
@@ -44,11 +44,9 @@ public class DecoracaoInfantil {
 			pstm.close();
 
 			JOptionPane.showMessageDialog(null, "Decoracao de aniversario infantil inserida com sucesso");
-			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "Erro ao inserir decoracao");
-			return false;
 		}
 	}
 	

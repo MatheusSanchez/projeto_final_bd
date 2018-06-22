@@ -8,10 +8,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.GroupLayout.Alignment;
 
-import decoracao.DecoracaoCasamento;
 import festa.Festa;
-import javax.swing.LayoutStyle.ComponentPlacement;
 
+@SuppressWarnings("serial")
 public class TelaInicio extends JFrame {
 	public TelaInicio() {
 		tela();

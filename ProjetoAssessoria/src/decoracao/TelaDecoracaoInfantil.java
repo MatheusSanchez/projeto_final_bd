@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 import javax.swing.JCheckBox;
 import javax.swing.SwingConstants;
 
+@SuppressWarnings("serial")
 public class TelaDecoracaoInfantil extends JFrame {
 	private JTextField textFieldTema;
 	private JTextField textFieldQtdeBaloes;
@@ -88,7 +89,7 @@ public class TelaDecoracaoInfantil extends JFrame {
 					cores[i] = cores[i].trim();
 				}
 				
-				boolean ok = DecoracaoInfantil.insert(tema, qtdeBaloes, pinata, cores);
+				DecoracaoInfantil.insert(tema, qtdeBaloes, pinata, cores);
 			}
 		});
 		btnCadastrar.setBounds(356, 228, 117, 25);

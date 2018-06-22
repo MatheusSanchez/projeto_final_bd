@@ -2,12 +2,12 @@ package festa;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.util.Scanner;
 
 import javax.swing.JFrame;
 
 import conexao.Conexao;
 
+@SuppressWarnings("serial")
 public class Festa extends JFrame {
 	public Festa() {
 				

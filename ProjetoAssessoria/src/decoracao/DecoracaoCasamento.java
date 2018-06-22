@@ -3,7 +3,6 @@ package decoracao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,7 +84,6 @@ public class DecoracaoCasamento {
 			pstm.setString(1, tema);
 			
 			ResultSet rs = pstm.executeQuery();
-			int i = 1;
 			while (rs.next()){
 				s.add(rs.getString(2));
 			}

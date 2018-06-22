@@ -1,6 +1,5 @@
 package conexao;
 
-import java.awt.Component;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -27,6 +26,7 @@ public class Conexao {
 				String user = s.nextLine();
 				System.out.print("Password: ");
 				String password = s.nextLine();
+				s.close();
 				conn = DriverManager.getConnection("jdbc:oracle:thin:@" + host + ":" + port + ":orcl", user, password);
 				System.out.println("Conexao estabelecida");
 			} catch (Exception e) {

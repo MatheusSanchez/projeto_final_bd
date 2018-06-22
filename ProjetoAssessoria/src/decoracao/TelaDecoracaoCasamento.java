@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+@SuppressWarnings("serial")
 public class TelaDecoracaoCasamento extends JFrame {
 	private JTextField textFieldTema;
 	private JTextField textFieldQtdeFlores;
