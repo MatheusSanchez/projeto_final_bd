@@ -3,7 +3,6 @@ package main;
 
 import buffet.TelaBuffetCasamento;
 import conexao.Conexao;
-import decoracao.TelaDecoracaoInfantil;
 
 public class Main {
 
