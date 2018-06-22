@@ -2,6 +2,7 @@ package buffet;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
@@ -50,5 +51,38 @@ public class BuffetCasamento {
 			else if (e.getErrorCode() == 2290) JOptionPane.showMessageDialog(null, "Erro: CNPJ e CEP devem estar formatados corretamente");
 			else JOptionPane.showMessageDialog(null, "Erro ao inserir buffet");
 		}
+	}
+	
+	public static String[] select(String cnpj) {
+		Connection c = Conexao.getInstance();
+		String[] s = null;
+		
+		try {
+			String sql = "select from buffetcasamento where CNPJ = ?";
+			PreparedStatement pstm = c.prepareStatement(sql);
+			pstm.setString(1, cnpj);
+			ResultSet rs = pstm.executeQuery();
+			
+			s = new String[6];
+			
+			while (rs.next()) {
+				
+				for (int i = 0; i < 6; i++) {
+					s[i] = rs.getString(i+1);
+				}
+			}
+			
+			pstm.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+			if (e.getErrorCode() == 1) JOptionPane.showMessageDialog(null, "Erro: CNPJ ja cadastrado");
+			else if (e.getErrorCode() == 1722) JOptionPane.showMessageDialog(null, "Erro: Numero e capacidade devem ser dados numericos");
+			else if (e.getErrorCode() == 2290) JOptionPane.showMessageDialog(null, "Erro: CNPJ e CEP devem estar formatados corretamente");
+			else JOptionPane.showMessageDialog(null, "Buffet nao encontrado");
+		}
+		
+		return s;
 	}
 }

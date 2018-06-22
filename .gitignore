@@ -4,6 +4,7 @@
 **.settings
 *.o
 *.so
+.recommenders/
 
 # Logs and databases #
 ######################
