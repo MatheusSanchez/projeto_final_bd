@@ -31,8 +31,8 @@ public class TelaBanda extends JFrame {
 	
 	public TelaBanda() {
 		//inserir();
-		menuInicial();
-		//alterar();
+		//menuInicial();
+		alterar();
 		//remover();
 	}
 	
