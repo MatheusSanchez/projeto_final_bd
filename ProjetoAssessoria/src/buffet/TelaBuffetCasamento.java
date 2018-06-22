@@ -61,6 +61,7 @@ public class TelaBuffetCasamento extends JFrame {
 		getContentPane().add(lblCapacidade);
 		
 		textFieldCnpj = new JTextField();
+		textFieldCnpj.setToolTipText("99.999.999/9999-99");
 		textFieldCnpj.setBounds(177, 58, 114, 19);
 		getContentPane().add(textFieldCnpj);
 		textFieldCnpj.setColumns(10);

@@ -1,6 +1,7 @@
 package main;
 
 
+import buffet.TelaBuffetCasamento;
 import conexao.Conexao;
 import decoracao.TelaDecoracaoInfantil;
 
@@ -12,7 +13,8 @@ public class Main {
 
 		// TelaContratante c = new TelaContratante();
 		// TelaDecoracaoCasamento c = new TelaDecoracaoCasamento();
-		TelaDecoracaoInfantil c = new TelaDecoracaoInfantil();
+		//TelaDecoracaoInfantil c = new TelaDecoracaoInfantil();
+		TelaBuffetCasamento c = new TelaBuffetCasamento();
 		c.setSize(768, 480);
 		c.setVisible(true);
 	}
