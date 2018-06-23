@@ -1,8 +1,8 @@
 package main;
 
 
-import atracao.TelaBanda;
 import conexao.Conexao;
+import festa.Tela3;
 
 public class Main {
 
@@ -15,7 +15,9 @@ public class Main {
 		//TelaDecoracaoInfantil c = new TelaDecoracaoInfantil();
 		// TelaBuffetCasamento c = new TelaBuffetCasamento();
 		//TelaBuffetInfantil c = new TelaBuffetInfantil();
-		TelaBanda c = new TelaBanda();
+		//TelaBanda c = new TelaBanda();
+		//TelaFesta c = new TelaFesta();
+		Tela3 c = new Tela3("casamento");
 		c.setSize(768, 480);
 		c.setVisible(true);
 		
