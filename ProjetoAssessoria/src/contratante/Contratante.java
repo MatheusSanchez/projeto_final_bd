@@ -3,6 +3,7 @@ package contratante;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
@@ -21,16 +22,23 @@ public class Contratante {
 				for (int i = 0; i < 8; i++) {
 					pstm.setString(i + 1, form[i]);
 				}
-				//System.out.println("ex");
 				pstm.execute();
-				//System.out.println("f ex");
 				
 				pstm.close();
 
 				JOptionPane.showMessageDialog(null, "Contratante inserido com sucesso");
+				c.commit();
+			} catch (SQLException e) {
+				try {
+					c.rollback();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
 				
-			} catch (Exception e) {
-				JOptionPane.showMessageDialog(null, "Erro ao inserir contratante");
+				if (e.getErrorCode() == 1) JOptionPane.showMessageDialog(null, "Erro: CPF ja cadastrado");
+				else if (e.getErrorCode() == 1722) JOptionPane.showMessageDialog(null, "Erro: Numero deve ser um dado numerico");
+				else if (e.getErrorCode() == 2290) JOptionPane.showMessageDialog(null, "Erro: Telefone, CPF e CEP devem estar formatados corretamente");
+				else JOptionPane.showMessageDialog(null, "Erro ao inserir buffet");
 			}
 	}
 	
@@ -50,9 +58,18 @@ public class Contratante {
 			pstm.execute();
 			pstm.close();
 
+			c.commit();
 			JOptionPane.showMessageDialog(null, "Contratante alterado com sucesso");
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Erro ao alterar contratante");
+		} catch (SQLException e) {
+			try {
+				c.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			
+			if (e.getErrorCode() == 1722) JOptionPane.showMessageDialog(null, "Erro: Numero deve ser um dado numerico");
+			else if (e.getErrorCode() == 2290) JOptionPane.showMessageDialog(null, "Erro: Telefone, CPF e CEP devem estar formatados corretamente");
+			else JOptionPane.showMessageDialog(null, "Erro ao inserir buffet");
 		}
 	}
 	
@@ -76,9 +93,15 @@ public class Contratante {
 			}
 			
 			pstm.close();
+			c.commit();
 			return s;
 			
 		} catch (Exception e) {
+			try {
+				c.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 			JOptionPane.showMessageDialog(null, "Erro ao procurar contratante");
 		}
 		
@@ -100,8 +123,13 @@ public class Contratante {
 			pstm.close();
 
 			JOptionPane.showMessageDialog(null, "Contratante removido com sucesso");
-			
+			c.commit();
 		} catch (Exception e) {
+			try {
+				c.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 			JOptionPane.showMessageDialog(null, "Erro ao remover contratante");
 		}
 	}

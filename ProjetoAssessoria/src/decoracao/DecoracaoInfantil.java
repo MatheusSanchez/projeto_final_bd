@@ -41,14 +41,16 @@ public class DecoracaoInfantil {
 			
 			c.commit();
 			JOptionPane.showMessageDialog(null, "Decoracao de aniversario infantil inserida com sucesso");
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			try {
 				c.rollback();
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
-			JOptionPane.showMessageDialog(null, "Erro ao inserir decoracao");
+			if (e.getErrorCode() == 1) JOptionPane.showMessageDialog(null, "Erro: tema ja cadastrado");
+			else if (e.getErrorCode() == 1722) JOptionPane.showMessageDialog(null, "Erro: Quantidade de baloes deve ser um dado numerico e nao negativo");
+			else JOptionPane.showMessageDialog(null, "Erro ao inserir decoracao");
 		}
 	}
 	
@@ -126,7 +128,7 @@ public class DecoracaoInfantil {
 			
 			c.commit();
 			JOptionPane.showMessageDialog(null, "Decoracao alterada com sucesso");
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			try {
 				c.rollback();
@@ -134,7 +136,9 @@ public class DecoracaoInfantil {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			JOptionPane.showMessageDialog(null, "Erro ao alterar decoracao");
+			
+			if (e.getErrorCode() == 1722) JOptionPane.showMessageDialog(null, "Erro: Quantidade de baloes deve ser um dado numerico e nao negativo");
+			else JOptionPane.showMessageDialog(null, "Erro ao inserir decoracao");
 		}
 
 	}
