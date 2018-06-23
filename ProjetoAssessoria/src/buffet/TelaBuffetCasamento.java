@@ -33,6 +33,7 @@ public class TelaBuffetCasamento extends JFrame {
 		//removerBuffetCasamento();
 	}
 	
+	// muda a visibilidade dos elementos
 	private void changeVisibility(boolean flag) {
 		textFieldNome.setVisible(flag);
 		textFieldRua.setVisible(flag);
@@ -122,6 +123,7 @@ public class TelaBuffetCasamento extends JFrame {
 				s[4] = textFieldCep.getText();
 				s[5] = textFieldCap.getText();
 				
+				//insere no banco
 				BuffetCasamento.insert(s);
 			}
 		});
@@ -203,6 +205,7 @@ public class TelaBuffetCasamento extends JFrame {
 				s[4] = textFieldCep.getText();
 				s[5] = textFieldCap.getText();
 				
+				//atualiza o banco
 				BuffetCasamento.update(s);
 			}
 		});
@@ -212,6 +215,7 @@ public class TelaBuffetCasamento extends JFrame {
 		JButton btnBuscarPorCnpj = new JButton("Buscar por CNPJ");
 		btnBuscarPorCnpj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//recupera as informacoes referentes aquele cnpj
 				String s[] = BuffetCasamento.select(textFieldCnpj.getText());
 				
 				if (s != null) {
@@ -231,6 +235,7 @@ public class TelaBuffetCasamento extends JFrame {
 		btnBuscarPorCnpj.setBounds(321, 55, 163, 25);
 		getContentPane().add(btnBuscarPorCnpj);
 		
+		//quando clicar no campo de escrever cnpj chama a funcao de alterar visibilidade
 		textFieldCnpj.addFocusListener(new FocusListener() {
 			
 			@Override
@@ -312,6 +317,7 @@ public class TelaBuffetCasamento extends JFrame {
 		btnCadastrar = new JButton("REMOVER");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//remove do banco
 				BuffetCasamento.remove(textFieldCnpj.getText());
 			}
 		});
@@ -321,9 +327,11 @@ public class TelaBuffetCasamento extends JFrame {
 		JButton btnBuscarPorCnpj = new JButton("Buscar por CNPJ");
 		btnBuscarPorCnpj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//recupera os dados daquele cnpj
 				String s[] = BuffetCasamento.select(textFieldCnpj.getText());
 				
 				if (s != null) {
+					//preenche os campos com o que esta cadastrado sem deixar editar
 					textFieldNome.setText(s[1]);
 					textFieldNome.setEditable(false);
 					textFieldRua.setText(s[2]);
@@ -345,6 +353,7 @@ public class TelaBuffetCasamento extends JFrame {
 		btnBuscarPorCnpj.setBounds(321, 55, 163, 25);
 		getContentPane().add(btnBuscarPorCnpj);
 		
+		//quando clica no campo de preencher cnpj chama a funcao de mudar visibilidade
 		textFieldCnpj.addFocusListener(new FocusListener() {
 			
 			@Override

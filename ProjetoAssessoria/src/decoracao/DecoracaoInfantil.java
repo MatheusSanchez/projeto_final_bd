@@ -17,12 +17,7 @@ public class DecoracaoInfantil {
 	}
 	
 	static public void insert(String tema, String qtdeBaloes, boolean pinata, String[] cores) {
-		Connection c = Conexao.getInstance();
-		
-		System.out.println(tema + " " + qtdeBaloes + " " + pinata + " " + cores.length);
-		for (int i = 0; i < cores.length; i++) {
-			System.out.println(cores[i]);
-		}
+		Connection c = Conexao.getInstance(); //inicia a conexao
 		
 		String sql = "insert into decoracaoinfantil(tema, qtde_baloes, pinata) values(?, ?, ?)";
 		
@@ -31,14 +26,14 @@ public class DecoracaoInfantil {
 			pstm.setString(1, tema);
 			pstm.setString(2, qtdeBaloes);
 			pstm.setString(3, pinata? "1" : "0");
-			pstm.execute();
+			pstm.execute(); //insere na tabela decoracaoinfantil
 			
 			sql = "insert into corbaloes(decoracao, cor) values(?, ?)";
 			pstm = c.prepareStatement(sql);
 			pstm.setString(1, tema);
 			for (int i = 0; i < cores.length; i++) {
 				pstm.setString(2, cores[i]);
-				pstm.execute();
+				pstm.execute(); //insere na tabela corbaloes 
 			}
 			
 			pstm.close();
@@ -89,7 +84,7 @@ public class DecoracaoInfantil {
 			JOptionPane.showMessageDialog(null, "Erro ao procurar cores de baloes");
 		}
 		
-		return s;
+		return s; //retorna uma lista com as colunas obtidas ou null quando nao encontrou
 	}
 	
 	public static void update(String[] form) {
@@ -100,10 +95,11 @@ public class DecoracaoInfantil {
 			
 			PreparedStatement pstm = c.prepareStatement(sql);
 			pstm.setString(1, form[0]);
-			pstm.execute();
+			pstm.execute(); //apaga as cores que ja existiam
 			
 			for(int i = 0; i < form.length; ++i) System.out.println(form[i]);
 			
+			//atualiza decoracaoinfantil
 			sql = "update decoracaoinfantil set qtde_baloes = ?, pinata = ? where tema = ?";
 			pstm = c.prepareStatement(sql);
 			pstm.setString(1, form[1]);
@@ -117,7 +113,7 @@ public class DecoracaoInfantil {
 			pstm.setString(1, form[0]);
 			for (int i = 3; i < form.length; i++) {
 				pstm.setString(2, form[i]);
-				pstm.execute();
+				pstm.execute(); //insere as cores novas aqui
 			}
 			
 			pstm.close();

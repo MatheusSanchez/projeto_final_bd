@@ -16,7 +16,7 @@ public class Conexao {
 	public synchronized static Connection getInstance() {
 		if (conn == null) {
 			try {
-				//conn = DriverManager.getConnection("jdbc:oracle:thin:@192.168.183.15:1521:orcl", "B9763050", "tantufas");
+				// pegando os dados da conexao com o usuario
 				Scanner s = new Scanner(System.in);
 				System.out.print("Host: ");
 				String host = s.nextLine();
@@ -27,6 +27,7 @@ public class Conexao {
 				System.out.print("Password: ");
 				String password = s.nextLine();
 				s.close();
+				
 				conn = DriverManager.getConnection("jdbc:oracle:thin:@" + host + ":" + port + ":orcl", user, password);
 				System.out.println("Conexao estabelecida");
 			} catch (Exception e) {
