@@ -28,15 +28,13 @@ public class TelaBuffetCasamento extends JFrame {
 	private JButton btnCadastrar;
 
 	public TelaBuffetCasamento() {
-		//cadastrarBuffetCasamento();
-		//alterarBuffetCasamento();
-		//removerBuffetCasamento();
 		menuInicial();
 	}
 	
 	public void menuInicial() {
 		getContentPane().setLayout(null);
-		
+	
+		/* Configura botao que direciona para a tela de inserir buffet Casamento */
 		JButton btnInserir = new JButton("Inserir Buffet Casamento");
 		btnInserir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -49,6 +47,7 @@ public class TelaBuffetCasamento extends JFrame {
 		btnInserir.setBounds(275, 110, 215, 49);
 		getContentPane().add(btnInserir);
 		
+		/* Configura botao que direciona para a tela de alterar Buffet Casamento */
 		JButton btnAlterar = new JButton("Alterar Buffet Casamento");
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -61,6 +60,7 @@ public class TelaBuffetCasamento extends JFrame {
 		btnAlterar.setBounds(275, 199, 215, 49);
 		getContentPane().add(btnAlterar);
 		
+		/* Configura botao que direciona para a tela de remover Buffet Casamento */
 		JButton btnRemover = new JButton("Remover Buffet Casamento");
 		btnRemover.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -73,7 +73,8 @@ public class TelaBuffetCasamento extends JFrame {
 		btnRemover.setBounds(275, 288, 215, 49);
 		getContentPane().add(btnRemover);
 	}
-	
+
+
 	// muda a visibilidade dos elementos
 	private void changeVisibility(boolean flag) {
 		textFieldNome.setVisible(flag);
