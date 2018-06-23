@@ -28,7 +28,7 @@ public class TelaBuffetCasamento extends JFrame {
 	private JButton btnCadastrar;
 
 	public TelaBuffetCasamento() {
-		menuInicial();
+		//menuInicial();
 	}
 	
 	public void menuInicial() {

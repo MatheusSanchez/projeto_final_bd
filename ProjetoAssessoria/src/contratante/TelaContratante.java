@@ -35,7 +35,7 @@ public class TelaContratante extends JFrame {
 	private JButton btnCadastrar;
 	
 	public TelaContratante() {
-		menuInicial();
+		//menuInicial();
 	}
 	
 	public void menuInicial() {

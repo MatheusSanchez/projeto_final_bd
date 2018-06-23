@@ -1,31 +1,34 @@
 package festa;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 import java.awt.Font;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JEditorPane;
-import javax.swing.JButton;
-import javax.swing.JTextPane;
-
-import buffet.BuffetCasamento;
-import buffet.BuffetInfantil;
-
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.List;
-import java.awt.event.ActionEvent;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JEditorPane;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
+import buffet.BuffetCasamento;
+import buffet.BuffetInfantil;
+import buffet.TelaBuffetCasamento;
+import buffet.TelaBuffetInfantil;
+import contratante.Contratante;
+import contratante.TelaContratante;
 
 @SuppressWarnings("serial")
 public class TelaFesta extends JFrame {
 	private String cpfContratante;
 	private String data;
 	private String tipo;
-	private String convidados;
+	private String[] convidados;
 	private String buffet;
 	private String atracao;
 	private double preco;
@@ -39,6 +42,8 @@ public class TelaFesta extends JFrame {
 	private JButton btnPesquisar1;
 	private JLabel lblNome;
 	private JLabel lblTitle1;
+	private JLabel lblNomeContratante;
+	private JTextField textFieldNomeCont;
 	
 	/* Tela 2*/
 	private JTextField txtData;
@@ -63,8 +68,19 @@ public class TelaFesta extends JFrame {
 	private JLabel lblCnpj;
 	private JLabel lblNomeBuffet;
 	
-	TelaFesta() {	
+	public TelaFesta() {	
 		tela1();
+	}
+	
+	public void novaJanela(JFrame jan) {
+		jan.setVisible(true);
+		jan.setSize(768, 480);
+	}
+	
+	public void novaTela() {
+		getContentPane().removeAll();
+		getContentPane().revalidate();
+		getContentPane().repaint();
 	}
 	
 	public void tela1() {
@@ -79,14 +95,31 @@ public class TelaFesta extends JFrame {
 		textCPF.setBounds(239, 154, 114, 19);
 		getContentPane().add(textCPF);
 		textCPF.setColumns(10);
+		textCPF.setText(cpfContratante);
 		
 		lblContratante = new JLabel("CPF do contratante");
 		lblContratante.setBounds(31, 156, 149, 15);
 		getContentPane().add(lblContratante);
 		
+		lblNomeContratante = new JLabel("Nome");
+		lblNomeContratante.setFont(new Font("Dialog", Font.BOLD, 12));
+		lblNomeContratante.setBounds(31, 202, 46, 14);
+		getContentPane().add(lblNomeContratante);
+		lblNomeContratante.setVisible(false);
+		
+		textFieldNomeCont = new JTextField();
+		textFieldNomeCont.setBounds(239, 196, 254, 20);
+		getContentPane().add(textFieldNomeCont);
+		textFieldNomeCont.setColumns(10);
+		textFieldNomeCont.setEditable(false);
+		textFieldNomeCont.setVisible(false);
+		
 		btnNext1 = new JButton("Proxima");
 		btnNext1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				cpfContratante = textCPF.getText();
+				novaTela();
+				tela2();
 			}
 		});
 		btnNext1.setBounds(612, 389, 117, 25);
@@ -95,6 +128,9 @@ public class TelaFesta extends JFrame {
 		btnNovoContratante = new JButton("Inserir Novo Contratante");
 		btnNovoContratante.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				TelaContratante tela = new TelaContratante();
+				novaJanela(tela);
+				tela.cadastroContratante();
 			}
 		});
 		btnNovoContratante.setBounds(31, 252, 226, 25);
@@ -106,18 +142,46 @@ public class TelaFesta extends JFrame {
 		
 		btnPesquisar1 = new JButton("Pesquisar");
 		btnPesquisar1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent e) {
+				String cpf = textCPF.getText();
+				boolean ok = true;
+				
+				String[] nome = Contratante.select(cpf);
+				if (nome != null) textFieldNomeCont.setText(nome[0]);
+				else ok = false;
+				
+				if (!ok) {
+					textFieldNomeCont.setVisible(false);
+					lblNomeContratante.setVisible(false);
+					JOptionPane.showMessageDialog(null, "CPF nao encontrado");
+					textFieldNomeCont.setText("");
+				} else {
+					textFieldNomeCont.setVisible(true);
+					lblNomeContratante.setVisible(true);
+				}
 			}
 		});
 		btnPesquisar1.setBounds(379, 154, 114, 19);
 		getContentPane().add(btnPesquisar1);
+		
+		textCPF.addFocusListener(new FocusListener() {
+			
+			@Override
+			public void focusLost(FocusEvent e){}
+			
+			@Override
+			public void focusGained(FocusEvent e) {
+				textFieldNomeCont.setVisible(false);
+				lblNomeContratante.setVisible(false);
+			}
+		});
 	}
 	
 	public void tela2() {
 		getContentPane().setLayout(null);
 		
 		lblTitle2 = new JLabel("<html><h1>2. Escolha a data, o tipo da festa e os convidados</h1></html>");
-		lblTitle2.setBounds(45, 35, 602, 49);
+		lblTitle2.setBounds(81, 48, 602, 49);
 		getContentPane().add(lblTitle2);
 		
 		lblData = new JLabel("Data");
@@ -130,6 +194,7 @@ public class TelaFesta extends JFrame {
 		txtData.setBounds(243, 130, 137, 20);
 		getContentPane().add(txtData);
 		txtData.setColumns(10);
+		txtData.setText(data);
 		
 		lblTipo = new JLabel("Tipo");
 		lblTipo.setFont(new Font("Dialog", Font.BOLD, 12));
@@ -140,6 +205,7 @@ public class TelaFesta extends JFrame {
 		comboBox.setModel(new DefaultComboBoxModel<Object>(new String[] {"Casamento", "Aniversario Infantil"}));
 		comboBox.setBounds(243, 179, 137, 20);
 		getContentPane().add(comboBox);
+		comboBox.setSelectedIndex((tipo == null || tipo == "Casamento")? 0 : 1);
 		
 		lblConvidados = new JLabel("Convidados");
 		lblConvidados.setFont(new Font("Dialog", Font.BOLD, 12));
@@ -147,28 +213,49 @@ public class TelaFesta extends JFrame {
 		getContentPane().add(lblConvidados);
 		
 		btnVoltar2 = new JButton("<");
-		btnVoltar2.setBounds(10, 11, 41, 23);
+		btnVoltar2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				data = txtData.getText();
+				tipo = (String) comboBox.getSelectedItem();
+				convidados = editorPane.getText().split(",");
+				for (int i = 0; i < convidados.length; i++) convidados[i] = convidados[i].trim();
+				
+				novaTela();
+				tela1();
+			}
+		});
+		btnVoltar2.setBounds(10, 11, 52, 23);
 		getContentPane().add(btnVoltar2);
 		
 		editorPane = new JEditorPane();
 		editorPane.setToolTipText("nome1, nome2, nome3");
 		editorPane.setBounds(243, 229, 278, 160);
 		getContentPane().add(editorPane);
+		String conv = "";
+		for(int i = 0; convidados != null && i < convidados.length; ++i) {
+			conv += convidados[i];
+			if(i != convidados.length-1) conv += ", ";
+		}
+		editorPane.setText(conv);
 		
 		lbldigiteTodosOs = new JLabel("<html><p>(Digite todos os nomes<br> separados por virgulas)</p></html>");
-		lbldigiteTodosOs.setBounds(59, 254, 162, 41);
+		lbldigiteTodosOs.setBounds(81, 255, 143, 98);
 		getContentPane().add(lbldigiteTodosOs);
 		
-		btnNext2 = new JButton("NEXT");
+		btnNext2 = new JButton("Proxima");
 		btnNext2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String[] convidados = editorPane.getText().split(",");
+				data = txtData.getText();
+				tipo = (String) comboBox.getSelectedItem();
+				
+				convidados = editorPane.getText().split(",");
 				for (int i = 0; i < convidados.length; i++) convidados[i] = convidados[i].trim();
 				
-				new Tela3((String)comboBox.getSelectedItem());
+				novaTela();
+				tela3();
 			}
 		});
-		btnNext2.setBounds(653, 366, 89, 23);
+		btnNext2.setBounds(645, 370, 89, 23);
 		getContentPane().add(btnNext2);
 	}
 	
@@ -176,7 +263,14 @@ public class TelaFesta extends JFrame {
 		getContentPane().setLayout(null);
 		
 		btnVoltar3 = new JButton("<");
-		btnVoltar3.setBounds(10, 11, 41, 23);
+		btnVoltar3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				buffet = txtCnpj.getText();
+				novaTela();
+				tela2();
+			}
+		});
+		btnVoltar3.setBounds(10, 11, 53, 23);
 		getContentPane().add(btnVoltar3);
 		
 		lblTitle3 = new JLabel("<html><h1>3. Escolha o Buffet</h1></html>");
@@ -193,6 +287,7 @@ public class TelaFesta extends JFrame {
 		txtCnpj.setBounds(143, 136, 163, 20);
 		getContentPane().add(txtCnpj);
 		txtCnpj.setColumns(10);
+		txtCnpj.setText(buffet);
 		
 		lblNomeBuffet = new JLabel("Nome");
 		lblNomeBuffet.setFont(new Font("Dialog", Font.BOLD, 12));
@@ -241,14 +336,28 @@ public class TelaFesta extends JFrame {
 		btnInserirNovo = new JButton("Inserir novo");
 		btnInserirNovo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//abre nova janela
+				if(tipo == "Casamento") {
+					TelaBuffetCasamento frame = new TelaBuffetCasamento();
+					novaJanela(frame);
+					frame.cadastrarBuffetCasamento();
+				} else {
+					TelaBuffetInfantil frame = new TelaBuffetInfantil();
+					novaJanela(frame);
+					frame.cadastrarBuffetInfantil();
+				}
+				
 			}
 		});
 		btnInserirNovo.setBounds(41, 285, 120, 23);
 		getContentPane().add(btnInserirNovo);
 		
-		btnNext3 = new JButton("NEXT");
-		btnNext3.setBounds(653, 407, 89, 23);
+		btnNext3 = new JButton("Proxima");
+		btnNext3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				buffet = txtCnpj.getText();
+			}
+		});
+		btnNext3.setBounds(622, 407, 120, 23);
 		getContentPane().add(btnNext3);
 		
 		//quando clica no campo de escrever o tema chama a funcao de alterar visibilidade

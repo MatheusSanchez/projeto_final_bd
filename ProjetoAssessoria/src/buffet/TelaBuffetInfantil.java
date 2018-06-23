@@ -33,7 +33,7 @@ public class TelaBuffetInfantil extends JFrame {
 	private JLabel lblBrinquedos;
 
 	public TelaBuffetInfantil() {
-		menuInicial();
+		//menuInicial();
 	}
 	
 	public void menuInicial() {
