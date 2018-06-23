@@ -31,45 +31,46 @@ public class TelaDecoracaoInfantil extends JFrame {
 	private JLabel lblCorBaloes;
 	
 	public TelaDecoracaoInfantil() {
-		//inserirDecoracaoInfantil();
-		//alterarDecoracaoInfantil();
-		removerDecoracaoCasamento();
+		menuInicial();
 	}
 	
 	public void menuInicial() {
 		getContentPane().setLayout(null);
-		
-		JButton btnInserir = new JButton("Inserir Buffet Casamento");
+	
+		/* Configura botao que direciona para a tela de inserir decoracao infantil */
+		JButton btnInserir = new JButton("Inserir Decoracao Infantil");
 		btnInserir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				getContentPane().removeAll();
 				getContentPane().revalidate();
 				getContentPane().repaint();
-				cadastrarBuffetCasamento();
+				inserirDecoracaoInfantil();
 			}
 		});
 		btnInserir.setBounds(275, 110, 215, 49);
 		getContentPane().add(btnInserir);
 		
-		JButton btnAlterar = new JButton("Alterar Buffet Casamento");
+		/* Configura botao que direciona para a tela de alterar decoracao infantil */
+		JButton btnAlterar = new JButton("Alterar Decoracao Infantil");
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				getContentPane().removeAll();
 				getContentPane().revalidate();
 				getContentPane().repaint();
-				alterarBuffetCasamento();
+				alterarDecoracaoInfantil();
 			}
 		});
 		btnAlterar.setBounds(275, 199, 215, 49);
 		getContentPane().add(btnAlterar);
 		
-		JButton btnRemover = new JButton("Remover Buffet Casamento");
+		/* Configura botao que direciona para a tela de remover decoracao infantil */
+		JButton btnRemover = new JButton("Remover Decoracao Infantil");
 		btnRemover.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				getContentPane().removeAll();
 				getContentPane().revalidate();
 				getContentPane().repaint();
-				removerBuffetCasamento();
+				removerDecoracaoInfantil();
 			}
 		});
 		btnRemover.setBounds(275, 288, 215, 49);
@@ -79,7 +80,7 @@ public class TelaDecoracaoInfantil extends JFrame {
 	public void inserirDecoracaoInfantil() {
 		getContentPane().setLayout(null);
 		
-		lblCadastroDeNovaDecoracaoInfantil = new JLabel("<html> <center> <p>Cadastro de decoração de Aniversário Infantil</p> </center> </html>");
+		lblCadastroDeNovaDecoracaoInfantil = new JLabel("<html> <center> <p>Cadastro de decoracao de Aniversario Infantil</p> </center> </html>");
 		lblCadastroDeNovaDecoracaoInfantil.setVerticalAlignment(SwingConstants.TOP);
 		lblCadastroDeNovaDecoracaoInfantil.setFont(new Font("Dialog", Font.PLAIN, 20));
 		lblCadastroDeNovaDecoracaoInfantil.setBounds(63, 16, 345, 69);
@@ -89,7 +90,7 @@ public class TelaDecoracaoInfantil extends JFrame {
 		lblTema.setBounds(49, 81, 70, 15);
 		getContentPane().add(lblTema);
 		
-		lblQtdBaloes = new JLabel("Quantidade de Balões");
+		lblQtdBaloes = new JLabel("Quantidade de Baloes");
 		lblQtdBaloes.setBounds(49, 108, 153, 15);
 		getContentPane().add(lblQtdBaloes);
 		
@@ -103,7 +104,7 @@ public class TelaDecoracaoInfantil extends JFrame {
 		textFieldQtdeBaloes.setBounds(230, 106, 140, 19);
 		getContentPane().add(textFieldQtdeBaloes);
 		
-		lblCorBaloes= new JLabel("Cores dos balões");
+		lblCorBaloes= new JLabel("Cores dos baloes");
 		lblCorBaloes.setBounds(49, 162, 153, 15);
 		getContentPane().add(lblCorBaloes);
 		
@@ -130,13 +131,14 @@ public class TelaDecoracaoInfantil extends JFrame {
 					cores[i] = cores[i].trim();
 				}
 				
+				//insere no banco
 				DecoracaoInfantil.insert(tema, qtdeBaloes, pinata, cores);
 			}
 		});
 		btnCadastrar.setBounds(356, 228, 117, 25);
 		getContentPane().add(btnCadastrar);
 		
-		chckbxPinata = new JCheckBox("Piñata");
+		chckbxPinata = new JCheckBox("Pinata");
 		chckbxPinata.setBounds(49, 131, 128, 23);
 		getContentPane().add(chckbxPinata);
 		
@@ -155,7 +157,7 @@ public class TelaDecoracaoInfantil extends JFrame {
 	public void alterarDecoracaoInfantil() {
 		getContentPane().setLayout(null);
 		
-		JLabel lblAltTitle = new JLabel("<html><center>Alteração de decoração de Aniversário Infantil</center></html>");
+		JLabel lblAltTitle = new JLabel("<html><center>Alteracao de decoracao de Aniversario Infantil</center></html>");
 		lblAltTitle.setFont(new Font("Dialog", Font.PLAIN, 20));
 		lblAltTitle.setBounds(35, 6, 409, 74);
 		getContentPane().add(lblAltTitle);
@@ -164,7 +166,7 @@ public class TelaDecoracaoInfantil extends JFrame {
 		lblTema.setBounds(49, 77, 70, 15);
 		getContentPane().add(lblTema);
 		
-		lblQtdeBaloes = new JLabel("Quantidade de Balões");
+		lblQtdeBaloes = new JLabel("Quantidade de Baloes");
 		lblQtdeBaloes.setBounds(49, 130, 153, 15);
 		getContentPane().add(lblQtdeBaloes);
 		lblQtdeBaloes.setVisible(false);
@@ -180,7 +182,7 @@ public class TelaDecoracaoInfantil extends JFrame {
 		getContentPane().add(textFieldQtdeBaloes);
 		textFieldQtdeBaloes.setVisible(false);
 		
-		lblCorBaloes= new JLabel("Cores dos balões");
+		lblCorBaloes= new JLabel("Cores dos baloes");
 		lblCorBaloes.setBounds(49, 168, 153, 15);
 		getContentPane().add(lblCorBaloes);
 		
@@ -219,9 +221,8 @@ public class TelaDecoracaoInfantil extends JFrame {
 				for (int i = 3; i < 3 + cores.length; i++) {
 					form[i] = cores[i - 3];
 				}
-				//String tema = textFieldTema.getText();
-				//String qtde = textFieldQtdeBaloes.getText();
 
+				//atualiza o banco
 				DecoracaoInfantil.update(form);
 			}
 		});
@@ -255,10 +256,9 @@ public class TelaDecoracaoInfantil extends JFrame {
 						cores += rs.get(i);
 						if (i != rs.size() - 1) cores += ", ";
 					}
-					
-					changeVisibility(true);
-					
+
 					textFieldCorBaloes.setText(cores);
+					changeVisibility(true); //mostra os campos com valores buscados no banco
 					
 				} else {
 					textFieldQtdeBaloes.setText("");
@@ -272,10 +272,10 @@ public class TelaDecoracaoInfantil extends JFrame {
 		
 	}
 
-	public void removerDecoracaoCasamento() {
+	public void removerDecoracaoInfantil() {
 		getContentPane().setLayout(null);
 		
-		JLabel lblAltTitle = new JLabel("<html><center>Remoção de decoração de Aniversário Infantil</center></html>");
+		JLabel lblAltTitle = new JLabel("<html><center>Remocao de decoracao de Aniversario Infantil</center></html>");
 		lblAltTitle.setFont(new Font("Dialog", Font.PLAIN, 20));
 		lblAltTitle.setBounds(35, 6, 409, 74);
 		getContentPane().add(lblAltTitle);
@@ -284,7 +284,7 @@ public class TelaDecoracaoInfantil extends JFrame {
 		lblTema.setBounds(49, 77, 70, 15);
 		getContentPane().add(lblTema);
 		
-		lblQtdeBaloes = new JLabel("Quantidade de Balões");
+		lblQtdeBaloes = new JLabel("Quantidade de Baloes");
 		lblQtdeBaloes.setBounds(49, 130, 153, 15);
 		getContentPane().add(lblQtdeBaloes);
 		lblQtdeBaloes.setVisible(false);
@@ -301,7 +301,7 @@ public class TelaDecoracaoInfantil extends JFrame {
 		textFieldQtdeBaloes.setVisible(false);
 		textFieldQtdeBaloes.setEditable(false);
 		
-		lblCorBaloes= new JLabel("Cores dos balões");
+		lblCorBaloes= new JLabel("Cores dos baloes");
 		lblCorBaloes.setBounds(49, 168, 153, 15);
 		getContentPane().add(lblCorBaloes);
 		
@@ -360,10 +360,9 @@ public class TelaDecoracaoInfantil extends JFrame {
 						cores += rs.get(i);
 						if (i != rs.size() - 1) cores += ", ";
 					}
-					
-					changeVisibility(true);
-					
+
 					textFieldCorBaloes.setText(cores);
+					changeVisibility(true); //mostra todos os campos com os valores buscados no banco e nao deixa editar
 				} else {
 					textFieldQtdeBaloes.setText("");
 					textFieldCorBaloes.setText("");

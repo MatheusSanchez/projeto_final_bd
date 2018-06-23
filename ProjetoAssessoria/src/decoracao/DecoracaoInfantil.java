@@ -3,6 +3,7 @@ package decoracao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,10 +38,16 @@ public class DecoracaoInfantil {
 			}
 			
 			pstm.close();
-
+			
+			c.commit();
 			JOptionPane.showMessageDialog(null, "Decoracao de aniversario infantil inserida com sucesso");
 		} catch (Exception e) {
 			e.printStackTrace();
+			try {
+				c.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 			JOptionPane.showMessageDialog(null, "Erro ao inserir decoracao");
 		}
 	}
@@ -61,27 +68,26 @@ public class DecoracaoInfantil {
 				s.add(rs.getString(3).trim()); //adiciona pinata
 			}
 			
-			pstm.close();
-			
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Erro ao procurar tema");
-		}
 		
-		sql = "select cor from corbaloes where decoracao = (?)";
-		try {
-			PreparedStatement pstm = c.prepareStatement(sql);
+			sql = "select cor from corbaloes where decoracao = (?)";
+			pstm = c.prepareStatement(sql);
 			pstm.setString(1, tema);
 			
-			ResultSet rs = pstm.executeQuery();
+			rs = pstm.executeQuery();
 			while (rs.next()){
 				s.add(rs.getString(1));
 			}
 			
 			pstm.close();
-			
+			c.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, "Erro ao procurar cores de baloes");
+			try {
+				c.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			JOptionPane.showMessageDialog(null, "Erro ao procurar decoracao");
 		}
 		
 		return s; //retorna uma lista com as colunas obtidas ou null quando nao encontrou
@@ -117,10 +123,17 @@ public class DecoracaoInfantil {
 			}
 			
 			pstm.close();
-
+			
+			c.commit();
 			JOptionPane.showMessageDialog(null, "Decoracao alterada com sucesso");
 		} catch (Exception e) {
 			e.printStackTrace();
+			try {
+				c.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			JOptionPane.showMessageDialog(null, "Erro ao alterar decoracao");
 		}
 
@@ -139,9 +152,14 @@ public class DecoracaoInfantil {
 			pstm.close();
 
 			JOptionPane.showMessageDialog(null, "Decoracao removida com sucesso");
-
+			c.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
+			try {
+				c.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 			JOptionPane.showMessageDialog(null, "Erro ao remover decoracao");
 		}
 	}
