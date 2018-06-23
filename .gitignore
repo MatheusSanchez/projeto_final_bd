@@ -4,7 +4,6 @@
 **.settings
 *.o
 *.so
-.recommenders/
 
 # Logs and databases #
 ######################
@@ -20,3 +19,6 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+.recommenders/
+.class
