@@ -3,6 +3,7 @@ package atracao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,10 +35,18 @@ public class Animador {
 			pstm.execute();
 			
 			pstm.close();
+			c.commit();
 
 			JOptionPane.showMessageDialog(null, "Animador inserido com sucesso");
 			return true;
 		} catch (Exception e) { // Tratamento de erro
+			try {
+				c.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "Erro ao inserir animador");
 			return false;
@@ -63,8 +72,15 @@ public class Animador {
 			}
 			
 			pstm.close();
+			c.commit();
 			
 		} catch (Exception e) { // Tratamento de erro
+			try {
+				c.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			JOptionPane.showMessageDialog(null, "Erro ao procurar animador");
 		}
 		
@@ -86,9 +102,16 @@ public class Animador {
 			pstm.execute();
 		
 			pstm.close();
+			c.commit();
 
 			JOptionPane.showMessageDialog(null, "Animador alterado com sucesso");
 		} catch (Exception e) {
+			try {
+				c.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			/* Tratamento de erro */
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "Erro ao alterar animador");
@@ -108,9 +131,16 @@ public class Animador {
 			
 			pstm.execute();
 			pstm.close();
+			c.commit();
 	
 			JOptionPane.showMessageDialog(null, "Animador removido com sucesso");
 		} catch (Exception e) { // tratamento de erro
+			try {
+				c.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "Erro ao remover animador");
 		}

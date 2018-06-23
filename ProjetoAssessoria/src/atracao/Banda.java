@@ -61,7 +61,7 @@ public class Banda {
 		}
 	}
 	
-	/* Selecao de banda do banco*/
+	/* Selecao de banda do banco */
 	public static List<String> select(String nome) {
 		Connection c = Conexao.getInstance();	
 		String sql = "select * from banda where nome = (?)";
@@ -80,7 +80,7 @@ public class Banda {
 
 			sql = "select integrante from integrantes where banda = (?)"; // comando SQL
 			pstm = c.prepareStatement(sql);
-			pstm.setString(1, nome);
+			pstm.setString(1, nome); // coloca o nome da banda no comando
 			
 			rs = pstm.executeQuery();
 			while (rs.next()){
@@ -88,11 +88,11 @@ public class Banda {
 			}
 			
 			pstm.close();
-			c.commit();
+			c.commit(); // faz o commit das alteracoes
 			
 		} catch (Exception e) {
 			try {
-				c.rollback();
+				c.rollback(); // faz o rollback das alteracoes
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -103,24 +103,25 @@ public class Banda {
 		return s;
 	}
 	
+	/* Alteracao de banda no banco */
 	public static void update(String nome, String telefone, String email, String[] integrantes) {
 		Connection c = Conexao.getInstance();
 		
 		try {
-			String sql = "delete from integrantes where banda = ?";
+			String sql = "delete from integrantes where banda = ?"; // comando SQL de remocao dos integrantes da banda
 			
 			PreparedStatement pstm = c.prepareStatement(sql);
 			pstm.setString(1, nome);
 			pstm.execute();
 			
-			sql = "update banda set telefone = ?, email = ? where nome = ?";
+			sql = "update banda set telefone = ?, email = ? where nome = ?"; // faz a alteracao de banda
 			pstm = c.prepareStatement(sql);
 			pstm.setString(1, telefone);
 			pstm.setString(2, email);
 			pstm.setString(3, nome);
 			pstm.execute();
 			
-			sql = "insert into integrantes(banda, integrante) values(?, ?)";
+			sql = "insert into integrantes(banda, integrante) values(?, ?)"; // faz a insercao dos novos integrantes da banda
 			pstm = c.prepareStatement(sql);
 			
 			pstm.setString(1, nome);
@@ -133,7 +134,7 @@ public class Banda {
 			c.commit();
 
 			JOptionPane.showMessageDialog(null, "Banda alterada com sucesso");
-		} catch (Exception e) {
+		} catch (Exception e) { // Tratamento de erro
 			try {
 				c.rollback();
 			} catch (SQLException e1) {
@@ -144,21 +145,30 @@ public class Banda {
 			JOptionPane.showMessageDialog(null, "Erro ao alterar banda");
 		}
 	}
-		
+	
+	
+	/* Remocao de banda do banco */
 	public static void remove(String nome) {
 		Connection c = Conexao.getInstance();
 			
-		String sql = "delete from banda where nome = ?";
+		String sql = "delete from banda where nome = ?"; //comando sql de remocao
 		
 		try {
 			PreparedStatement pstm = c.prepareStatement(sql);
-			pstm.setString(1, nome);
+			pstm.setString(1, nome); // coloca o nome da banda no comando
 			
 			pstm.execute();
 			pstm.close();
+			c.commit();
 	
 			JOptionPane.showMessageDialog(null, "Banda removida com sucesso");
 		} catch (Exception e) {
+			try {
+				c.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "Erro ao remover banda");
 		}
