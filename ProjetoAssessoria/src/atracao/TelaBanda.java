@@ -15,6 +15,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 public class TelaBanda extends JFrame {
+	
+	/* Objetos usados pelo swing para a interface da tela */
 	private JTextField textFieldNome;
 	private JTextField textFieldTelefone;
 	private JTextField textFieldEmail;
@@ -39,6 +41,8 @@ public class TelaBanda extends JFrame {
 	public void menuInicial() {
 		getContentPane().setLayout(null);
 		
+		
+		/* Configura botao que direciona para a tela de inserir banda */
 		JButton btnInserir = new JButton("Inserir Banda");
 		btnInserir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -51,6 +55,7 @@ public class TelaBanda extends JFrame {
 		btnInserir.setBounds(275, 110, 215, 49);
 		getContentPane().add(btnInserir);
 		
+		/* Configura botao que direciona para a tela de alterar banda */
 		JButton btnAlterar = new JButton("Alterar Banda");
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -63,6 +68,7 @@ public class TelaBanda extends JFrame {
 		btnAlterar.setBounds(275, 199, 215, 49);
 		getContentPane().add(btnAlterar);
 		
+		/* Configura botao que direciona para a tela de remover banda */
 		JButton btnRemover = new JButton("Remover Banda");
 		btnRemover.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -76,6 +82,8 @@ public class TelaBanda extends JFrame {
 		getContentPane().add(btnRemover);
 	}
 	
+	
+	/* Metodo usado para esconder ou revelar o formulario de insercao ou alteracao de banda */
 	private void changeVisibility(boolean flag) {
 		lblTelefone.setVisible(flag);
 		btnCadastrar.setVisible(flag);
@@ -87,9 +95,11 @@ public class TelaBanda extends JFrame {
 		lblDigiteTodosOs.setVisible(flag);
 	}
 	
+	/* Metodo que cria a tela de insercao de banda */
 	public void inserir() {
 		getContentPane().setLayout(null);
 		
+		/* Criacao dos objetos swing para a interface da tela */
 		lblTitulo = new JLabel("<html><body><center><h1>Tela de Insercao de Banda</h1></center></body></html>");
 		lblTitulo.setVerticalAlignment(SwingConstants.TOP);
 		lblTitulo.setFont(new Font("Dialog", Font.PLAIN, 20));
@@ -139,22 +149,25 @@ public class TelaBanda extends JFrame {
 		
 		btnCadastrar = new JButton("CADASTRAR");
 		btnCadastrar.addActionListener(new ActionListener() {
+			
+			/* Callback para o o botao de cadastrar banda. Realiza a insercao no banco */
 			public void actionPerformed(ActionEvent e) {
 				
-				String nome = textFieldNome.getText();
-				String telefone = textFieldTelefone.getText();
-				String email = textFieldEmail.getText();			
-				String integrantes[] = textFieldInteg.getText().split(",");
+				String nome = textFieldNome.getText(); // pega o nome da banda
+				String telefone = textFieldTelefone.getText(); // pega o telefone da banda 
+				String email = textFieldEmail.getText(); // pega o email da banda
+				String integrantes[] = textFieldInteg.getText().split(","); // pega os integrantes da banda, separando por virgulas
 				for (int i = 0; i < integrantes.length; i++) {
 					integrantes[i] = integrantes[i].trim();
 				}
 				
-				Banda.insert(nome, telefone, email, integrantes);
+				Banda.insert(nome, telefone, email, integrantes); // insere no banco
 			}
 		});
 		btnCadastrar.setBounds(515, 318, 117, 25);
 		getContentPane().add(btnCadastrar);
 		
+		/* Configuracao do botao de voltar para o menu inicial */
 		btnVoltar = new JButton("<");
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -170,9 +183,11 @@ public class TelaBanda extends JFrame {
 		
 	}
 	
+	/* Metodo que cria a tela de alteracao de banda */
 	public void alterar() {
 		getContentPane().setLayout(null);
 		
+		/* Criacao dos objetos swing para a interface da tela */
 		lblTitulo = new JLabel("<html><body><center><h1>Tela de Alteracao de Banda</h1></center></body></html>");
 		lblTitulo.setVerticalAlignment(SwingConstants.TOP);
 		lblTitulo.setFont(new Font("Dialog", Font.PLAIN, 20));
@@ -222,6 +237,8 @@ public class TelaBanda extends JFrame {
 		
 		btnCadastrar = new JButton("ALTERAR");
 		btnCadastrar.addActionListener(new ActionListener() {
+			
+			/* Callback para o o botao de alterar banda. Realiza o update no banco */
 			public void actionPerformed(ActionEvent e) {
 				
 				String nome = textFieldNome.getText();
@@ -238,6 +255,7 @@ public class TelaBanda extends JFrame {
 		btnCadastrar.setBounds(515, 318, 117, 25);
 		getContentPane().add(btnCadastrar);
 		
+		/* Configuracao do botao de voltar para o menu inicial */
 		btnVoltar = new JButton("<");
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -251,14 +269,15 @@ public class TelaBanda extends JFrame {
 		btnVoltar.setBounds(12, 12, 44, 25);
 		getContentPane().add(btnVoltar);
 		
+		/* Configuracao do botao de pesquisar banda */
 		btnPesquisar = new JButton("Pesquisar banda");
 		btnPesquisar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String nome = textFieldNome.getText();
-				List<String> rs = Banda.select(nome);
+				List<String> rs = Banda.select(nome); // realiza um select no banco e retorna os dados da banda selecionada
 				if (rs != null && rs.size() > 0) {
-					textFieldTelefone.setText(rs.get(0));
-					textFieldEmail.setText(rs.get(1));
+					textFieldTelefone.setText(rs.get(0)); // atualiza o texto do campo de telefone
+					textFieldEmail.setText(rs.get(1)); // atualiza o texto do campo de email
 					
 					String integ = "";
 					for (int i = 2; i < rs.size(); i++) {
@@ -271,6 +290,8 @@ public class TelaBanda extends JFrame {
 					changeVisibility(true);
 					
 				} else {
+					
+					// Mensagem de erro
 					textFieldEmail.setText("");
 					changeVisibility(false);	
 					JOptionPane.showMessageDialog(null, "Banda nao encontrada");
@@ -294,9 +315,11 @@ public class TelaBanda extends JFrame {
 		});
 	}
 	
+	/* Metodo que cria a tela de remocao de banda */
 	public void remover() {
 		getContentPane().setLayout(null);
 		
+		/* Criacao dos objetos swing para a interface da tela */
 		lblTitulo = new JLabel("<html><body><center><h1>Tela de Remocao de Banda</h1></center></body></html>");
 		lblTitulo.setVerticalAlignment(SwingConstants.TOP);
 		lblTitulo.setFont(new Font("Dialog", Font.PLAIN, 20));
@@ -350,6 +373,8 @@ public class TelaBanda extends JFrame {
 		
 		btnCadastrar = new JButton("REMOVER");
 		btnCadastrar.addActionListener(new ActionListener() {
+			
+			/* Callback do botao de remover, que realiza a remocao da banda do banco*/
 			public void actionPerformed(ActionEvent e) {
 				
 				String nome = textFieldNome.getText();
@@ -359,6 +384,7 @@ public class TelaBanda extends JFrame {
 		btnCadastrar.setBounds(515, 318, 117, 25);
 		getContentPane().add(btnCadastrar);
 		
+		/* Configura o botao de voltar para o menu inicial */
 		btnVoltar = new JButton("<");
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -372,15 +398,18 @@ public class TelaBanda extends JFrame {
 		btnVoltar.setBounds(12, 12, 44, 25);
 		getContentPane().add(btnVoltar);
 		
+		/* Configura o botao de selecionar a banda */
 		btnPesquisar = new JButton("Pesquisar banda");
 		btnPesquisar.addActionListener(new ActionListener() {
+			
 			public void actionPerformed(ActionEvent e) {
 				String nome = textFieldNome.getText();
-				List<String> rs = Banda.select(nome);
+				List<String> rs = Banda.select(nome); // realiza um select no banco da banda
 				if (rs != null && rs.size() > 0) {
-					textFieldTelefone.setText(rs.get(0));
-					textFieldEmail.setText(rs.get(1));
+					textFieldTelefone.setText(rs.get(0)); // seta o texto do telefone da banda
+					textFieldEmail.setText(rs.get(1)); // seta o campo de email da banda
 					
+					/* Seta o campo de integrantes da banda */
 					String integ = "";
 					for (int i = 2; i < rs.size(); i++) {
 						integ += rs.get(i);

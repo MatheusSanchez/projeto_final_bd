@@ -29,6 +29,7 @@ public class Conexao {
 				s.close();
 				
 				conn = DriverManager.getConnection("jdbc:oracle:thin:@" + host + ":" + port + ":orcl", user, password);
+				conn.setAutoCommit(false);
 				System.out.println("Conexao estabelecida");
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(null, "Nao foi possivel conectar");

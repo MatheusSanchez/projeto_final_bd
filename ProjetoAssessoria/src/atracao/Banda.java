@@ -3,6 +3,7 @@ package atracao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,10 +42,17 @@ public class Banda {
 			}
 			
 			pstm.close();
+			c.commit();
 
 			JOptionPane.showMessageDialog(null, "Banda inserida com sucesso");
 			return true;
 		} catch (Exception e) {
+			try {
+				c.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "Erro ao inserir banda");
 			return false;
