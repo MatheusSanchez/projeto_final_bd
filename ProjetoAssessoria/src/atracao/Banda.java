@@ -13,19 +13,20 @@ import conexao.Conexao;
 
 public class Banda {
 	
+	/* Cadastro de banda no banco*/
 	static public boolean insert(String nome, String telefone, String email, String[] integrantes) {
 		Connection c = Conexao.getInstance();
 		
 		
-		
-		
 		try {
+			/* Insere o tipo "BANDA" na tabela de AtracaoCriterio" */
 			String sql = "insert into AtracaoCriterio(atracao, tipo) values (?, ?)";
 			PreparedStatement pstm = c.prepareStatement(sql);
 			pstm.setString(1, nome);
 			pstm.setString(2, "BANDA");	
 			pstm.execute();
 			
+			/* Insere a banda */
 			sql = "insert into banda(nome, telefone, email) values(?, ?, ?)";
 			pstm = c.prepareStatement(sql);
 			pstm.setString(1, nome);
@@ -33,6 +34,7 @@ public class Banda {
 			pstm.setString(3, email);
 			pstm.execute();
 			
+			/* Insere os integrantes da banda */
 			sql = "insert into integrantes(banda, integrante) values(?, ?)";
 			pstm = c.prepareStatement(sql);
 			pstm.setString(1, nome);
@@ -59,11 +61,12 @@ public class Banda {
 		}
 	}
 	
+	/* Selecao de banda do banco*/
 	public static List<String> select(String nome) {
 		Connection c = Conexao.getInstance();	
 		String sql = "select * from banda where nome = (?)";
 		
-		List<String> s = new ArrayList<String>();
+		List<String> s = new ArrayList<String>(); // resultado do select
 
 		try {
 			PreparedStatement pstm = c.prepareStatement(sql);
@@ -74,28 +77,27 @@ public class Banda {
 				s.add(rs.getString(2)); //adiciona telefone
 				s.add(rs.getString(3)); //adiciona email
 			}
-			
-			pstm.close();
-			
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Erro ao procurar banda");
-		}
-		
-		sql = "select integrante from integrantes where banda = (?)";
-		try {
-			PreparedStatement pstm = c.prepareStatement(sql);
+
+			sql = "select integrante from integrantes where banda = (?)"; // comando SQL
+			pstm = c.prepareStatement(sql);
 			pstm.setString(1, nome);
 			
-			ResultSet rs = pstm.executeQuery();
+			rs = pstm.executeQuery();
 			while (rs.next()){
 				s.add(rs.getString(1));
 			}
 			
 			pstm.close();
+			c.commit();
 			
 		} catch (Exception e) {
-			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, "Erro ao procurar integrantes da banda");
+			try {
+				c.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			JOptionPane.showMessageDialog(null, "Erro ao procurar banda");
 		}
 		
 		return s;
@@ -128,9 +130,16 @@ public class Banda {
 			}
 			
 			pstm.close();
+			c.commit();
 
 			JOptionPane.showMessageDialog(null, "Banda alterada com sucesso");
 		} catch (Exception e) {
+			try {
+				c.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "Erro ao alterar banda");
 		}
