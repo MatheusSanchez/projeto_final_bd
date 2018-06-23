@@ -1,10 +1,19 @@
 package festa;
 
-public class TelaFesta {
+import javax.swing.JFrame;
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+@SuppressWarnings("serial")
+public class TelaFesta extends JFrame {
 
+	TelaFesta() {
+		
 	}
 
+	public void tela1() {
+		
+	}
+	
+	public void tela2() {
+		
+	}
 }
