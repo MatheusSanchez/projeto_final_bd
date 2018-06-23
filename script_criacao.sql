@@ -30,7 +30,9 @@ create table Festa(
 		references Contratante(cpf)
 		on delete set null,
 	-- checando se o tipo eh valido
-	constraint ck_tipo check (upper(tipo) in ('CASAMENTO', 'ANIVERSARIO INFANTIL'))
+	constraint ck_tipo check (upper(tipo) in ('CASAMENTO', 'ANIVERSARIO INFANTIL')),
+	-- preco deve ser positivo
+	constraint ck_preco_festa check (preco > 0)
 );
 
 create table ConvidadosFesta(
@@ -80,7 +82,9 @@ create table DecoracaoCasamento(
 	tema varchar2(50) not null,
 	qtde_flores number(5),
 
-	constraint pk_DecoracaoCasamento primary key (tema)
+	constraint pk_DecoracaoCasamento primary key (tema),
+	-- quantidade de flores deve ser >= 0
+	constraint ck_qtde_flores check (qtde_flores >= 0)
 );
 
 create table TiposFlores(
@@ -136,6 +140,8 @@ create table ContratoSeguranca(
 
 	constraint pk_ContratoSeguranca primary key (nro_contrato),
 	constraint uk_ContratoSeguranca unique (casamento),
+	-- preco deve ser positivo
+	constraint ck_preco_seguranca check (preco > 0),
 	constraint fk_ContratoSeguranca1 foreign key (empresa_seguranca)
 		references EmpresaSeguranca(CNPJ)
 		on delete cascade,
@@ -199,6 +205,8 @@ create table ContratoFotografia(
 
 	constraint pk_ContratoFotografo primary key (nro_contrato),
 	constraint uk_ContratoFotografo unique (festa),
+	-- preco deve ser positivo
+	constraint ck_preco_fotografia check (preco > 0),
 	constraint fk_ContratoFotografia1 foreign key (empresa_fotografia)
 		references EmpresaFotografia(CNPJ)
 		on delete cascade,

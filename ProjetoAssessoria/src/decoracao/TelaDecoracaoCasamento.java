@@ -70,15 +70,13 @@ public class TelaDecoracaoCasamento extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String tema = textFieldTema.getText();
 				String qtde = textFieldQtdeFlores.getText();
-				
-				boolean ok = DecoracaoCasamento.insert(tema, qtde);
-				
+			
 				String tipos[] = textFieldTipoFlor.getText().split(",");
 				for (int i = 0; i < tipos.length; i++) {
 					tipos[i] = tipos[i].trim();
 				}
 				
-				if (ok) DecoracaoCasamento.insertTipo(tema, tipos);
+				DecoracaoCasamento.insert(tema, qtde, tipos);
 			}
 		});
 		btnCadastrar.setBounds(356, 228, 117, 25);
@@ -91,6 +89,7 @@ public class TelaDecoracaoCasamento extends JFrame {
 		
 	}
 
+	//altera a visibilidade de determiandos atributos de acordo com a flag
 	private void changeVisibility(boolean flag) {
 		lblDigiteTodosOs.setVisible(flag);
 		textFieldTipoFlor.setVisible(flag);
@@ -173,6 +172,7 @@ public class TelaDecoracaoCasamento extends JFrame {
 		getContentPane().add(lblDigiteTodosOs);
 		lblDigiteTodosOs.setVisible(false);
 		
+		//quando clica no campo de escrever o tema chama a funcao de alterar visibilidade
 		textFieldTema.addFocusListener(new FocusListener() {
 			
 			@Override
@@ -199,7 +199,7 @@ public class TelaDecoracaoCasamento extends JFrame {
 					}
 					textFieldTipoFlor.setText(tipos);
 					
-					changeVisibility(true);
+					changeVisibility(true); //mostra os campos com os valores buscados no banco
 					
 				} else {
 					textFieldQtdeFlores.setText("");
@@ -258,6 +258,7 @@ public class TelaDecoracaoCasamento extends JFrame {
 		btnCadastrar = new JButton("REMOVER");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//remove o tema e altera a visibilidade
 				String tema = textFieldTema.getText();
 				DecoracaoCasamento.remove(tema);
 				changeVisibility(false);
@@ -272,7 +273,8 @@ public class TelaDecoracaoCasamento extends JFrame {
 		lblDigiteTodosOs.setBounds(49, 179, 308, 20);
 		getContentPane().add(lblDigiteTodosOs);
 		lblDigiteTodosOs.setVisible(false);
-		
+
+		//quando clica no campo de escrever o tema chama a funcao de alterar visibilidade
 		textFieldTema.addFocusListener(new FocusListener() {
 			
 			@Override
@@ -289,7 +291,7 @@ public class TelaDecoracaoCasamento extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				String tema = textFieldTema.getText();
-				List<String> rs = DecoracaoCasamento.select(tema);
+				List<String> rs = DecoracaoCasamento.select(tema); //busca no banco pelo tema
 				if (rs != null && rs.size() > 0) {
 					textFieldQtdeFlores.setText(rs.get(0));
 					String tipos = "";
@@ -299,9 +301,8 @@ public class TelaDecoracaoCasamento extends JFrame {
 					}
 					textFieldTipoFlor.setSize(tipos.length() * 7, textFieldTipoFlor.getHeight());
 					textFieldTipoFlor.setText(tipos);
-					//textFieldTipoFlor.repaint();
 
-					changeVisibility(true);
+					changeVisibility(true); //deixa visivel os campos atualizados com as infos buscadas no banco
 					
 				} else {
 					textFieldQtdeFlores.setText("");

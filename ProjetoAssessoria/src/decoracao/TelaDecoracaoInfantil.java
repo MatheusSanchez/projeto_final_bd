@@ -35,6 +35,47 @@ public class TelaDecoracaoInfantil extends JFrame {
 		//alterarDecoracaoInfantil();
 		removerDecoracaoCasamento();
 	}
+	
+	public void menuInicial() {
+		getContentPane().setLayout(null);
+		
+		JButton btnInserir = new JButton("Inserir Buffet Casamento");
+		btnInserir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				getContentPane().removeAll();
+				getContentPane().revalidate();
+				getContentPane().repaint();
+				cadastrarBuffetCasamento();
+			}
+		});
+		btnInserir.setBounds(275, 110, 215, 49);
+		getContentPane().add(btnInserir);
+		
+		JButton btnAlterar = new JButton("Alterar Buffet Casamento");
+		btnAlterar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				getContentPane().removeAll();
+				getContentPane().revalidate();
+				getContentPane().repaint();
+				alterarBuffetCasamento();
+			}
+		});
+		btnAlterar.setBounds(275, 199, 215, 49);
+		getContentPane().add(btnAlterar);
+		
+		JButton btnRemover = new JButton("Remover Buffet Casamento");
+		btnRemover.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				getContentPane().removeAll();
+				getContentPane().revalidate();
+				getContentPane().repaint();
+				removerBuffetCasamento();
+			}
+		});
+		btnRemover.setBounds(275, 288, 215, 49);
+		getContentPane().add(btnRemover);
+	}
+
 	public void inserirDecoracaoInfantil() {
 		getContentPane().setLayout(null);
 		

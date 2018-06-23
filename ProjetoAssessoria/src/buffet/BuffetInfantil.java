@@ -94,11 +94,7 @@ public class BuffetInfantil{
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			
-			if (e.getErrorCode() == 1) JOptionPane.showMessageDialog(null, "Erro: CNPJ ja cadastrado");
-			else if (e.getErrorCode() == 1722) JOptionPane.showMessageDialog(null, "Erro: Numero e capacidade devem ser dados numericos");
-			else if (e.getErrorCode() == 2290) JOptionPane.showMessageDialog(null, "Erro: CNPJ e CEP devem estar formatados corretamente");
-			else JOptionPane.showMessageDialog(null, "Buffet nao encontradoo");
+			JOptionPane.showMessageDialog(null, "Buffet nao encontradoo");
 		}
 		
 		return s;
@@ -106,7 +102,6 @@ public class BuffetInfantil{
 	
 	public static void update(String s[], String brinq[]) {
 		Connection c = Conexao.getInstance();
-		
 		
 		try {
 			String sql = "update buffetinfantil set nome = ?, rua = ?, numero = ?, cep = ?, capacidade = ?"
