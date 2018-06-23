@@ -9,8 +9,11 @@ create table Contratante(
 	cep char(9),
 
 	constraint pk_contratante primary key (CPF),
+	-- checando a mascara do cpf
 	constraint ck_CPF check(regexp_like(CPF, '[0-9]{3}\.[0-9]{3}\.[0-9]{3}\-[0-9]{2}')),
+	-- checando a mascara do telefone
 	constraint ck_telefone check(regexp_like(telefone, '\([0-9]{2}\)[0-9]{4,5}\-[0-9]{4}')),
+	-- checando a mascara do cep
 	constraint ck_cep check(regexp_like(cep, '[0-9]{5}\-[0-9]{3}'))
 );
 
@@ -26,6 +29,7 @@ create table Festa(
 	constraint fk_festa foreign key (contratante)
 		references Contratante(cpf)
 		on delete set null,
+	-- checando se o tipo eh valido
 	constraint ck_tipo check (upper(tipo) in ('CASAMENTO', 'ANIVERSARIO INFANTIL'))
 );
 
@@ -45,6 +49,7 @@ create table DecoracaoInfantil(
 	pinata number(1),
 
 	constraint pk_DecoracaoInfantil primary key (tema),
+	-- pinata eh um bool
 	constraint ck_pinata check (pinata in (0, 1))
 );
 
@@ -102,11 +107,13 @@ create table Casamento(
 );
 
 create table EmpresaCriterio(
-	empresa char(18) not null, -- 99.999.999/9999-99
+	empresa char(18) not null,
 	tipo varchar2(10) not null,
 
 	constraint pk_EmpresaCriterio primary key (empresa),
+	-- checando se o tipo da empresa eh valido
 	constraint ck_EmpresaCriterio check (upper(tipo) in ('SEGURANCA', 'FOTOGRAFIA')),
+	-- checando a mascara do cnpj
 	constraint ck_empresa check (regexp_like(empresa, '[0-9]{2}\.[0-9]{3}\.[0-9]{3}\/[0-9]{4}\-[0-9]{2}'))
 );
 
@@ -142,7 +149,9 @@ create table FuncionarioCriterio(
 	tipo char(9) not null,
 
 	constraint pk_FuncionarioCriterio primary key (funcionario),
+	-- checando se o tipo do funcionario eh valido
 	constraint ck_tipo2 check (upper(tipo) in ('SEGURANCA', 'FOTOGRAFO')),
+	-- checando a mascara do cpf
 	constraint ck_funcionario check(regexp_like(funcionario, '[0-9]{3}\.[0-9]{3}\.[0-9]{3}\-[0-9]{2}'))
 );
 
@@ -162,7 +171,6 @@ create table ServicoSeguranca(
 	contrato_seguranca varchar2(25) not null,
 
 	constraint pk_ServicoSeguranca primary key (data, seguranca),
-	constraint uk_ServicoSeguranca unique (contrato_seguranca),
 	constraint fk_ServicoSeguranca1 foreign key (seguranca)
 		references Seguranca(CPF)
 		on delete cascade,
@@ -215,7 +223,6 @@ create table ServicoFotografo(
 	contrato_fotografia varchar2(25) not null,
 
 	constraint pk_ServicoFotografia primary key (data, fotografo),
-	constraint uk_ServicoFotografia unique (contrato_fotografia),
 	constraint fk_ServicoFotografia1 foreign key (fotografo)
 		references fotografo(CPF)
 		on delete cascade,
@@ -229,6 +236,7 @@ CREATE TABLE ATRACAOCRITERIO (
 	TIPO VARCHAR2(8),
 
 	CONSTRAINT PK_ATRACAOCRITERIO PRIMARY KEY (ATRACAO),
+	-- checando se o tipo da atracao eh valido
 	CONSTRAINT CK_TIPO3 CHECK (upper(TIPO) IN ('ANIMADOR', 'BANDA'))
 );
 
@@ -242,6 +250,7 @@ CREATE TABLE ANIMADOR (
 	CONSTRAINT FK_ANIMADOR FOREIGN KEY (NOME) 
 		REFERENCES ATRACAOCRITERIO(ATRACAO) 
 		ON DELETE CASCADE,
+	-- checando a mascara do telefone
 	CONSTRAINT CK_ANIMADOR_TELEFONE CHECK(REGEXP_LIKE(TELEFONE, '\([0-9]{2}\)[0-9]{4,5}\-[0-9]{4}'))
 );
 
@@ -254,6 +263,7 @@ CREATE TABLE BANDA (
 	CONSTRAINT FK_BANDA FOREIGN KEY (NOME) 
 		REFERENCES ATRACAOCRITERIO(ATRACAO) 
 		ON DELETE CASCADE,
+	-- checando a mascara do telefone
 	CONSTRAINT CK_BANDA_TELEFONE CHECK(REGEXP_LIKE(TELEFONE, '\([0-9]{2}\)[0-9]{4,5}\-[0-9]{4}'))
 );
 
@@ -289,6 +299,7 @@ CREATE TABLE CONTRATOANIMADOR (
 	CONSTRAINT FK_CONTRATOANIMADOR2 FOREIGN KEY (ANIVERSARIO_INFANTIL)
 		REFERENCES ANIVERSARIOINFANTIL(NRO_CONTRATO)
 		ON DELETE CASCADE,
+	-- um aniversario so aparece uma vez na tabela de contrato
 	CONSTRAINT UN_ANIVERSARIOINFANTIL UNIQUE(ANIVERSARIO_INFANTIL)
 );
 
@@ -304,6 +315,7 @@ CREATE TABLE CONTRATOBANDA (
 	CONSTRAINT FK_CONTRATOBANDA2 FOREIGN KEY (CASAMENTO)
 		REFERENCES CASAMENTO(NRO_CONTRATO)
 		ON DELETE CASCADE,
+	-- um casamento so aparece uma vez na tabela de contrato
 	CONSTRAINT UN_CONTRATOBANDA UNIQUE (CASAMENTO)
 );
 
@@ -334,7 +346,9 @@ CREATE TABLE BUFFETCRITERIO (
 	TIPO VARCHAR2(9) NOT NULL,
 
 	CONSTRAINT PK_BUFFETCRITERIO PRIMARY KEY (BUFFET),
+	-- checando a mascara do cpnj
 	CONSTRAINT CK_BUFFET CHECK (REGEXP_LIKE(BUFFET, '[0-9]{2}\.[0-9]{3}\.[0-9]{3}\/[0-9]{4}\-[0-9]{2}')),
+	-- checando se o tipo do buffet eh valido
 	CONSTRAINT CK_BUFFETCRITERIO CHECK (upper(TIPO) IN ('INFANTIL', 'CASAMENTO'))
 );
 
@@ -350,7 +364,9 @@ CREATE TABLE BUFFETINFANTIL (
 	CONSTRAINT FK_BUFFETINFANTIL FOREIGN KEY (CNPJ)
 		REFERENCES BUFFETCRITERIO (BUFFET)
 		ON DELETE CASCADE,
+	-- capacidade deve ser positiva
 	CONSTRAINT CK_BUFFETINFANTIL_CAPACIDADE CHECK (CAPACIDADE > 0),
+	-- checando a masara do cep
 	CONSTRAINT CK_CEP2 CHECK (REGEXP_LIKE(CEP, '[0-9]{5}\-[0-9]{3}'))
 );
 
@@ -376,7 +392,9 @@ CREATE TABLE BUFFETCASAMENTO (
 	CONSTRAINT FK_BUFFETCASAMENTO FOREIGN KEY (CNPJ)
 		REFERENCES BUFFETCRITERIO(BUFFET) 
 		ON DELETE CASCADE,
+	-- checando a masara do cep
 	CONSTRAINT CK_BUFFETCASAMENTO_CEP CHECK(REGEXP_LIKE(CEP, '[0-9]{5}\-[0-9]{3}')),
+	-- capacidade deve ser positiva
 	CONSTRAINT CK_BUFFETCASAMENTO_CAPACIDADE CHECK (CAPACIDADE > 0)
 );
 
@@ -390,7 +408,9 @@ CREATE TABLE CONTRATOBUFFETINFANTIL (
 	CONSTRAINT FK_CONTRATOBUFFETINFANTIL FOREIGN KEY (BUFFET_INFANTIL)
 		REFERENCES BUFFETINFANTIL(CNPJ)
 		ON DELETE CASCADE,
+	-- aniversario infantil so pode aparecer uma vez contratando um buffet
 	CONSTRAINT UN_CONTRATOBI_AI UNIQUE(ANIVERSARIO_INFANTIL),
+	-- preco deve ser positivo
 	CONSTRAINT CK_CONTRATOBI_PRECO CHECK (PRECO > 0)
 );
 
@@ -415,7 +435,9 @@ CREATE TABLE CONTRATOBUFFETCASAMENTO (
 	CONSTRAINT FK_CONTRATOBUFFETCASAMENTO FOREIGN KEY (BUFFET_CASAMENTO)
 		REFERENCES BUFFETCASAMENTO(CNPJ)
 		ON DELETE CASCADE,
+	-- casamento so pode aparecer uma vez contratando um buffet
 	CONSTRAINT UN_CASAMENTO UNIQUE(CASAMENTO),
+	-- preco deve ser positivo
 	CONSTRAINT CK_PRECO CHECK (PRECO > 0)
 );
 

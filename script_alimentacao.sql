@@ -1,11 +1,11 @@
 insert into Contratante(CPF, nome, telefone, email, rua, numero, bairro, cep)
-	values('123.123.123-12', 'José da Silva', '(16)3333-3333', 'jose@yahoo.com.br', 'Avenida São Carlos', 1313, 'Centro', '13560-000');
+	values('123.123.123-12', 'Joao da Silva', '(16)3333-3333', 'jose@yahoo.com.br', 'Avenida Sao Carlos', 1313, 'Centro', '13560-000');
 
 insert into Contratante(CPF, nome, telefone, email, rua, numero, bairro, cep)
 	values('462.078.168-11', 'Matheus Turci', '(11)1111-1111', 'turcitheus@gmail.com', 'Avenida 25 de Mar�o', 6666, 'Centro', '45236-699');
 
 insert into Contratante(CPF, nome, telefone, email, rua, numero, bairro, cep)
-	values('123.123.123-21', 'Maria da Graça', NULL, 'maria@hotmail.com', 'Avenida São Carlos', 1515, 'Centro', NULL);
+	values('123.123.123-21', 'Maria da Graca', NULL, 'maria@hotmail.com', 'Avenida Sao Carlos', 1515, 'Centro', NULL);
 
 insert into festa(nro_contrato, pdf_contrato, preco, data, tipo, contratante)
 	values('1', NULL, NULL, to_date('25/12/18 19:00', 'dd/mm/yy hh24:mi'), 'casamento', '123.123.123-21');
