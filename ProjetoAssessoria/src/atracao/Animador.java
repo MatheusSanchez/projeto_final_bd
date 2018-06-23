@@ -39,7 +39,7 @@ public class Animador {
 
 			JOptionPane.showMessageDialog(null, "Animador inserido com sucesso");
 			return true;
-		} catch (Exception e) { // Tratamento de erro
+		} catch (SQLException e) { // Tratamento de erro
 			try {
 				c.rollback();
 			} catch (SQLException e1) {
@@ -48,7 +48,9 @@ public class Animador {
 			}
 			
 			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, "Erro ao inserir animador");
+			if (e.getErrorCode() == 1) JOptionPane.showMessageDialog(null, "Erro: Um animador com este nome ja foi cadastrado");
+			else if (e.getErrorCode() == 2290) JOptionPane.showMessageDialog(null, "Erro: O telefone do animador deve estar formatado corretamente");
+			else JOptionPane.showMessageDialog(null, "Erro ao inserir animador");
 			return false;
 		}
 	}
@@ -105,7 +107,7 @@ public class Animador {
 			c.commit();
 
 			JOptionPane.showMessageDialog(null, "Animador alterado com sucesso");
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			try {
 				c.rollback();
 			} catch (SQLException e1) {
@@ -113,8 +115,8 @@ public class Animador {
 				e1.printStackTrace();
 			}
 			/* Tratamento de erro */
-			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, "Erro ao alterar animador");
+			if (e.getErrorCode() == 2290) JOptionPane.showMessageDialog(null, "Erro: O telefone do animador deve estar formatado corretamente");
+			else JOptionPane.showMessageDialog(null, "Erro ao alterar animador");
 		}
 	}
 	

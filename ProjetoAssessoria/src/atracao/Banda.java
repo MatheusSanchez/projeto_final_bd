@@ -48,15 +48,18 @@ public class Banda {
 
 			JOptionPane.showMessageDialog(null, "Banda inserida com sucesso");
 			return true;
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			try {
 				c.rollback();
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+			if (e.getErrorCode() == 1) JOptionPane.showMessageDialog(null, "Erro: Uma banda com este nome ja foi cadastrada");
+			else if (e.getErrorCode() == 2290) JOptionPane.showMessageDialog(null, "Erro: O telefone da banda deve estar formatado corretamente");
+			else JOptionPane.showMessageDialog(null, "Erro ao inserir banda");
+			
 			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, "Erro ao inserir banda");
 			return false;
 		}
 	}
@@ -134,15 +137,18 @@ public class Banda {
 			c.commit();
 
 			JOptionPane.showMessageDialog(null, "Banda alterada com sucesso");
-		} catch (Exception e) { // Tratamento de erro
+		} catch (SQLException e) { // Tratamento de erro
 			try {
 				c.rollback();
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+			
+			if (e.getErrorCode() == 2290) JOptionPane.showMessageDialog(null, "Erro: O telefone da banda deve estar formatado corretamente");
+			else JOptionPane.showMessageDialog(null, "Erro ao inserir banda");
+			
 			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, "Erro ao alterar banda");
 		}
 	}
 	

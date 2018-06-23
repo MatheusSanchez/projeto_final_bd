@@ -40,22 +40,20 @@ public class BuffetInfantil{
 			}
 			
 			pstm.close();
+			c.commit();
 
 			JOptionPane.showMessageDialog(null, "Buffet infantil inserido com sucesso");
 		} catch (SQLException e) {
 			e.printStackTrace();
-			
-			
-			String sql = "delete buffetcriterio where buffet = ?";
-			PreparedStatement pstm;
 			try {
-				pstm = c.prepareStatement(sql);
-				pstm.setString(1, s[0]);
-				pstm.execute();
+				c.rollback();
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+			
+			String sql = "delete buffetcriterio where buffet = ?";
+
 			if (e.getErrorCode() == 1) JOptionPane.showMessageDialog(null, "Erro: CNPJ ja cadastrado");
 			else if (e.getErrorCode() == 1722) JOptionPane.showMessageDialog(null, "Erro: Numero e capacidade devem ser dados numericos");
 			else if (e.getErrorCode() == 2290) JOptionPane.showMessageDialog(null, "Erro: CNPJ e CEP devem estar formatados corretamente");
@@ -91,8 +89,15 @@ public class BuffetInfantil{
 			}
 			
 			pstm.close();
+			c.commit();
 
 		} catch (SQLException e) {
+			try {
+				c.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "Buffet nao encontradoo");
 		}
@@ -129,10 +134,17 @@ public class BuffetInfantil{
 			}
 			
 			pstm.close();
+			c.commit();
 
 			JOptionPane.showMessageDialog(null, "Buffet infantil alterado com sucesso");
 		} catch (SQLException e) {
 			e.printStackTrace();
+			try {
+				c.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			
 			if (e.getErrorCode() == 1722) JOptionPane.showMessageDialog(null, "Erro: Numero e capacidade devem ser dados numericos");
 			else if (e.getErrorCode() == 2290) JOptionPane.showMessageDialog(null, "Erro: CNPJ e CEP devem estar formatados corretamente");
@@ -151,9 +163,16 @@ public class BuffetInfantil{
 			
 			pstm.execute();
 			pstm.close();
+			c.commit();
 
 			JOptionPane.showMessageDialog(null, "Buffet de removido com sucesso");
 		} catch (SQLException e) {
+			try {
+				c.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "Erro ao remover buffet");
 		}
