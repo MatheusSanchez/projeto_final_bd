@@ -18,5 +18,8 @@ public class Main {
 		TelaAnimador c = new TelaAnimador();
 		c.setSize(768, 480);
 		c.setVisible(true);
+		
+		
+		Conexao.fecharConnexao();
 	}
 }
