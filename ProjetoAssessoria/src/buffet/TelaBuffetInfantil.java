@@ -33,10 +33,52 @@ public class TelaBuffetInfantil extends JFrame {
 	private JLabel lblBrinquedos;
 
 	public TelaBuffetInfantil() {
-		//cadastrarBuffetInfantil();
-		//alterarBuffetInfantil();
-		removerBuffetInfantil();
+		menuInicial();
 	}
+	
+	public void menuInicial() {
+		getContentPane().setLayout(null);
+	
+		/* Configura botao que direciona para a tela de inserir buffet Infantil */
+		JButton btnInserir = new JButton("Inserir Buffet Infantil");
+		btnInserir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				getContentPane().removeAll();
+				getContentPane().revalidate();
+				getContentPane().repaint();
+				cadastrarBuffetInfantil();
+			}
+		});
+		btnInserir.setBounds(275, 110, 215, 49);
+		getContentPane().add(btnInserir);
+		
+		/* Configura botao que direciona para a tela de alterar Buffet Casamento */
+		JButton btnAlterar = new JButton("Alterar Buffet Infantil");
+		btnAlterar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				getContentPane().removeAll();
+				getContentPane().revalidate();
+				getContentPane().repaint();
+				alterarBuffetInfantil();
+			}
+		});
+		btnAlterar.setBounds(275, 199, 215, 49);
+		getContentPane().add(btnAlterar);
+		
+		/* Configura botao que direciona para a tela de remover Buffet Infantil */
+		JButton btnRemover = new JButton("Remover Buffet Infantil");
+		btnRemover.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				getContentPane().removeAll();
+				getContentPane().revalidate();
+				getContentPane().repaint();
+				removerBuffetInfantil();
+			}
+		});
+		btnRemover.setBounds(275, 288, 215, 49);
+		getContentPane().add(btnRemover);
+	}
+
 	
 	private void changeVisibility(boolean flag) {
 		textFieldNome.setVisible(flag);
@@ -55,46 +97,6 @@ public class TelaBuffetInfantil extends JFrame {
 		textFieldBrinquedos.setVisible(flag);
 	}
 	
-	public void menuInicial() {
-		getContentPane().setLayout(null);
-		
-		JButton btnInserir = new JButton("Inserir Buffet Infantil");
-		btnInserir.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				getContentPane().removeAll();
-				getContentPane().revalidate();
-				getContentPane().repaint();
-				cadastrarBuffetInfantil();
-			}
-		});
-		btnInserir.setBounds(275, 110, 215, 49);
-		getContentPane().add(btnInserir);
-		
-		JButton btnAlterar = new JButton("Alterar Buffet Infantil");
-		btnAlterar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				getContentPane().removeAll();
-				getContentPane().revalidate();
-				getContentPane().repaint();
-				alterarBuffetInfantil();
-			}
-		});
-		btnAlterar.setBounds(275, 199, 215, 49);
-		getContentPane().add(btnAlterar);
-		
-		JButton btnRemover = new JButton("Remover Buffet Infantil");
-		btnRemover.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				getContentPane().removeAll();
-				getContentPane().revalidate();
-				getContentPane().repaint();
-				removerBuffetInfantil();
-			}
-		});
-		btnRemover.setBounds(275, 288, 215, 49);
-		getContentPane().add(btnRemover);
-	}
-
 	public void cadastrarBuffetInfantil() {
 		getContentPane().setLayout(null);
 		

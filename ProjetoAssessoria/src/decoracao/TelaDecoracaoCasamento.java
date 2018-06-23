@@ -25,10 +25,53 @@ public class TelaDecoracaoCasamento extends JFrame {
 	private JLabel lblQuantidadeDeFlores;
 	
 	public TelaDecoracaoCasamento() {
-		inserirDecoracaoCasamento();
-		//alterarDecoracaoCasamento();
-		//apagarDecoracaoCasamento();
+		menuInicial();
 	}
+	
+	public void menuInicial() {
+		getContentPane().setLayout(null);
+	
+		/* Configura botao que direciona para a tela de inserir decoracao Casamento */
+		JButton btnInserir = new JButton("Inserir Decoracao Casamento");
+		btnInserir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				getContentPane().removeAll();
+				getContentPane().revalidate();
+				getContentPane().repaint();
+				inserirDecoracaoCasamento();
+			}
+		});
+		btnInserir.setBounds(275, 110, 215, 49);
+		getContentPane().add(btnInserir);
+		
+		/* Configura botao que direciona para a tela de alterar decoracao Casamento */
+		JButton btnAlterar = new JButton("Alterar Decoracao Casamento");
+		btnAlterar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				getContentPane().removeAll();
+				getContentPane().revalidate();
+				getContentPane().repaint();
+				alterarDecoracaoCasamento();
+			}
+		});
+		btnAlterar.setBounds(275, 199, 215, 49);
+		getContentPane().add(btnAlterar);
+		
+		/* Configura botao que direciona para a tela de remover decoracao Casamento */
+		JButton btnRemover = new JButton("Remover Decoracao Casamento");
+		btnRemover.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				getContentPane().removeAll();
+				getContentPane().revalidate();
+				getContentPane().repaint();
+				apagarDecoracaoCasamento();
+			}
+		});
+		btnRemover.setBounds(275, 288, 215, 49);
+		getContentPane().add(btnRemover);
+	}
+
+	
 	public void inserirDecoracaoCasamento() {
 		getContentPane().setLayout(null);
 		

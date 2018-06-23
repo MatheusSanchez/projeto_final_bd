@@ -35,10 +35,52 @@ public class TelaContratante extends JFrame {
 	private JButton btnCadastrar;
 	
 	public TelaContratante() {
-		//cadastroContratante();
-		//alteracaoContratante();
-		remocaoContratante();
+		menuInicial();
 	}
+	
+	public void menuInicial() {
+		getContentPane().setLayout(null);
+	
+		/* Configura botao que direciona para a tela de inserir Contratante */
+		JButton btnInserir = new JButton("Inserir Contratante");
+		btnInserir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				getContentPane().removeAll();
+				getContentPane().revalidate();
+				getContentPane().repaint();
+				cadastroContratante();
+			}
+		});
+		btnInserir.setBounds(275, 110, 215, 49);
+		getContentPane().add(btnInserir);
+		
+		/* Configura botao que direciona para a tela de alterar Contratante */
+		JButton btnAlterar = new JButton("Alterar Contratante");
+		btnAlterar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				getContentPane().removeAll();
+				getContentPane().revalidate();
+				getContentPane().repaint();
+				alteracaoContratante();
+			}
+		});
+		btnAlterar.setBounds(275, 199, 215, 49);
+		getContentPane().add(btnAlterar);
+		
+		/* Configura botao que direciona para a tela de remover Contratante */
+		JButton btnRemover = new JButton("Remover Contratante");
+		btnRemover.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				getContentPane().removeAll();
+				getContentPane().revalidate();
+				getContentPane().repaint();
+				remocaoContratante();
+			}
+		});
+		btnRemover.setBounds(275, 288, 215, 49);
+		getContentPane().add(btnRemover);
+	}
+
 	
 	public void changeVisibility(boolean flag) {
 		textFieldNome.setVisible(flag);
