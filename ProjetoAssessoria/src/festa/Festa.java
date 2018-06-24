@@ -66,6 +66,43 @@ public class Festa extends JFrame {
 			
 			insereTabelasExternas(numeroContrato, preco, dataa, tipo, contratante, buffet, decoracao, atracao, convidados);
 			
+			// Insere a o casamento se a festa for casamento ou no aniversario infantil se a festa for um aniversario infantl
+			if(tipo.equals("Casamento")) {
+				sql = "insert into casamento(nro_contrato, decoracao) values (?, ?)";
+			} else {
+				sql = "insert into aniversarioinfantil(nro_contrato, decoracao) values (?, ?)";
+			}
+			
+			pstm = c.prepareStatement(sql);
+			pstm.setString(1, numeroContrato);
+			pstm.setString(2, decoracao);
+			pstm.execute();
+			
+			// Insere o buffet
+			if(tipo.equals("Casamento")) {
+				sql = "insert into contratobuffetcasamento(data, buffet_casamento, casamento) values(?, ?, ?)";
+			} else {
+				sql = "insert into contratobuffetinfantil(data, buffet_infantil, aniversario_infantil) values(?, ?, ?)";
+			}
+			pstm = c.prepareStatement(sql);
+			pstm.setDate(1, dataa);
+			pstm.setString(2, buffet);
+			pstm.setString(3, numeroContrato);			
+			pstm.execute();
+			
+			// Insere a atracao
+			if(tipo.equals("Casamento")) {
+				sql = "insert into contratobanda(data, banda, casamento) values(?, ?, ?)";
+			} else {
+				sql = "insert into contratoanimador(data, animador, aniversario_infantil) values(?, ?, ?)";
+			}
+			
+			pstm = c.prepareStatement(sql);
+			pstm.setDate(1, dataa);
+			pstm.setString(2, atracao);
+			pstm.setString(3, numeroContrato);			
+			pstm.execute();
+			
 			c.commit();
 			JOptionPane.showMessageDialog(null, "Festa inserida com sucesso");
 		} catch (SQLException e) {
@@ -99,43 +136,6 @@ public class Festa extends JFrame {
 			pstm.execute();
 		}
 		
-		// Insere a o casamento se a festa for casamento ou no aniversario infantil se a festa for um aniversario infantl
-		if(tipo == "Casamento") {
-			sql = "insert into casamento(nro_contrato, decoracao) values (?, ?)";
-		} else {
-			sql = "insert into aniversarioinfantil(nro_contrato, decoracao) values (?, ?)";
-		}
-		
-		pstm = c.prepareStatement(sql);
-		pstm.setString(1, numeroContrato);
-		pstm.setString(2, decoracao);
-		pstm.execute();
-		
-		// Insere o buffet
-		if(tipo == "Casamento") {
-			sql = "insert into contratobuffetcasamento(data, buffet_casamento, casamento) values(?, ?, ?)";
-		} else {
-			sql = "insert into contratobuffetinfantil(data, buffet_infantil, aniversario_infantil) values(?, ?, ?)";
-		}
-		pstm = c.prepareStatement(sql);
-		pstm.setDate(1, dataa);
-		pstm.setString(2, buffet);
-		pstm.setString(3, numeroContrato);			
-		pstm.execute();
-		
-		// Insere a atracao
-		if(tipo == "Casamento") {
-			sql = "insert into contratobanda(data, banda, casamento) values(?, ?, ?)";
-		} else {
-			sql = "insert into contratoanimador(data, animador, aniversario_infantil) values(?, ?, ?)";
-		}
-		
-		pstm = c.prepareStatement(sql);
-		pstm.setDate(1, dataa);
-		pstm.setString(2, atracao);
-		pstm.setString(3, numeroContrato);			
-		pstm.execute();
-		
 	}
 	
 	/*double preco, String data, String tipo, String contratante, String buffet, String decoracao, String atracao */
@@ -151,13 +151,15 @@ public class Festa extends JFrame {
 			
 			ResultSet rs = pstm.executeQuery();
 			
-			for(int i = 0; i < 4 && rs.next(); ++i)
+			if(!rs.next()) return s;
+			for(int i = 1; i < 4; ++i)
 				s[i] = rs.getString(i+1);
 
 			// Pega a decoracao
-			
+	
 			// se o tipo for casamento
-			if(s[2] == "Casamento") {
+			if(s[2].equals("Casamento")) {
+				System.out.println("entrei no if");
 				sql = "select decoracao from Casamento where nro_contrato = ?"; // comando SQL
 			} else {
 				sql = "select decoracao from AniversarioInfantil where nro_contrato = ?"; // comando SQL
@@ -168,16 +170,17 @@ public class Festa extends JFrame {
 			
 			rs = pstm.executeQuery();
 			while (rs.next()){
+				System.out.println("Feito o 1");
 				s[5] = rs.getString(1);
 			}
 			
 			// Pega o buffet
 			
 			// se o tipo for casamento
-			if(s[2] == "Casamento") {
+			if(s[2].equals("Casamento")){
 				sql = "select buffet_casamento from contratobuffetcasamento where casamento = ?"; // comando SQL
 			} else {
-				sql = "select buffet_infantil from contratoaniversarioinfantil where aniversario_infantil = ?"; // comando SQL
+				sql = "select buffet_infantil from contratobuffetinfantil where aniversario_infantil = ?"; // comando SQL
 			}
 			
 			pstm = c.prepareStatement(sql);
@@ -191,7 +194,7 @@ public class Festa extends JFrame {
 			// Pega a atracao	
 			
 			// se o tipo for casamento
-			if(s[2] == "Casamento") {
+			if(s[2].equals("Casamento")) {
 				sql = "select banda from contratobanda where casamento = ?"; // comando SQL
 			} else {
 				sql = "select animador from contratoanimador where aniversario_infantil = ?"; // comando SQL
@@ -210,14 +213,14 @@ public class Festa extends JFrame {
 
 		} catch (Exception e) {
 			s = null;
-			
+			e.printStackTrace();
 			try {
 				c.rollback(); // faz o rollback das alteracoes
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			JOptionPane.showMessageDialog(null, "Erro ao procurar banda");
+			JOptionPane.showMessageDialog(null, "Erro ao procurar festa");
 		}
 		
 		return s;
@@ -272,7 +275,7 @@ public class Festa extends JFrame {
 		}
 		
 		try {
-			String sql = "delete from festa where nro_contrato = ?";
+			String sql = "delete from convidadosfesta where festa = ?";
 			PreparedStatement pstm = c.prepareStatement(sql);
 			pstm.setString(1, numeroContrato);
 			pstm.execute();
@@ -286,8 +289,46 @@ public class Festa extends JFrame {
 			pstm.setString(5, numeroContrato);
 			pstm.execute();
 			
+			// updata decoracao
+			if(tipo.equals("Casamento")) {
+				sql = "update casamento set decoracao = ? where nro_contrato = ?";
+			} else {
+				sql = "update aniversarioinfantil set decoracao = ? where nro_contrato = ?";
+			}
+			pstm = c.prepareStatement(sql);
+			pstm.setString(1, decoracao);
+			pstm.setString(2, numeroContrato);
+			pstm.execute();
+			
+			
+			if(tipo.equals("Casamento")) {
+				sql = "update contratobuffetcasamento set data = ?, buffet_casamento = ? where casamento = ?";
+			} else {
+				sql = "update aniversarioinfantil set data = ?, buffet_infantil = ? where aniversario_infantil = ?";
+			}
+			pstm = c.prepareStatement(sql);
+			pstm.setDate(1, dataa);
+			pstm.setString(2, buffet);
+			pstm.setString(3, numeroContrato);
+			pstm.execute();
+
+			
+			// Updata atracao
+			if(tipo.equals("Casamento")) {
+				sql = "update contratobanda set data = ?, banda = ? where casamento = ?";
+			} else {
+				sql = "update contratoanimador set data = ?, animador = ? where aniversario_infantil = ?";
+			}
+			
+			pstm = c.prepareStatement(sql);
+			pstm.setDate(1, dataa);
+			pstm.setString(2, atracao);
+			pstm.setString(3, numeroContrato);
+			pstm.execute();
+			
 			insereTabelasExternas(numeroContrato, preco, dataa, tipo, contratante, buffet, decoracao, atracao, convidados);
 			
+			pstm.close();
 			c.commit();
 			JOptionPane.showMessageDialog(null, "Festa alterada com sucesso");
 		} catch (SQLException e) {
@@ -303,7 +344,7 @@ public class Festa extends JFrame {
 			if (e.getErrorCode() == 1) JOptionPane.showMessageDialog(null, "Erro: Numero de contrato da festa ja cadastrado");
 			else if (e.getErrorCode() == 1722) JOptionPane.showMessageDialog(null, "Erro: Preco deve ser um dado numerico");
 			else if (e.getErrorCode() == 2290) JOptionPane.showMessageDialog(null, "Erro: Os campos de preco, data ou tipo da festa nao foram inseridos corretamente");
-			else JOptionPane.showMessageDialog(null, "Erro ao inserir festa");
+			else JOptionPane.showMessageDialog(null, "Erro ao atualizar festa");
 		}
 	}
 	
