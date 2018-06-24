@@ -14,6 +14,7 @@ import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import buffet.BuffetCasamento;
@@ -22,6 +23,7 @@ import buffet.TelaBuffetCasamento;
 import buffet.TelaBuffetInfantil;
 import contratante.Contratante;
 import contratante.TelaContratante;
+import main.Main;
 
 @SuppressWarnings("serial")
 public class TelaFesta extends JFrame {
@@ -69,19 +71,9 @@ public class TelaFesta extends JFrame {
 	private JLabel lblNomeBuffet;
 	
 	public TelaFesta() {	
-		tela1();
+		tela2();
 	}
 	
-	public void novaJanela(JFrame jan) {
-		jan.setVisible(true);
-		jan.setSize(768, 480);
-	}
-	
-	public void novaTela() {
-		getContentPane().removeAll();
-		getContentPane().revalidate();
-		getContentPane().repaint();
-	}
 	
 	public void tela1() {
 		getContentPane().setLayout(null);
@@ -118,7 +110,7 @@ public class TelaFesta extends JFrame {
 		btnNext1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cpfContratante = textCPF.getText();
-				novaTela();
+				Main.novaTela(getContentPane());
 				tela2();
 			}
 		});
@@ -129,7 +121,7 @@ public class TelaFesta extends JFrame {
 		btnNovoContratante.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TelaContratante tela = new TelaContratante();
-				novaJanela(tela);
+				Main.novaJanela(tela);
 				tela.cadastroContratante();
 			}
 		});
@@ -220,7 +212,7 @@ public class TelaFesta extends JFrame {
 				convidados = editorPane.getText().split(",");
 				for (int i = 0; i < convidados.length; i++) convidados[i] = convidados[i].trim();
 				
-				novaTela();
+				Main.novaTela(getContentPane());
 				tela1();
 			}
 		});
@@ -230,7 +222,9 @@ public class TelaFesta extends JFrame {
 		editorPane = new JEditorPane();
 		editorPane.setToolTipText("nome1, nome2, nome3");
 		editorPane.setBounds(243, 229, 278, 160);
+		final JScrollPane scrollPane = new JScrollPane(editorPane);
 		getContentPane().add(editorPane);
+		getContentPane().add(scrollPane);
 		String conv = "";
 		for(int i = 0; convidados != null && i < convidados.length; ++i) {
 			conv += convidados[i];
@@ -251,7 +245,7 @@ public class TelaFesta extends JFrame {
 				convidados = editorPane.getText().split(",");
 				for (int i = 0; i < convidados.length; i++) convidados[i] = convidados[i].trim();
 				
-				novaTela();
+				Main.novaTela(getContentPane());
 				tela3();
 			}
 		});
@@ -266,7 +260,7 @@ public class TelaFesta extends JFrame {
 		btnVoltar3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				buffet = txtCnpj.getText();
-				novaTela();
+				Main.novaTela(getContentPane());
 				tela2();
 			}
 		});
@@ -338,11 +332,11 @@ public class TelaFesta extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if(tipo == "Casamento") {
 					TelaBuffetCasamento frame = new TelaBuffetCasamento();
-					novaJanela(frame);
+					Main.novaJanela(frame);
 					frame.cadastrarBuffetCasamento();
 				} else {
 					TelaBuffetInfantil frame = new TelaBuffetInfantil();
-					novaJanela(frame);
+					Main.novaJanela(frame);
 					frame.cadastrarBuffetInfantil();
 				}
 				

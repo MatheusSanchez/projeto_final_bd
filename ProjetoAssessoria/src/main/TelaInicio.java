@@ -13,24 +13,16 @@ import festa.Festa;
 @SuppressWarnings("serial")
 public class TelaInicio extends JFrame {
 	public TelaInicio() {
-		tela();
+		telaInicial();
 		//TelaInicio m = new TelaIncio();
 		//m.setSize(500, 500);
 		//m.setVisible(true);
 	}
 	
-	public void tela() {
-		JButton btnCadastrarNovaFesta = new JButton("Cadastrar nova festa");
-		btnCadastrarNovaFesta.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Festa festa = new Festa();
-				festa.setVisible(true);
-				//festa.close();
-			}
-		});
+	public void telaInicial() {
 		
-		JButton btnInserirNovaDecoracao = new JButton("Inserir nova decoracao");
-		btnInserirNovaDecoracao.addActionListener(new ActionListener() {
+		JButton btnAtualizar = new JButton("Atualizar Banco");
+		btnAtualizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//DecoracaoCasamento dec = new DecoracaoCasamento();
 				//dec.metodozinho();
@@ -38,38 +30,30 @@ public class TelaInicio extends JFrame {
 			}
 		});
 		
-		JButton btnInserirNovaAtracao = new JButton("Inserir nova atracao");
+		JButton btnConsultar = new JButton("Consultar Banco");
 		
-		JButton btnCadastrarNovaEmpresa = new JButton("Cadastrar nova empresa");
-		
-		JButton btnRealizarConsulta = new JButton("Realizar consulta");
+		JButton btnGerar = new JButton("Gerar Relatorios");
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(101)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(btnCadastrarNovaFesta, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
-						.addComponent(btnInserirNovaDecoracao, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
-						.addComponent(btnInserirNovaAtracao, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
-						.addComponent(btnCadastrarNovaEmpresa, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
-						.addComponent(btnRealizarConsulta, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE))
+						.addComponent(btnAtualizar, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
+						.addComponent(btnConsultar, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
+						.addComponent(btnGerar, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE))
 					.addGap(100))
 		);
 		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
-					.addGap(37)
-					.addComponent(btnCadastrarNovaFesta)
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(80)
+					.addComponent(btnAtualizar)
 					.addGap(18)
-					.addComponent(btnInserirNovaDecoracao)
+					.addComponent(btnConsultar)
 					.addGap(18)
-					.addComponent(btnInserirNovaAtracao)
-					.addGap(18)
-					.addComponent(btnCadastrarNovaEmpresa)
-					.addGap(18)
-					.addComponent(btnRealizarConsulta)
-					.addContainerGap(37, Short.MAX_VALUE))
+					.addComponent(btnGerar)
+					.addContainerGap(109, Short.MAX_VALUE))
 		);
 		getContentPane().setLayout(groupLayout);
 	}
