@@ -5,23 +5,26 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.text.ParseException;
 
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.text.MaskFormatter;
 
 import main.Main;
 import main.TelaInicio;
 
 @SuppressWarnings("serial")
 public class TelaBuffetCasamento extends JFrame {
-	private JTextField textFieldCnpj;
+	private JFormattedTextField textFieldCnpj;
 	private JTextField textFieldNome;
 	private JTextField textFieldRua;
 	private JTextField textFieldNumero;
-	private JTextField textFieldCep;
+	private JFormattedTextField textFieldCep;
 	private JTextField textFieldCap;
 	private JLabel lblCadastroDeBuffet;
 	private JLabel lblCnpj;
@@ -33,13 +36,37 @@ public class TelaBuffetCasamento extends JFrame {
 	private JButton btnCadastrar;
 
 	private Container container;
+	
+	private MaskFormatter cnpjMask;
+	private MaskFormatter cepMask;
 
 	public TelaBuffetCasamento() {
 		this.container = getContentPane();
+		createMasks();
 	}
 
 	public TelaBuffetCasamento(Container c) {
 		this.container = c;
+		createMasks();
+	}
+	
+	private void createMasks() {
+		
+		try {
+		    cnpjMask = new MaskFormatter("##.###.###/####-##");
+		    cnpjMask.setPlaceholderCharacter(' ');
+		    cnpjMask.setValidCharacters("0123456789");
+		} catch (ParseException e) {
+		    e.printStackTrace();
+		}
+		
+		try {
+		    cepMask = new MaskFormatter("#####-###");
+		    cepMask.setPlaceholderCharacter(' ');
+		    cepMask.setValidCharacters("0123456789");
+		} catch (ParseException e) {
+		    e.printStackTrace();
+		}
 	}
 	
 	public void menuInicial() {
@@ -145,11 +172,17 @@ public class TelaBuffetCasamento extends JFrame {
 		lblCapacidade.setBounds(29, 195, 89, 15);
 		container.add(lblCapacidade);
 		
-		textFieldCnpj = new JTextField();
+		//textFieldCnpj = new JTextField();
+		//textFieldCnpj.setToolTipText("99.999.999/9999-99");
+		//textFieldCnpj.setBounds(177, 58, 114, 19);
+		//container.add(textFieldCnpj);
+		//textFieldCnpj.setColumns(10);
+		
+		textFieldCnpj = new JFormattedTextField(cnpjMask);
 		textFieldCnpj.setToolTipText("99.999.999/9999-99");
+		textFieldCnpj.setColumns(10);
 		textFieldCnpj.setBounds(177, 58, 114, 19);
 		container.add(textFieldCnpj);
-		textFieldCnpj.setColumns(10);
 		
 		textFieldNome = new JTextField();
 		textFieldNome.setColumns(10);
@@ -166,7 +199,13 @@ public class TelaBuffetCasamento extends JFrame {
 		textFieldNumero.setBounds(177, 139, 114, 19);
 		container.add(textFieldNumero);
 		
-		textFieldCep = new JTextField();
+		//textFieldCep = new JTextField();
+		//textFieldCep.setColumns(10);
+		//textFieldCep.setBounds(177, 166, 114, 19);
+		//container.add(textFieldCep);
+		
+		textFieldCep = new JFormattedTextField(cepMask);
+		textFieldCep.setToolTipText("99999-999");
 		textFieldCep.setColumns(10);
 		textFieldCep.setBounds(177, 166, 114, 19);
 		container.add(textFieldCep);
@@ -186,6 +225,9 @@ public class TelaBuffetCasamento extends JFrame {
 				s[3] = textFieldNumero.getText();
 				s[4] = textFieldCep.getText();
 				s[5] = textFieldCap.getText();
+				
+				if (s[0].equals("  .   .   /    -  ")) s[0] = null;
+				if (s[4].equals("     -   ")) s[4] = null;
 				
 				//insere no banco
 				BuffetCasamento.insert(s);
@@ -237,11 +279,17 @@ public class TelaBuffetCasamento extends JFrame {
 		lblCapacidade.setBounds(29, 220, 89, 15);
 		container.add(lblCapacidade);
 		
-		textFieldCnpj = new JTextField();
+		//textFieldCnpj = new JTextField();
+		//textFieldCnpj.setToolTipText("99.999.999/9999-99");
+		//textFieldCnpj.setBounds(177, 58, 114, 19);
+		//container.add(textFieldCnpj);
+		//textFieldCnpj.setColumns(10);
+		
+		textFieldCnpj = new JFormattedTextField(cnpjMask);
 		textFieldCnpj.setToolTipText("99.999.999/9999-99");
+		textFieldCnpj.setColumns(10);
 		textFieldCnpj.setBounds(177, 58, 114, 19);
 		container.add(textFieldCnpj);
-		textFieldCnpj.setColumns(10);
 		
 		textFieldNome = new JTextField();
 		textFieldNome.setColumns(10);
@@ -258,7 +306,13 @@ public class TelaBuffetCasamento extends JFrame {
 		textFieldNumero.setBounds(177, 164, 114, 19);
 		container.add(textFieldNumero);
 		
-		textFieldCep = new JTextField();
+		//textFieldCep = new JTextField();
+		//textFieldCep.setColumns(10);
+		//textFieldCep.setBounds(177, 191, 114, 19);
+		//container.add(textFieldCep);
+		
+		textFieldCep = new JFormattedTextField(cepMask);
+		textFieldCep.setToolTipText("99999-999");
 		textFieldCep.setColumns(10);
 		textFieldCep.setBounds(177, 191, 114, 19);
 		container.add(textFieldCep);
@@ -278,6 +332,9 @@ public class TelaBuffetCasamento extends JFrame {
 				s[3] = textFieldNumero.getText();
 				s[4] = textFieldCep.getText();
 				s[5] = textFieldCap.getText();
+				
+				if (s[0].equals("  .   .   /    -  ")) s[0] = null;
+				if (s[4].equals("     -   ")) s[4] = null;
 				
 				//atualiza o banco
 				BuffetCasamento.update(s);
@@ -366,11 +423,17 @@ public class TelaBuffetCasamento extends JFrame {
 		lblCapacidade.setBounds(29, 220, 89, 15);
 		container.add(lblCapacidade);
 		
-		textFieldCnpj = new JTextField();
+		//textFieldCnpj = new JTextField();
+		//textFieldCnpj.setToolTipText("99.999.999/9999-99");
+		//textFieldCnpj.setBounds(177, 58, 114, 19);
+		//container.add(textFieldCnpj);
+		//textFieldCnpj.setColumns(10);
+		
+		textFieldCnpj = new JFormattedTextField(cnpjMask);
 		textFieldCnpj.setToolTipText("99.999.999/9999-99");
+		textFieldCnpj.setColumns(10);
 		textFieldCnpj.setBounds(177, 58, 114, 19);
 		container.add(textFieldCnpj);
-		textFieldCnpj.setColumns(10);
 		
 		textFieldNome = new JTextField();
 		textFieldNome.setColumns(10);
@@ -387,7 +450,13 @@ public class TelaBuffetCasamento extends JFrame {
 		textFieldNumero.setBounds(177, 164, 114, 19);
 		container.add(textFieldNumero);
 		
-		textFieldCep = new JTextField();
+		//textFieldCep = new JTextField();
+		//textFieldCep.setColumns(10);
+		//textFieldCep.setBounds(177, 191, 114, 19);
+		//container.add(textFieldCep);
+		
+		textFieldCep = new JFormattedTextField(cepMask);
+		textFieldCep.setToolTipText("99999-999");
 		textFieldCep.setColumns(10);
 		textFieldCep.setBounds(177, 191, 114, 19);
 		container.add(textFieldCep);

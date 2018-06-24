@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -147,13 +148,21 @@ public class TelaDecoracaoInfantil extends JFrame {
 				String qtdeBaloes = textFieldQtdeBaloes.getText();
 				boolean pinata = chckbxPinata.isSelected(); 
 				
-				String cores[] = textFieldCorBaloes.getText().split(",");
-				for (int i = 0; i < cores.length; i++) {
-					cores[i] = cores[i].trim();
+				String tipos[] = textFieldCorBaloes.getText().split(",");
+				for (int i = 0; i < tipos.length; i++) {
+					tipos[i] = tipos[i].trim();
 				}
 				
+				List<String> types = new ArrayList<String>();
+				for (int i = 0; i < tipos.length; i++) {
+					if (tipos[i].length() != 0) {
+						types.add(tipos[i]);
+					}
+				}
+				tipos = types.toArray(new String[0]);
+				
 				//insere no banco
-				DecoracaoInfantil.insert(tema, qtdeBaloes, pinata, cores);
+				DecoracaoInfantil.insert(tema, qtdeBaloes, pinata, tipos);
 			}
 		});
 		btnCadastrar.setBounds(356, 228, 117, 25);
@@ -237,19 +246,28 @@ public class TelaDecoracaoInfantil extends JFrame {
 				String tema = textFieldTema.getText();
 				String qtde = textFieldQtdeBaloes.getText();
 				String pinata = chckbxPinata.isSelected()? "1" : "0";
-				String cores[] = textFieldCorBaloes.getText().split(",");
-				for (int i = 0; i < cores.length; i++) {
-					cores[i] = cores[i].trim();
+				
+				String tipos[] = textFieldCorBaloes.getText().split(",");
+				for (int i = 0; i < tipos.length; i++) {
+					tipos[i] = tipos[i].trim();
 				}
 				
-				String[] form = new String[3 + cores.length];
+				List<String> types = new ArrayList<String>();
+				for (int i = 0; i < tipos.length; i++) {
+					if (tipos[i].length() != 0) {
+						types.add(tipos[i]);
+					}
+				}
+				tipos = types.toArray(new String[0]);
+				
+				String[] form = new String[3 + tipos.length];
 			
 				form[0] = tema;
 				form[1] = qtde;
 				form[2] = pinata;
 				
-				for (int i = 3; i < 3 + cores.length; i++) {
-					form[i] = cores[i - 3];
+				for (int i = 3; i < 3 + tipos.length; i++) {
+					form[i] = tipos[i - 3];
 				}
 
 				//atualiza o banco
@@ -309,6 +327,8 @@ public class TelaDecoracaoInfantil extends JFrame {
 		});
 		button.setBounds(12, 12, 44, 25);
 		container.add(button);
+		
+		changeVisibility(false);
 	}
 
 	public void removerDecoracaoInfantil() {
@@ -423,5 +443,7 @@ public class TelaDecoracaoInfantil extends JFrame {
 		});
 		button.setBounds(12, 12, 44, 25);
 		container.add(button);
+		
+		changeVisibility(false);
 	}
 }

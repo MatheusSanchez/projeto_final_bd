@@ -34,11 +34,13 @@ public class Contratante {
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
+				e.printStackTrace();
 				
 				if (e.getErrorCode() == 1) JOptionPane.showMessageDialog(null, "Erro: CPF ja cadastrado");
+				if (e.getErrorCode() == 1400) JOptionPane.showMessageDialog(null, "Erro: CPF deve ser preenchido");
 				else if (e.getErrorCode() == 1722) JOptionPane.showMessageDialog(null, "Erro: Numero deve ser um dado numerico");
 				else if (e.getErrorCode() == 2290) JOptionPane.showMessageDialog(null, "Erro: Telefone, CPF e CEP devem estar formatados corretamente");
-				else JOptionPane.showMessageDialog(null, "Erro ao inserir buffet");
+				else JOptionPane.showMessageDialog(null, "Erro ao inserir contratante");
 			}
 	}
 	
