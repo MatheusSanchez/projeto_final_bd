@@ -4,45 +4,36 @@ import java.awt.Container;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
-import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
 
+import contratante.TelaContratante;
 import atracao.TelaAnimador;
 import atracao.TelaBanda;
 import buffet.TelaBuffetCasamento;
 import buffet.TelaBuffetInfantil;
-import conexao.Conexao;
-import contratante.TelaContratante;
 import decoracao.TelaDecoracaoCasamento;
 import decoracao.TelaDecoracaoInfantil;
 import festa.TelaFesta;
 
 @SuppressWarnings("serial")
 public class TelaInicio extends JFrame {
-	private Container container;
+	private static Container container;
 
 	public TelaInicio() {
 		setLocation(new Point(600, 300));
-		this.container = getContentPane();
+		container = getContentPane();
 	}
 
 	public TelaInicio(Container c) {
-		this.container = c;
+		container = c;
 	}
 
-	public void telaInicial() {
+	public static void telaInicial() {
 		
 		JButton btnAtualizar = new JButton("Atualizar Banco");
 		btnAtualizar.addActionListener(new ActionListener() {
@@ -96,7 +87,7 @@ public class TelaInicio extends JFrame {
 		container.setLayout(groupLayout);
 	}
 
-	public void atualizaBanco() {
+	public static void atualizaBanco() {
 		container.setLayout(null);
 		
 		JButton btnDecoracaoCasamento = new JButton("Decoracao Casamento");
@@ -198,14 +189,14 @@ public class TelaInicio extends JFrame {
 		container.add(button);
 	}
 
-	public void consultaBanco() {
+	public static void consultaBanco() {
 		container.setLayout(null);
 		
 		JButton btnDecoracaoCasamento = new JButton("Decoracao Casamento");
 		btnDecoracaoCasamento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Main.novaTela(container);
-				telaConsulta("Decoracao Casamento");
+				new TelaConsulta(container, "Decoracao Casamento");
 			}
 		});
 		btnDecoracaoCasamento.setBounds(161, 176, 198, 25);
@@ -215,7 +206,7 @@ public class TelaInicio extends JFrame {
 		btnDecoracaoInfantil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Main.novaTela(container);
-				telaConsulta("Decoracao Infantil");
+				new TelaConsulta(container, "Decoracao Infantil");
 			}
 		});
 		btnDecoracaoInfantil.setBounds(389, 176, 198, 25);
@@ -225,7 +216,7 @@ public class TelaInicio extends JFrame {
 		btnFesta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Main.novaTela(container);
-				telaConsulta("Festa");
+				new TelaConsulta(container, "Festa");
 			}
 		});
 		btnFesta.setBounds(161, 139, 198, 25);
@@ -235,7 +226,7 @@ public class TelaInicio extends JFrame {
 		btnContratante.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Main.novaTela(container);
-				telaConsulta("Contratante");
+				new TelaConsulta(container, "Contratante");
 			}
 		});
 		btnContratante.setBounds(389, 139, 198, 25);
@@ -245,7 +236,7 @@ public class TelaInicio extends JFrame {
 		btnBanda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Main.novaTela(container);
-				telaConsulta("Banda");
+				new TelaConsulta(container, "Banda");
 			}
 		});
 		btnBanda.setBounds(161, 213, 198, 25);
@@ -255,7 +246,7 @@ public class TelaInicio extends JFrame {
 		btnAnimador.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Main.novaTela(container);
-				telaConsulta("Animador");
+				new TelaConsulta(container, "Animador");
 			}
 		});
 		btnAnimador.setBounds(389, 213, 198, 25);
@@ -265,7 +256,7 @@ public class TelaInicio extends JFrame {
 		btnBuffetCasamento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Main.novaTela(container);
-				telaConsulta("Buffet Casamento");
+				new TelaConsulta(container, "Buffet Casamento");
 			}
 		});
 		btnBuffetCasamento.setBounds(161, 250, 198, 25);
@@ -275,7 +266,7 @@ public class TelaInicio extends JFrame {
 		btnBuffetInfantil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Main.novaTela(container);
-				telaConsulta("Buffet Infantil");
+				new TelaConsulta(container, "Buffet Infantil");
 			}
 		});
 		btnBuffetInfantil.setBounds(389, 250, 198, 25);
@@ -292,94 +283,4 @@ public class TelaInicio extends JFrame {
 		container.add(button);
 	}
 	
-	public void telaConsulta(String tabela) {
-		getContentPane().setLayout(null);
-		
-		JEditorPane editorPane = new JEditorPane();
-		editorPane.setBounds(10, 114, 732, 316);
-		getContentPane().add(editorPane);
-		
-		JLabel lblTitle_1 = new JLabel("<html><h1>Cadastros de " + tabela + "</h1></html>");
-		lblTitle_1.setBounds(10, 25, 732, 42);
-		getContentPane().add(lblTitle_1);
-		
-		JTextField lblColunas = new JTextField("");
-		lblColunas.setBounds(10, 78, 732, 25);
-		getContentPane().add(lblColunas);
-		
-		String s = "";
-		
-		Connection c = Conexao.getInstance();
-		
-		try {
-			switch (tabela) {
-				case "Decoracao Casamento":
-					tabela = "DECORACAOCASAMENTO";
-					break;
-				case "Decoracao Infantil":
-					tabela = "DECORACAOINFANTIL";
-					break;
-				case "Buffet Casamento":
-					tabela = "BUFFETCASAMENTO";
-					break;
-				case "Buffet Infantil":
-					tabela = "BUFFETINFANTIL";
-					break;
-				case "Contratante":
-					tabela = "CONTRATANTE";
-					break;
-				case "Banda":
-					tabela = "BANDA";
-					break;
-				case "Animador":
-					tabela = "ANIMADOR";
-					break;
-				default:
-					break;
-			}
-			
-			String sql = "select column_name from user_tab_columns where table_name = ?";
-			PreparedStatement pstm = c.prepareStatement(sql);
-			pstm.setString(1, tabela);
-			ResultSet rs = pstm.executeQuery();
-			
-			List<String> colunas = new ArrayList<String>();
-			while (rs.next()) {
-				colunas.add(rs.getString(1));
-			}
-			
-			String aux = "";
-			for (String string : colunas) {
-				aux += string + "\t";
-			}
-			
-			lblColunas.setText(aux);
-			
-			sql = "select * from " + tabela;
-			pstm = c.prepareStatement(sql);
-			rs = pstm.executeQuery();
-			
-			while (rs.next()) {
-				for (String string : colunas) {
-					s += rs.getString(string) + "\t";
-				}
-				s += "\n";
-			}
-			
-			editorPane.setText(s);
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		JButton button = new JButton("<");
-		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Main.novaTela(container);
-				consultaBanco();
-			}
-		});
-		button.setBounds(12, 12, 44, 25);
-		container.add(button);
-	}
 }
