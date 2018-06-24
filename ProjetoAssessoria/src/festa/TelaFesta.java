@@ -23,26 +23,30 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
 
-import main.Main;
-import main.TelaInicio;
+import atracao.Banda;
 import buffet.BuffetCasamento;
 import buffet.BuffetInfantil;
-import buffet.TelaBuffetCasamento;
-import buffet.TelaBuffetInfantil;
 import contratante.Contratante;
 import contratante.TelaContratante;
+import main.Main;
+import main.TelaInicio;
 
 @SuppressWarnings("serial")
-public class TelaFesta {
+public class TelaFesta extends JFrame {
 	private String cpfContratante;
 	private String data;
 	private String tipo;
 	private String[] convidados;
 	private String buffet;
 	private String atracao;
+	private String decoracao;
 	private double preco;
 	private Container container;
 	
+	/* Tela inicio */
+	private JButton btnInserir;
+	private JButton btnAlterar;
+	private JButton btnVoltar;
 	
 	/* Tela 1*/
 	private JTextField textCPF;
@@ -52,6 +56,7 @@ public class TelaFesta {
 	private JButton btnPesquisar1;
 	private JLabel lblNome;
 	private JLabel lblTitle1;
+	private JButton btnVoltar1;
 	private JLabel lblNomeContratante;
 	private JTextField textFieldNomeCont;
 	
@@ -72,11 +77,19 @@ public class TelaFesta {
 	private JTextField textFieldNome;
 	private JButton btnVoltar3;
 	private JButton btnPesquisar3;
-	private JButton btnInserirNovo;
 	private JButton btnNext3;
 	private JLabel lblTitle3;
 	private JLabel lblCnpj;
 	private JLabel lblNomeBuffet;
+	
+	/* Tela 4*/
+	private JTextField txtTema;
+	private JTextField txtNomeDec;
+	private JButton btnVoltar4;
+	private JButton btnNext4;
+	private JLabel lblTitle4;
+	private JLabel lblTema;
+	private JLabel lblNomeAt;
 	
 	public TelaFesta(Container c) {	
 		this.container = c;
@@ -84,13 +97,19 @@ public class TelaFesta {
 	}
 
 	public TelaFesta() {	
+		this.container = getContentPane();
+		//menuInicial();
+		//tela1();
+		//tela2();
+		//tela3();
+		tela4();
 	}
 
 	public void menuInicial() {
 		container.setLayout(null);
 	
 		/* Configura botao que direciona para a tela de inserir Festa */
-		JButton btnInserir = new JButton("Inserir Festa");
+		btnInserir = new JButton("Inserir Festa");
 		btnInserir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				container.removeAll();
@@ -103,7 +122,7 @@ public class TelaFesta {
 		container.add(btnInserir);
 		
 		/* Configura botao que direciona para a tela de alterar Contratante */
-		JButton btnAlterar = new JButton("Alterar Festa");
+		btnAlterar = new JButton("Alterar Festa");
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				container.removeAll();
@@ -129,15 +148,15 @@ public class TelaFesta {
 		btnRemover.setBounds(275, 288, 215, 49);
 		container.add(btnRemover);*/
 		
-		JButton button = new JButton("<");
-		button.addActionListener(new ActionListener() {
+		btnVoltar = new JButton("<");
+		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Main.novaTela(container);
 				new TelaInicio(container);
 			}
 		});
-		button.setBounds(12, 12, 44, 25);
-		container.add(button);
+		btnVoltar.setBounds(12, 12, 44, 25);
+		container.add(btnVoltar);
 	}
 
 
@@ -146,8 +165,18 @@ public class TelaFesta {
 	public void tela1() {
 		container.setLayout(null);
 		
+		btnVoltar1 = new JButton("<");
+		btnVoltar1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Main.novaTela(container);
+				menuInicial();
+			}
+		});
+		btnVoltar1.setBounds(10, 11, 52, 23);
+		container.add(btnVoltar1);
+		
 		lblTitle1 = new JLabel("<html> <h1> 1. Escolha o Contratante </h1> </html>");
-		lblTitle1.setBounds(31, 12, 362, 51);
+		lblTitle1.setBounds(31, 60, 362, 51);
 		container.add(lblTitle1);
 		
 		textCPF = new JTextField();
@@ -327,7 +356,7 @@ public class TelaFesta {
 				tela3();
 			}
 		});
-		btnNext2.setBounds(645, 370, 89, 23);
+		btnNext2.setBounds(635, 396, 103, 23);
 		container.add(btnNext2);
 	}
 	
@@ -346,7 +375,7 @@ public class TelaFesta {
 		container.add(btnVoltar3);
 		
 		lblTitle3 = new JLabel("<html><h1>3. Escolha o Buffet</h1></html>");
-		lblTitle3.setBounds(41, 45, 250, 39);
+		lblTitle3.setBounds(41, 58, 250, 39);
 		container.add(lblTitle3);
 		
 		lblCnpj = new JLabel("CNPJ");
@@ -427,5 +456,70 @@ public class TelaFesta {
 			}
 		});
 		
+	}
+	
+	public void tela4() {
+		container.setLayout(null);
+		
+		btnVoltar4 = new JButton("<");
+		btnVoltar4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				atracao = txtNomeDec.getText();
+				decoracao = txtTema.getText();
+				Main.novaTela(container);
+				tela3();
+			}
+		});
+		btnVoltar4.setBounds(10, 11, 53, 23);
+		container.add(btnVoltar4);
+		
+		lblTitle4 = new JLabel("<html><h1> 4. Escolha a Decoracao e " + (tipo == null || tipo == "Casamento"? "a Banda" : "o Animador") + "</h1></html>");
+		lblTitle4.setBounds(41, 58, 500, 39);
+		container.add(lblTitle4);
+		
+		lblTema = new JLabel("Tema");
+		lblTema.setFont(new Font("Dialog", Font.BOLD, 12));
+		lblTema.setBounds(41, 274, 46, 14);
+		container.add(lblTema);
+		
+		txtTema = new JTextField();
+		txtTema.setToolTipText("99.999.999/9999-99");
+		txtTema.setBounds(143, 272, 163, 20);
+		container.add(txtTema);
+		txtTema.setColumns(10);
+		txtTema.setText(buffet);
+		
+		lblNomeAt = new JLabel("Nome");
+		lblNomeAt.setFont(new Font("Dialog", Font.BOLD, 12));
+		lblNomeAt.setBounds(41, 178, 46, 14);
+		container.add(lblNomeAt);
+		
+		txtNomeDec = new JTextField();
+		txtNomeDec.setToolTipText("99.999.999/9999-99");
+		txtNomeDec.setBounds(143, 176, 163, 20);
+		container.add(txtNomeDec);
+		txtNomeDec.setColumns(10);
+		txtNomeDec.setText(buffet);
+		
+		btnNext4 = new JButton("Criar festa");
+		btnNext4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				atracao = txtNomeDec.getText();
+				decoracao = txtTema.getText();
+				// inserir no SQL
+			}
+		});
+		btnNext4.setBounds(622, 407, 120, 23);
+		container.add(btnNext4);
+		
+		JLabel lblTitleAt = new JLabel("<html> <h2>" + (tipo == null || tipo == "Casamento"? "Banda" : "Animador") + "<h2> </html>");
+		lblTitleAt.setFont(new Font("Dialog", Font.BOLD, 12));
+		lblTitleAt.setBounds(41, 135, 163, 31);
+		getContentPane().add(lblTitleAt);
+		
+		JLabel lblTituloDec = new JLabel("<html> <h2> Decoracao </h2> </html>");
+		lblTituloDec.setFont(new Font("Dialog", Font.BOLD, 12));
+		lblTituloDec.setBounds(41, 231, 163, 31);
+		getContentPane().add(lblTituloDec);
 	}
 }
