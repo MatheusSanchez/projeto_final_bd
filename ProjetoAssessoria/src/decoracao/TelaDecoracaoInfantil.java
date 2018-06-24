@@ -1,5 +1,6 @@
 package decoracao;
 
+import java.awt.Container;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,12 +9,15 @@ import java.awt.event.FocusListener;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.JCheckBox;
 import javax.swing.SwingConstants;
+
+import main.Main;
+import main.TelaInicio;
 
 @SuppressWarnings("serial")
 public class TelaDecoracaoInfantil extends JFrame {
@@ -30,94 +34,110 @@ public class TelaDecoracaoInfantil extends JFrame {
 	private JLabel lblDigiteTodosOs;
 	private JLabel lblCorBaloes;
 	
+	private Container container;
+
 	public TelaDecoracaoInfantil() {
-		menuInicial();
+		this.container = getContentPane();
+	}
+	
+	public TelaDecoracaoInfantil(Container c) {
+		this.container = c;
 	}
 	
 	public void menuInicial() {
-		getContentPane().setLayout(null);
+		container.setLayout(null);
 	
 		/* Configura botao que direciona para a tela de inserir decoracao infantil */
 		JButton btnInserir = new JButton("Inserir Decoracao Infantil");
 		btnInserir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				getContentPane().removeAll();
-				getContentPane().revalidate();
-				getContentPane().repaint();
+				container.removeAll();
+				container.revalidate();
+				container.repaint();
 				inserirDecoracaoInfantil();
 			}
 		});
 		btnInserir.setBounds(275, 110, 215, 49);
-		getContentPane().add(btnInserir);
+		container.add(btnInserir);
 		
 		/* Configura botao que direciona para a tela de alterar decoracao infantil */
 		JButton btnAlterar = new JButton("Alterar Decoracao Infantil");
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				getContentPane().removeAll();
-				getContentPane().revalidate();
-				getContentPane().repaint();
+				container.removeAll();
+				container.revalidate();
+				container.repaint();
 				alterarDecoracaoInfantil();
 			}
 		});
 		btnAlterar.setBounds(275, 199, 215, 49);
-		getContentPane().add(btnAlterar);
+		container.add(btnAlterar);
 		
 		/* Configura botao que direciona para a tela de remover decoracao infantil */
 		JButton btnRemover = new JButton("Remover Decoracao Infantil");
 		btnRemover.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				getContentPane().removeAll();
-				getContentPane().revalidate();
-				getContentPane().repaint();
+				container.removeAll();
+				container.revalidate();
+				container.repaint();
 				removerDecoracaoInfantil();
 			}
 		});
 		btnRemover.setBounds(275, 288, 215, 49);
-		getContentPane().add(btnRemover);
+		container.add(btnRemover);
+		
+		JButton button = new JButton("<");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Main.novaTela(container);
+				new TelaInicio(container);
+			}
+		});
+		button.setBounds(12, 12, 44, 25);
+		container.add(button);
 	}
 
 	public void inserirDecoracaoInfantil() {
-		getContentPane().setLayout(null);
+		container.setLayout(null);
 		
 		lblCadastroDeNovaDecoracaoInfantil = new JLabel("<html> <center> <p>Cadastro de decoracao de Aniversario Infantil</p> </center> </html>");
 		lblCadastroDeNovaDecoracaoInfantil.setVerticalAlignment(SwingConstants.TOP);
 		lblCadastroDeNovaDecoracaoInfantil.setFont(new Font("Dialog", Font.PLAIN, 20));
 		lblCadastroDeNovaDecoracaoInfantil.setBounds(63, 16, 345, 69);
-		getContentPane().add(lblCadastroDeNovaDecoracaoInfantil);
+		container.add(lblCadastroDeNovaDecoracaoInfantil);
 		
 		lblTema = new JLabel("Tema");
 		lblTema.setBounds(49, 81, 70, 15);
-		getContentPane().add(lblTema);
+		container.add(lblTema);
 		
 		lblQtdBaloes = new JLabel("Quantidade de Baloes");
 		lblQtdBaloes.setBounds(49, 108, 153, 15);
-		getContentPane().add(lblQtdBaloes);
+		container.add(lblQtdBaloes);
 		
 		textFieldTema = new JTextField();
 		textFieldTema.setBounds(230, 79, 140, 19);
-		getContentPane().add(textFieldTema);
+		container.add(textFieldTema);
 		textFieldTema.setColumns(10);
 		
 		textFieldQtdeBaloes = new JTextField();
 		textFieldQtdeBaloes.setColumns(10);
 		textFieldQtdeBaloes.setBounds(230, 106, 140, 19);
-		getContentPane().add(textFieldQtdeBaloes);
+		container.add(textFieldQtdeBaloes);
 		
 		lblCorBaloes= new JLabel("Cores dos baloes");
 		lblCorBaloes.setBounds(49, 162, 153, 15);
-		getContentPane().add(lblCorBaloes);
+		container.add(lblCorBaloes);
 		
 		textFieldCorBaloes= new JTextField();
 		textFieldCorBaloes.setToolTipText("cor1, cor2");
 		textFieldCorBaloes.setColumns(10);
 		textFieldCorBaloes.setBounds(230, 160, 140, 19);
-		getContentPane().add(textFieldCorBaloes);
+		container.add(textFieldCorBaloes);
 		
 		lblDigiteTodosOs = new JLabel("(Digite todas as cores desejadas separadas por virgulas)");
 		lblDigiteTodosOs.setFont(new Font("Dialog", Font.PLAIN, 9));
 		lblDigiteTodosOs.setBounds(49, 179, 308, 20);
-		getContentPane().add(lblDigiteTodosOs);
+		container.add(lblDigiteTodosOs);
 		
 		JButton btnCadastrar = new JButton("CADASTRAR");
 		btnCadastrar.addActionListener(new ActionListener() {
@@ -136,12 +156,21 @@ public class TelaDecoracaoInfantil extends JFrame {
 			}
 		});
 		btnCadastrar.setBounds(356, 228, 117, 25);
-		getContentPane().add(btnCadastrar);
+		container.add(btnCadastrar);
 		
 		chckbxPinata = new JCheckBox("Pinata");
 		chckbxPinata.setBounds(49, 131, 128, 23);
-		getContentPane().add(chckbxPinata);
+		container.add(chckbxPinata);
 		
+		JButton button = new JButton("<");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Main.novaTela(container);
+				menuInicial();
+			}
+		});
+		button.setBounds(12, 12, 44, 25);
+		container.add(button);
 	}
 
 	private void changeVisibility(boolean flag) {
@@ -155,51 +184,51 @@ public class TelaDecoracaoInfantil extends JFrame {
 	}
 	
 	public void alterarDecoracaoInfantil() {
-		getContentPane().setLayout(null);
+		container.setLayout(null);
 		
 		JLabel lblAltTitle = new JLabel("<html><center>Alteracao de decoracao de Aniversario Infantil</center></html>");
 		lblAltTitle.setFont(new Font("Dialog", Font.PLAIN, 20));
 		lblAltTitle.setBounds(35, 6, 409, 74);
-		getContentPane().add(lblAltTitle);
+		container.add(lblAltTitle);
 		
 		lblTema = new JLabel("Tema");
 		lblTema.setBounds(49, 77, 70, 15);
-		getContentPane().add(lblTema);
+		container.add(lblTema);
 		
 		lblQtdeBaloes = new JLabel("Quantidade de Baloes");
 		lblQtdeBaloes.setBounds(49, 130, 153, 15);
-		getContentPane().add(lblQtdeBaloes);
+		container.add(lblQtdeBaloes);
 		lblQtdeBaloes.setVisible(false);
 		
 		textFieldTema = new JTextField();
 		textFieldTema.setBounds(137, 77, 140, 19);
-		getContentPane().add(textFieldTema);
+		container.add(textFieldTema);
 		textFieldTema.setColumns(10);
 		
 		textFieldQtdeBaloes = new JTextField();
 		textFieldQtdeBaloes.setColumns(10);
 		textFieldQtdeBaloes.setBounds(230, 127, 140, 19);
-		getContentPane().add(textFieldQtdeBaloes);
+		container.add(textFieldQtdeBaloes);
 		textFieldQtdeBaloes.setVisible(false);
 		
 		lblCorBaloes= new JLabel("Cores dos baloes");
 		lblCorBaloes.setBounds(49, 168, 153, 15);
-		getContentPane().add(lblCorBaloes);
+		container.add(lblCorBaloes);
 		
 		textFieldCorBaloes= new JTextField();
 		textFieldCorBaloes.setToolTipText("cor1, cor2");
 		textFieldCorBaloes.setColumns(10);
 		textFieldCorBaloes.setBounds(230, 165, 140, 19);
-		getContentPane().add(textFieldCorBaloes);
+		container.add(textFieldCorBaloes);
 		
 		lblDigiteTodosOs = new JLabel("(Digite todas as cores desejadas separadas por virgulas)");
 		lblDigiteTodosOs.setFont(new Font("Dialog", Font.PLAIN, 9));
 		lblDigiteTodosOs.setBounds(49, 183, 308, 20);
-		getContentPane().add(lblDigiteTodosOs);
+		container.add(lblDigiteTodosOs);
 		
 		chckbxPinata = new JCheckBox("Piñata");
 		chckbxPinata.setBounds(49, 215, 128, 23);
-		getContentPane().add(chckbxPinata);
+		container.add(chckbxPinata);
 		
 		btnCadastrar = new JButton("ALTERAR");
 		btnCadastrar.addActionListener(new ActionListener() {
@@ -227,7 +256,7 @@ public class TelaDecoracaoInfantil extends JFrame {
 			}
 		});
 		btnCadastrar.setBounds(356, 228, 117, 25);
-		getContentPane().add(btnCadastrar);
+		container.add(btnCadastrar);
 		btnCadastrar.setVisible(false);
 		
 		textFieldTema.addFocusListener(new FocusListener() {
@@ -268,59 +297,68 @@ public class TelaDecoracaoInfantil extends JFrame {
 			}
 		});
 		btnPesquisarPorTema.setBounds(289, 72, 184, 25);
-		getContentPane().add(btnPesquisarPorTema);
+		container.add(btnPesquisarPorTema);
 		
+		JButton button = new JButton("<");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Main.novaTela(container);
+				menuInicial();
+			}
+		});
+		button.setBounds(12, 12, 44, 25);
+		container.add(button);
 	}
 
 	public void removerDecoracaoInfantil() {
-		getContentPane().setLayout(null);
+		container.setLayout(null);
 		
 		JLabel lblAltTitle = new JLabel("<html><center>Remocao de decoracao de Aniversario Infantil</center></html>");
 		lblAltTitle.setFont(new Font("Dialog", Font.PLAIN, 20));
 		lblAltTitle.setBounds(35, 6, 409, 74);
-		getContentPane().add(lblAltTitle);
+		container.add(lblAltTitle);
 		
 		lblTema = new JLabel("Tema");
 		lblTema.setBounds(49, 77, 70, 15);
-		getContentPane().add(lblTema);
+		container.add(lblTema);
 		
 		lblQtdeBaloes = new JLabel("Quantidade de Baloes");
 		lblQtdeBaloes.setBounds(49, 130, 153, 15);
-		getContentPane().add(lblQtdeBaloes);
+		container.add(lblQtdeBaloes);
 		lblQtdeBaloes.setVisible(false);
 		
 		textFieldTema = new JTextField();
 		textFieldTema.setBounds(137, 77, 140, 19);
-		getContentPane().add(textFieldTema);
+		container.add(textFieldTema);
 		textFieldTema.setColumns(10);
 		
 		textFieldQtdeBaloes = new JTextField();
 		textFieldQtdeBaloes.setColumns(10);
 		textFieldQtdeBaloes.setBounds(230, 127, 140, 19);
-		getContentPane().add(textFieldQtdeBaloes);
+		container.add(textFieldQtdeBaloes);
 		textFieldQtdeBaloes.setVisible(false);
 		textFieldQtdeBaloes.setEditable(false);
 		
 		lblCorBaloes= new JLabel("Cores dos baloes");
 		lblCorBaloes.setBounds(49, 168, 153, 15);
-		getContentPane().add(lblCorBaloes);
+		container.add(lblCorBaloes);
 		
 		textFieldCorBaloes= new JTextField();
 		textFieldCorBaloes.setToolTipText("cor1, cor2");
 		textFieldCorBaloes.setColumns(10);
 		textFieldCorBaloes.setBounds(230, 165, 140, 19);
-		getContentPane().add(textFieldCorBaloes);
+		container.add(textFieldCorBaloes);
 		textFieldCorBaloes.setEditable(false);
 		
 		lblDigiteTodosOs = new JLabel("(Digite todas as cores desejadas separadas por virgulas)");
 		lblDigiteTodosOs.setFont(new Font("Dialog", Font.PLAIN, 9));
 		lblDigiteTodosOs.setBounds(49, 183, 308, 20);
-		getContentPane().add(lblDigiteTodosOs);
+		container.add(lblDigiteTodosOs);
 		
 		chckbxPinata = new JCheckBox("Piñata");
 		chckbxPinata.setBounds(49, 215, 128, 23);
 		chckbxPinata.setEnabled(false);
-		getContentPane().add(chckbxPinata);
+		container.add(chckbxPinata);
 		
 		btnCadastrar = new JButton("REMOVER");
 		btnCadastrar.addActionListener(new ActionListener() {
@@ -331,7 +369,7 @@ public class TelaDecoracaoInfantil extends JFrame {
 			}
 		});
 		btnCadastrar.setBounds(356, 228, 117, 25);
-		getContentPane().add(btnCadastrar);
+		container.add(btnCadastrar);
 		btnCadastrar.setVisible(false);
 		
 		textFieldTema.addFocusListener(new FocusListener() {
@@ -373,7 +411,16 @@ public class TelaDecoracaoInfantil extends JFrame {
 			}
 		});
 		btnPesquisarPorTema.setBounds(289, 72, 184, 25);
-		getContentPane().add(btnPesquisarPorTema);
+		container.add(btnPesquisarPorTema);
 		
+		JButton button = new JButton("<");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Main.novaTela(container);
+				menuInicial();
+			}
+		});
+		button.setBounds(12, 12, 44, 25);
+		container.add(button);
 	}
 }

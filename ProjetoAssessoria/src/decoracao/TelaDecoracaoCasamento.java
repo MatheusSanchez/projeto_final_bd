@@ -1,5 +1,6 @@
 package decoracao;
 
+import java.awt.Container;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,6 +14,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import main.Main;
+import main.TelaInicio;
+
 @SuppressWarnings("serial")
 public class TelaDecoracaoCasamento extends JFrame {
 	private JTextField textFieldTema;
@@ -24,89 +28,105 @@ public class TelaDecoracaoCasamento extends JFrame {
 	private JLabel lblTipoDeFlor;
 	private JLabel lblQuantidadeDeFlores;
 	
+	private Container container;
+
 	public TelaDecoracaoCasamento() {
-		menuInicial();
+		this.container = getContentPane();
+	}
+
+	public TelaDecoracaoCasamento(Container c) {
+		this.container = c;
 	}
 	
 	public void menuInicial() {
-		getContentPane().setLayout(null);
+		container.setLayout(null);
 	
 		/* Configura botao que direciona para a tela de inserir decoracao Casamento */
 		JButton btnInserir = new JButton("Inserir Decoracao Casamento");
 		btnInserir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				getContentPane().removeAll();
-				getContentPane().revalidate();
-				getContentPane().repaint();
+				container.removeAll();
+				container.revalidate();
+				container.repaint();
 				inserirDecoracaoCasamento();
 			}
 		});
 		btnInserir.setBounds(275, 110, 215, 49);
-		getContentPane().add(btnInserir);
+		container.add(btnInserir);
 		
 		/* Configura botao que direciona para a tela de alterar decoracao Casamento */
 		JButton btnAlterar = new JButton("Alterar Decoracao Casamento");
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				getContentPane().removeAll();
-				getContentPane().revalidate();
-				getContentPane().repaint();
+				container.removeAll();
+				container.revalidate();
+				container.repaint();
 				alterarDecoracaoCasamento();
 			}
 		});
 		btnAlterar.setBounds(275, 199, 215, 49);
-		getContentPane().add(btnAlterar);
+		container.add(btnAlterar);
 		
 		/* Configura botao que direciona para a tela de remover decoracao Casamento */
 		JButton btnRemover = new JButton("Remover Decoracao Casamento");
 		btnRemover.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				getContentPane().removeAll();
-				getContentPane().revalidate();
-				getContentPane().repaint();
+				container.removeAll();
+				container.revalidate();
+				container.repaint();
 				apagarDecoracaoCasamento();
 			}
 		});
 		btnRemover.setBounds(275, 288, 215, 49);
-		getContentPane().add(btnRemover);
+		container.add(btnRemover);
+		
+		JButton button = new JButton("<");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Main.novaTela(container);
+				new TelaInicio(container);
+			}
+		});
+		button.setBounds(12, 12, 44, 25);
+		container.add(button);
 	}
 
 	
 	public void inserirDecoracaoCasamento() {
-		getContentPane().setLayout(null);
+		container.setLayout(null);
 		
 		JLabel lblCadastroDeNova = new JLabel("Cadastro de decoracao de casamento");
 		lblCadastroDeNova.setFont(new Font("Dialog", Font.PLAIN, 20));
 		lblCadastroDeNova.setBounds(64, 33, 409, 15);
-		getContentPane().add(lblCadastroDeNova);
+		container.add(lblCadastroDeNova);
 		
 		JLabel lblTema = new JLabel("Tema");
 		lblTema.setBounds(49, 114, 70, 15);
-		getContentPane().add(lblTema);
+		container.add(lblTema);
 		
 		JLabel lblQuantidadeDeFlores = new JLabel("Quantidade de Flores");
 		lblQuantidadeDeFlores.setBounds(49, 141, 153, 15);
-		getContentPane().add(lblQuantidadeDeFlores);
+		container.add(lblQuantidadeDeFlores);
 		
 		JLabel lblTipoDeFlor = new JLabel("Tipos de Flor");
 		lblTipoDeFlor.setBounds(49, 168, 153, 15);
-		getContentPane().add(lblTipoDeFlor);
+		container.add(lblTipoDeFlor);
 		
 		textFieldTema = new JTextField();
 		textFieldTema.setBounds(230, 112, 140, 19);
-		getContentPane().add(textFieldTema);
+		container.add(textFieldTema);
 		textFieldTema.setColumns(10);
 		
 		textFieldQtdeFlores = new JTextField();
 		textFieldQtdeFlores.setColumns(10);
 		textFieldQtdeFlores.setBounds(230, 139, 140, 19);
-		getContentPane().add(textFieldQtdeFlores);
+		container.add(textFieldQtdeFlores);
 		
 		textFieldTipoFlor = new JTextField();
 		textFieldTipoFlor.setToolTipText("tipo1, tipo2");
 		textFieldTipoFlor.setColumns(10);
 		textFieldTipoFlor.setBounds(230, 166, 140, 19);
-		getContentPane().add(textFieldTipoFlor);
+		container.add(textFieldTipoFlor);
 		
 		JButton btnCadastrar = new JButton("CADASTRAR");
 		btnCadastrar.addActionListener(new ActionListener() {
@@ -123,13 +143,22 @@ public class TelaDecoracaoCasamento extends JFrame {
 			}
 		});
 		btnCadastrar.setBounds(356, 228, 117, 25);
-		getContentPane().add(btnCadastrar);
+		container.add(btnCadastrar);
 		
 		JLabel lblDigiteTodosOs = new JLabel("(Digite todos os tipos desejados separados por virgulas)");
 		lblDigiteTodosOs.setFont(new Font("Dialog", Font.PLAIN, 9));
 		lblDigiteTodosOs.setBounds(49, 179, 308, 20);
-		getContentPane().add(lblDigiteTodosOs);
+		container.add(lblDigiteTodosOs);
 		
+		JButton button = new JButton("<");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Main.novaTela(container);
+				menuInicial();
+			}
+		});
+		button.setBounds(12, 12, 44, 25);
+		container.add(button);
 	}
 
 	//altera a visibilidade de determiandos atributos de acordo com a flag
@@ -143,43 +172,43 @@ public class TelaDecoracaoCasamento extends JFrame {
 	}
 	
 	public void alterarDecoracaoCasamento() {
-		getContentPane().setLayout(null);
+		container.setLayout(null);
 		
 		JLabel lblCadastroDeNova = new JLabel("Alteracao de decoracao de casamento");
 		lblCadastroDeNova.setFont(new Font("Dialog", Font.PLAIN, 20));
 		lblCadastroDeNova.setBounds(64, 33, 409, 15);
-		getContentPane().add(lblCadastroDeNova);
+		container.add(lblCadastroDeNova);
 		
 		JLabel lblTema = new JLabel("Tema");
 		lblTema.setBounds(49, 77, 70, 15);
-		getContentPane().add(lblTema);
+		container.add(lblTema);
 		
 		lblQuantidadeDeFlores = new JLabel("Quantidade de Flores");
 		lblQuantidadeDeFlores.setBounds(49, 141, 153, 15);
-		getContentPane().add(lblQuantidadeDeFlores);
+		container.add(lblQuantidadeDeFlores);
 		lblQuantidadeDeFlores.setVisible(false);
 		
 		lblTipoDeFlor = new JLabel("Tipos de Flor");
 		lblTipoDeFlor.setBounds(49, 168, 153, 15);
-		getContentPane().add(lblTipoDeFlor);
+		container.add(lblTipoDeFlor);
 		lblTipoDeFlor.setVisible(false);
 		
 		textFieldTema = new JTextField();
 		textFieldTema.setBounds(137, 77, 140, 19);
-		getContentPane().add(textFieldTema);
+		container.add(textFieldTema);
 		textFieldTema.setColumns(10);
 		
 		textFieldQtdeFlores = new JTextField();
 		textFieldQtdeFlores.setColumns(10);
 		textFieldQtdeFlores.setBounds(230, 139, 140, 19);
-		getContentPane().add(textFieldQtdeFlores);
+		container.add(textFieldQtdeFlores);
 		textFieldQtdeFlores.setVisible(false);
 		
 		textFieldTipoFlor = new JTextField();
 		textFieldTipoFlor.setToolTipText("tipo1, tipo2");
 		textFieldTipoFlor.setColumns(10);
 		textFieldTipoFlor.setBounds(230, 166, 140, 19);
-		getContentPane().add(textFieldTipoFlor);
+		container.add(textFieldTipoFlor);
 		textFieldTipoFlor.setVisible(false);
 		
 		btnCadastrar = new JButton("ALTERAR");
@@ -206,13 +235,13 @@ public class TelaDecoracaoCasamento extends JFrame {
 			}
 		});
 		btnCadastrar.setBounds(356, 228, 117, 25);
-		getContentPane().add(btnCadastrar);
+		container.add(btnCadastrar);
 		btnCadastrar.setVisible(false);
 		
 		lblDigiteTodosOs = new JLabel("(Digite todos os tipos desejados separados por virgulas)");
 		lblDigiteTodosOs.setFont(new Font("Dialog", Font.PLAIN, 9));
 		lblDigiteTodosOs.setBounds(49, 179, 308, 20);
-		getContentPane().add(lblDigiteTodosOs);
+		container.add(lblDigiteTodosOs);
 		lblDigiteTodosOs.setVisible(false);
 		
 		//quando clica no campo de escrever o tema chama a funcao de alterar visibilidade
@@ -253,48 +282,57 @@ public class TelaDecoracaoCasamento extends JFrame {
 			}
 		});
 		btnPesquisarPorTema.setBounds(289, 72, 184, 25);
-		getContentPane().add(btnPesquisarPorTema);
+		container.add(btnPesquisarPorTema);
 		
+		JButton button = new JButton("<");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Main.novaTela(container);
+				menuInicial();
+			}
+		});
+		button.setBounds(12, 12, 44, 25);
+		container.add(button);
 	}
 
 	public void apagarDecoracaoCasamento() {
-		getContentPane().setLayout(null);
+		container.setLayout(null);
 		
 		JLabel lblCadastroDeNova = new JLabel("Remocao de decoracao de casamento");
 		lblCadastroDeNova.setFont(new Font("Dialog", Font.PLAIN, 20));
 		lblCadastroDeNova.setBounds(64, 33, 409, 15);
-		getContentPane().add(lblCadastroDeNova);
+		container.add(lblCadastroDeNova);
 		
 		JLabel lblTema = new JLabel("Tema");
 		lblTema.setBounds(49, 77, 70, 15);
-		getContentPane().add(lblTema);
+		container.add(lblTema);
 		
 		lblQuantidadeDeFlores = new JLabel("Quantidade de Flores");
 		lblQuantidadeDeFlores.setBounds(49, 141, 153, 15);
-		getContentPane().add(lblQuantidadeDeFlores);
+		container.add(lblQuantidadeDeFlores);
 		lblQuantidadeDeFlores.setVisible(false);
 		
 		lblTipoDeFlor = new JLabel("Tipos de Flor");
 		lblTipoDeFlor.setBounds(49, 168, 153, 15);
-		getContentPane().add(lblTipoDeFlor);
+		container.add(lblTipoDeFlor);
 		lblTipoDeFlor.setVisible(false);
 		
 		textFieldTema = new JTextField();
 		textFieldTema.setBounds(137, 77, 140, 19);
-		getContentPane().add(textFieldTema);
+		container.add(textFieldTema);
 		textFieldTema.setColumns(10);
 		
 		textFieldQtdeFlores = new JTextField();
 		textFieldQtdeFlores.setColumns(10);
 		textFieldQtdeFlores.setBounds(230, 139, 140, 19);
-		getContentPane().add(textFieldQtdeFlores);
+		container.add(textFieldQtdeFlores);
 		textFieldQtdeFlores.setVisible(false);
 		textFieldQtdeFlores.setEditable(false);
 		
 		textFieldTipoFlor = new JTextField();
 		textFieldTipoFlor.setColumns(10);
 		textFieldTipoFlor.setBounds(230, 166, 140, 19);
-		getContentPane().add(textFieldTipoFlor);
+		container.add(textFieldTipoFlor);
 		textFieldTipoFlor.setVisible(false);
 		textFieldTipoFlor.setEditable(false);
 		
@@ -308,13 +346,13 @@ public class TelaDecoracaoCasamento extends JFrame {
 			}
 		});
 		btnCadastrar.setBounds(356, 228, 117, 25);
-		getContentPane().add(btnCadastrar);
+		container.add(btnCadastrar);
 		btnCadastrar.setVisible(false);
 		
 		lblDigiteTodosOs = new JLabel("(Digite todos os tipos desejados separados por virgulas)");
 		lblDigiteTodosOs.setFont(new Font("Dialog", Font.PLAIN, 9));
 		lblDigiteTodosOs.setBounds(49, 179, 308, 20);
-		getContentPane().add(lblDigiteTodosOs);
+		container.add(lblDigiteTodosOs);
 		lblDigiteTodosOs.setVisible(false);
 
 		//quando clica no campo de escrever o tema chama a funcao de alterar visibilidade
@@ -356,8 +394,17 @@ public class TelaDecoracaoCasamento extends JFrame {
 			}
 		});
 		btnPesquisarPorTema.setBounds(289, 72, 184, 25);
-		getContentPane().add(btnPesquisarPorTema);
+		container.add(btnPesquisarPorTema);
 		
+		JButton button = new JButton("<");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Main.novaTela(container);
+				menuInicial();
+			}
+		});
+		button.setBounds(12, 12, 44, 25);
+		container.add(button);
 	}
 
 	

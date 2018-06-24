@@ -1,5 +1,6 @@
 package contratante;
 
+import java.awt.Container;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,6 +12,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+
+import main.Main;
+import main.TelaInicio;
 
 @SuppressWarnings("serial")
 public class TelaContratante extends JFrame {
@@ -34,51 +38,70 @@ public class TelaContratante extends JFrame {
 	
 	private JButton btnCadastrar;
 	
+	private Container container;
+
 	public TelaContratante() {
+		this.container = getContentPane();
+		
 		//menuInicial();
+	}
+
+	public TelaContratante(Container c) {
+		//menuInicial();
+		this.container = c;
 	}
 	
 	public void menuInicial() {
-		getContentPane().setLayout(null);
+		container.setLayout(null);
 	
 		/* Configura botao que direciona para a tela de inserir Contratante */
 		JButton btnInserir = new JButton("Inserir Contratante");
 		btnInserir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				getContentPane().removeAll();
-				getContentPane().revalidate();
-				getContentPane().repaint();
+				container.removeAll();
+				container.revalidate();
+				container.repaint();
 				cadastroContratante();
 			}
 		});
 		btnInserir.setBounds(275, 110, 215, 49);
-		getContentPane().add(btnInserir);
+		container.add(btnInserir);
 		
 		/* Configura botao que direciona para a tela de alterar Contratante */
 		JButton btnAlterar = new JButton("Alterar Contratante");
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				getContentPane().removeAll();
-				getContentPane().revalidate();
-				getContentPane().repaint();
+				container.removeAll();
+				container.revalidate();
+				container.repaint();
 				alteracaoContratante();
 			}
 		});
 		btnAlterar.setBounds(275, 199, 215, 49);
-		getContentPane().add(btnAlterar);
+		container.add(btnAlterar);
 		
 		/* Configura botao que direciona para a tela de remover Contratante */
 		JButton btnRemover = new JButton("Remover Contratante");
 		btnRemover.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				getContentPane().removeAll();
-				getContentPane().revalidate();
-				getContentPane().repaint();
+				container.removeAll();
+				container.revalidate();
+				container.repaint();
 				remocaoContratante();
 			}
 		});
 		btnRemover.setBounds(275, 288, 215, 49);
-		getContentPane().add(btnRemover);
+		container.add(btnRemover);
+		
+		JButton button = new JButton("<");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Main.novaTela(container);
+				new TelaInicio(container);
+			}
+		});
+		button.setBounds(12, 12, 44, 25);
+		container.add(button);
 	}
 
 	
@@ -103,90 +126,90 @@ public class TelaContratante extends JFrame {
 	}
 	
 	public void cadastroContratante() {
-		getContentPane().setLayout(null);
+		container.setLayout(null);
 		
 		lblNomeCompleto = new JLabel("Nome Completo");
 		lblNomeCompleto.setBounds(86, 50, 115, 39);
 		lblNomeCompleto.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		getContentPane().add(lblNomeCompleto);
+		container.add(lblNomeCompleto);
 		
 		textFieldNome = new JTextField();
 		textFieldNome.setBounds(234, 62, 136, 20);
-		getContentPane().add(textFieldNome);
+		container.add(textFieldNome);
 		textFieldNome.setColumns(10);
 		
 		lblEmail = new JLabel("Email");
 		lblEmail.setBounds(86, 148, 41, 39);
 		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		getContentPane().add(lblEmail);
+		container.add(lblEmail);
 		
 		lblCpf = new JLabel("CPF");
 		lblCpf.setBounds(86, 86, 41, 29);
 		lblCpf.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		getContentPane().add(lblCpf);
+		container.add(lblCpf);
 		
 		lblTelefone = new JLabel("Telefone");
 		lblTelefone.setBounds(86, 112, 70, 39);
 		lblTelefone.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		getContentPane().add(lblTelefone);
+		container.add(lblTelefone);
 		
 		lblCep = new JLabel("Cep");
 		lblCep.setBounds(86, 209, 41, 39);
 		lblCep.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		getContentPane().add(lblCep);
+		container.add(lblCep);
 		
 		lblRua = new JLabel("Rua");
 		lblRua.setBounds(86, 244, 41, 39);
 		lblRua.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		getContentPane().add(lblRua);
+		container.add(lblRua);
 		
 		lblNumero = new JLabel("Numero");
 		lblNumero.setBounds(86, 276, 57, 39);
 		lblNumero.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		getContentPane().add(lblNumero);
+		container.add(lblNumero);
 		
 		lblBairro = new JLabel("Bairro");
 		lblBairro.setBounds(86, 178, 51, 39);
 		lblBairro.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		getContentPane().add(lblBairro);
+		container.add(lblBairro);
 		
 		textFieldCpf = new JTextField();
 		textFieldCpf.setToolTipText("xxx.xxx.xxx-xx");
 		textFieldCpf.setColumns(10);
 		textFieldCpf.setBounds(234, 93, 136, 20);
-		getContentPane().add(textFieldCpf);
+		container.add(textFieldCpf);
 		
 		textFieldTelefone = new JTextField();
 		textFieldTelefone.setToolTipText("(xx)xxxx-xxxx ou (xx)xxxxx-xxxx");
 		textFieldTelefone.setColumns(10);
 		textFieldTelefone.setBounds(234, 124, 136, 20);
-		getContentPane().add(textFieldTelefone);
+		container.add(textFieldTelefone);
 		
 		textFieldBairro = new JTextField();
 		textFieldBairro.setColumns(10);
 		textFieldBairro.setBounds(234, 190, 136, 20);
-		getContentPane().add(textFieldBairro);
+		container.add(textFieldBairro);
 		
 		textFieldCep = new JTextField();
 		textFieldCep.setToolTipText("xxxxx-xxx");
 		textFieldCep.setColumns(10);
 		textFieldCep.setBounds(234, 221, 136, 20);
-		getContentPane().add(textFieldCep);
+		container.add(textFieldCep);
 		
 		textFieldRua = new JTextField();
 		textFieldRua.setColumns(10);
 		textFieldRua.setBounds(234, 256, 136, 20);
-		getContentPane().add(textFieldRua);
+		container.add(textFieldRua);
 		
 		textFieldNumero = new JTextField();
 		textFieldNumero.setColumns(10);
 		textFieldNumero.setBounds(234, 288, 136, 20);
-		getContentPane().add(textFieldNumero);
+		container.add(textFieldNumero);
 		
 		textFieldEmail = new JTextField();
 		textFieldEmail.setColumns(10);
 		textFieldEmail.setBounds(234, 160, 136, 20);
-		getContentPane().add(textFieldEmail);
+		container.add(textFieldEmail);
 		
 		JButton btnCadastrar = new JButton("CADASTRAR");
 		btnCadastrar.addActionListener(new ActionListener() {
@@ -204,100 +227,110 @@ public class TelaContratante extends JFrame {
 			}
 		});
 		btnCadastrar.setBounds(459, 256, 115, 46);
-		getContentPane().add(btnCadastrar);
+		container.add(btnCadastrar);
 		
 		JLabel lblCadasroDeNovo = new JLabel("Cadastro de Novo Contratante");
 		lblCadasroDeNovo.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblCadasroDeNovo.setBounds(184, 0, 285, 29);
-		getContentPane().add(lblCadasroDeNovo);
+		container.add(lblCadasroDeNovo);
+		
+		JButton button = new JButton("<");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Main.novaTela(container);
+				menuInicial();
+			}
+		});
+		button.setBounds(12, 12, 44, 25);
+		container.add(button);
 	}
 
 
 	public void alteracaoContratante() {
-		getContentPane().setLayout(null);
+		container.setLayout(null);
 		
 		lblNomeCompleto = new JLabel("Nome Completo");
 		lblNomeCompleto.setBounds(86, 82, 115, 39);
 		lblNomeCompleto.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		getContentPane().add(lblNomeCompleto);
+		container.add(lblNomeCompleto);
 		
 		textFieldNome = new JTextField();
 		textFieldNome.setBounds(234, 93, 136, 20);
-		getContentPane().add(textFieldNome);
+		container.add(textFieldNome);
 		textFieldNome.setColumns(10);
 		
 		lblEmail = new JLabel("Email");
 		lblEmail.setBounds(86, 148, 41, 39);
 		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		getContentPane().add(lblEmail);
+		container.add(lblEmail);
 		
 		lblCpf = new JLabel("CPF");
 		lblCpf.setBounds(86, 41, 41, 29);
 		lblCpf.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		getContentPane().add(lblCpf);
+		container.add(lblCpf);
 		
 		lblTelefone = new JLabel("Telefone");
 		lblTelefone.setBounds(86, 112, 70, 39);
 		lblTelefone.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		getContentPane().add(lblTelefone);
+		container.add(lblTelefone);
 		
 		lblCep = new JLabel("Cep");
 		lblCep.setBounds(86, 209, 41, 39);
 		lblCep.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		getContentPane().add(lblCep);
+		container.add(lblCep);
 		
 		lblRua = new JLabel("Rua");
 		lblRua.setBounds(86, 244, 41, 39);
 		lblRua.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		getContentPane().add(lblRua);
+		container.add(lblRua);
 		
 		lblNumero = new JLabel("Numero");
 		lblNumero.setBounds(86, 276, 57, 39);
 		lblNumero.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		getContentPane().add(lblNumero);
+		container.add(lblNumero);
 		
 		lblBairro = new JLabel("Bairro");
 		lblBairro.setBounds(86, 178, 51, 39);
 		lblBairro.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		getContentPane().add(lblBairro);
+		container.add(lblBairro);
 		
 		textFieldCpf = new JTextField();
 		textFieldCpf.setToolTipText("xxx.xxx.xxx-xx");
 		textFieldCpf.setColumns(10);
 		textFieldCpf.setBounds(234, 47, 136, 20);
-		getContentPane().add(textFieldCpf);
+		container.add(textFieldCpf);
 		
 		textFieldTelefone = new JTextField();
 		textFieldTelefone.setToolTipText("(xx)xxxx-xxxx ou (xx)xxxxx-xxxx");
 		textFieldTelefone.setColumns(10);
 		textFieldTelefone.setBounds(234, 124, 136, 20);
-		getContentPane().add(textFieldTelefone);
+		container.add(textFieldTelefone);
 		
 		textFieldBairro = new JTextField();
 		textFieldBairro.setColumns(10);
 		textFieldBairro.setBounds(234, 190, 136, 20);
-		getContentPane().add(textFieldBairro);
+		container.add(textFieldBairro);
 		
 		textFieldCep = new JTextField();
 		textFieldCep.setToolTipText("xxxxx-xxx");
 		textFieldCep.setColumns(10);
 		textFieldCep.setBounds(234, 221, 136, 20);
-		getContentPane().add(textFieldCep);
+		container.add(textFieldCep);
 		
 		textFieldRua = new JTextField();
 		textFieldRua.setColumns(10);
 		textFieldRua.setBounds(234, 256, 136, 20);
-		getContentPane().add(textFieldRua);
+		container.add(textFieldRua);
 		
 		textFieldNumero = new JTextField();
 		textFieldNumero.setColumns(10);
 		textFieldNumero.setBounds(234, 288, 136, 20);
-		getContentPane().add(textFieldNumero);
+		container.add(textFieldNumero);
 		
 		textFieldEmail = new JTextField();
 		textFieldEmail.setColumns(10);
 		textFieldEmail.setBounds(234, 160, 136, 20);
-		getContentPane().add(textFieldEmail);
+		container.add(textFieldEmail);
 		
 		
 		btnCadastrar = new JButton("ALTERAR");
@@ -316,12 +349,12 @@ public class TelaContratante extends JFrame {
 			}
 		});
 		btnCadastrar.setBounds(459, 256, 115, 46);
-		getContentPane().add(btnCadastrar);
+		container.add(btnCadastrar);
 		
 		JLabel lblCadasroDeNovo = new JLabel("Alteracao de Contratante");
 		lblCadasroDeNovo.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblCadasroDeNovo.setBounds(184, 0, 285, 29);
-		getContentPane().add(lblCadasroDeNovo);
+		container.add(lblCadasroDeNovo);
 		
 		changeVisibility(false);
 		
@@ -354,7 +387,7 @@ public class TelaContratante extends JFrame {
 			}
 		});
 		btnRetornaContratante.setBounds(392, 46, 182, 23);
-		getContentPane().add(btnRetornaContratante);
+		container.add(btnRetornaContratante);
 		
 		textFieldCpf.addFocusListener(new FocusListener() {
 			
@@ -366,101 +399,111 @@ public class TelaContratante extends JFrame {
 				changeVisibility(false);
 			}
 		});
+		
+		JButton button = new JButton("<");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Main.novaTela(container);
+				menuInicial();
+			}
+		});
+		button.setBounds(12, 12, 44, 25);
+		container.add(button);
 	}
 	
 
 	public void remocaoContratante() {
-		getContentPane().setLayout(null);
+		container.setLayout(null);
 		
 		lblNomeCompleto = new JLabel("Nome Completo");
 		lblNomeCompleto.setBounds(86, 82, 115, 39);
 		lblNomeCompleto.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		getContentPane().add(lblNomeCompleto);
+		container.add(lblNomeCompleto);
 		
 		textFieldNome = new JTextField();
 		textFieldNome.setBounds(234, 93, 136, 20);
-		getContentPane().add(textFieldNome);
+		container.add(textFieldNome);
 		textFieldNome.setColumns(10);
 		textFieldNome.setEditable(false);
 		
 		lblEmail = new JLabel("Email");
 		lblEmail.setBounds(86, 148, 41, 39);
 		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		getContentPane().add(lblEmail);
+		container.add(lblEmail);
 		
 		lblCpf = new JLabel("CPF");
 		lblCpf.setBounds(86, 41, 41, 29);
 		lblCpf.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		getContentPane().add(lblCpf);
+		container.add(lblCpf);
 		
 		lblTelefone = new JLabel("Telefone");
 		lblTelefone.setBounds(86, 112, 70, 39);
 		lblTelefone.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		getContentPane().add(lblTelefone);
+		container.add(lblTelefone);
 		
 		lblCep = new JLabel("Cep");
 		lblCep.setBounds(86, 209, 41, 39);
 		lblCep.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		getContentPane().add(lblCep);
+		container.add(lblCep);
 		
 		lblRua = new JLabel("Rua");
 		lblRua.setBounds(86, 244, 41, 39);
 		lblRua.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		getContentPane().add(lblRua);
+		container.add(lblRua);
 		
 		lblNumero = new JLabel("Numero");
 		lblNumero.setBounds(86, 276, 57, 39);
 		lblNumero.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		getContentPane().add(lblNumero);
+		container.add(lblNumero);
 		
 		lblBairro = new JLabel("Bairro");
 		lblBairro.setBounds(86, 178, 51, 39);
 		lblBairro.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		getContentPane().add(lblBairro);
+		container.add(lblBairro);
 		
 		textFieldCpf = new JTextField();
 		textFieldCpf.setToolTipText("xxx.xxx.xxx-xx");
 		textFieldCpf.setColumns(10);
 		textFieldCpf.setBounds(234, 47, 136, 20);
-		getContentPane().add(textFieldCpf);
+		container.add(textFieldCpf);
 		
 		textFieldTelefone = new JTextField();
 		textFieldTelefone.setToolTipText("(xx)xxxx-xxxx ou (xx)xxxxx-xxxx");
 		textFieldTelefone.setColumns(10);
 		textFieldTelefone.setBounds(234, 124, 136, 20);
 		textFieldTelefone.setEditable(false);
-		getContentPane().add(textFieldTelefone);
+		container.add(textFieldTelefone);
 		
 		textFieldBairro = new JTextField();
 		textFieldBairro.setColumns(10);
 		textFieldBairro.setBounds(234, 190, 136, 20);
 		textFieldBairro.setEditable(false);
-		getContentPane().add(textFieldBairro);
+		container.add(textFieldBairro);
 		
 		textFieldCep = new JTextField();
 		textFieldCep.setToolTipText("xxxxx-xxx");
 		textFieldCep.setColumns(10);
 		textFieldCep.setBounds(234, 221, 136, 20);
 		textFieldCep.setEditable(false);
-		getContentPane().add(textFieldCep);
+		container.add(textFieldCep);
 		
 		textFieldRua = new JTextField();
 		textFieldRua.setColumns(10);
 		textFieldRua.setBounds(234, 256, 136, 20);
 		textFieldRua.setEditable(false);
-		getContentPane().add(textFieldRua);
+		container.add(textFieldRua);
 		
 		textFieldNumero = new JTextField();
 		textFieldNumero.setColumns(10);
 		textFieldNumero.setBounds(234, 288, 136, 20);
 		textFieldNumero.setEditable(false);
-		getContentPane().add(textFieldNumero);
+		container.add(textFieldNumero);
 		
 		textFieldEmail = new JTextField();
 		textFieldEmail.setColumns(10);
 		textFieldEmail.setBounds(234, 160, 136, 20);
 		textFieldEmail.setEditable(false);
-		getContentPane().add(textFieldEmail);
+		container.add(textFieldEmail);
 		
 		
 		btnCadastrar = new JButton("REMOVER");
@@ -473,12 +516,12 @@ public class TelaContratante extends JFrame {
 			}
 		});
 		btnCadastrar.setBounds(459, 256, 115, 46);
-		getContentPane().add(btnCadastrar);
+		container.add(btnCadastrar);
 		
 		JLabel lblCadasroDeNovo = new JLabel("Remocao de Contratante");
 		lblCadasroDeNovo.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblCadasroDeNovo.setBounds(184, 0, 285, 29);
-		getContentPane().add(lblCadasroDeNovo);
+		container.add(lblCadasroDeNovo);
 		
 		changeVisibility(false);
 		
@@ -511,7 +554,7 @@ public class TelaContratante extends JFrame {
 			}
 		});
 		btnRetornaContratante.setBounds(392, 46, 182, 23);
-		getContentPane().add(btnRetornaContratante);
+		container.add(btnRetornaContratante);
 		
 		textFieldCpf.addFocusListener(new FocusListener() {
 			
@@ -523,5 +566,15 @@ public class TelaContratante extends JFrame {
 				changeVisibility(false);
 			}
 		});
+		
+		JButton button = new JButton("<");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Main.novaTela(container);
+				menuInicial();
+			}
+		});
+		button.setBounds(12, 12, 44, 25);
+		container.add(button);
 	}
 }

@@ -23,7 +23,8 @@ public class Main {
 	public static void main(String[] args) {
 		Conexao.getInstance(); // pede os dados da conexao antes de rodar
 
-		TelaFesta c = new TelaFesta();
+		//TelaFesta c = new TelaFesta();
+		TelaInicio c = new TelaInicio();
 
 		// TelaContratante c = new TelaContratante();
 		// TelaDecoracaoCasamento c = new TelaDecoracaoCasamento();
