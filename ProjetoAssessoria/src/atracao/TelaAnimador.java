@@ -1,5 +1,6 @@
 package atracao;
 
+import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -13,6 +14,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+
+import main.Main;
+import main.TelaInicio;
 
 public class TelaAnimador extends JFrame {
 	
@@ -31,13 +35,14 @@ public class TelaAnimador extends JFrame {
 	private JButton btnPesquisarAnimador;
 	private String[] options = {"Magico", "Palhaco"};
 	
+	private Container container;
 	
 	public TelaAnimador() {
-		
-		menuInicial();
-		//inserir();
-		//alterar();
-		
+		this.container = getContentPane();		
+	}
+
+	public TelaAnimador(Container c) {
+		this.container = c;		
 	}
 	
 	/* Metodo usado para esconder ou revelar o formulario de insercao ou alteracao de animador */
@@ -58,100 +63,110 @@ public class TelaAnimador extends JFrame {
 		btnInserir.setBounds(275, 110, 215, 49);
 		btnInserir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				getContentPane().removeAll();
-				getContentPane().revalidate();
-				getContentPane().repaint();
+				container.removeAll();
+				container.revalidate();
+				container.repaint();
 				inserir();
 			}
 		});
-		getContentPane().setLayout(null);
-		getContentPane().add(btnInserir);
+		container.setLayout(null);
+		container.add(btnInserir);
 		
 		/* Configura botao que direciona para a tela de alterar animador */
 		JButton btnAlterar = new JButton("Alterar Animador");
 		btnAlterar.setBounds(275, 199, 215, 49);
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				getContentPane().removeAll();
-				getContentPane().revalidate();
-				getContentPane().repaint();
+				container.removeAll();
+				container.revalidate();
+				container.repaint();
 				alterar();
 			}
 		});
-		getContentPane().add(btnAlterar);
+		container.add(btnAlterar);
 		
 		/* Configura botao que direciona para a tela de remover animador */
 		JButton btnRemover = new JButton("Remover Animador");
 		btnRemover.setBounds(275, 288, 215, 49);
 		btnRemover.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				getContentPane().removeAll();
-				getContentPane().revalidate();
-				getContentPane().repaint();
+				container.removeAll();
+				container.revalidate();
+				container.repaint();
 				remover();
 			}
 		});
-		getContentPane().add(btnRemover);
+		container.add(btnRemover);
+		
+		JButton button = new JButton("<");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Main.novaTela(container);
+				new TelaInicio(container);
+			}
+		});
+		button.setBounds(12, 12, 44, 25);
+		container.add(button);
 	}
 	
 	/* Metodo que cria a tela de insercao de animador */
 	public void inserir() {
-		getContentPane().setLayout(null);
+		container.setLayout(null);
 		
 		/* Criacao dos objetos swing para a interface da tela */
 		lblTitulo = new JLabel("<html><body><center><h1>Tela de Insercao de Animador</h1></center></body></html>");
 		lblTitulo.setVerticalAlignment(SwingConstants.TOP);
 		lblTitulo.setBounds(201, 12, 363, 71);
-		getContentPane().add(lblTitulo);
+		container.add(lblTitulo);
 		
 		lblNome = new JLabel("Nome");
 		lblNome.setBounds(119, 159, 70, 15);
-		getContentPane().add(lblNome);
+		container.add(lblNome);
 		
 		lblTelefone = new JLabel("Telefone");
 		lblTelefone.setBounds(119, 203, 70, 15);
-		getContentPane().add(lblTelefone);
+		container.add(lblTelefone);
 		
 		lblEmail = new JLabel("Email");
 		lblEmail.setBounds(119, 250, 70, 15);
-		getContentPane().add(lblEmail);
+		container.add(lblEmail);
 		
 		textFieldNome = new JTextField();
 		textFieldNome.setBounds(281, 159, 221, 19);
-		getContentPane().add(textFieldNome);
+		container.add(textFieldNome);
 		textFieldNome.setColumns(10);
 		
 		textFieldTelefone = new JTextField();
 		textFieldTelefone.setColumns(10);
 		textFieldTelefone.setBounds(281, 203, 221, 19);
-		getContentPane().add(textFieldTelefone);
+		container.add(textFieldTelefone);
 		
 		textFieldEmail = new JTextField();
 		textFieldEmail.setColumns(10);
 		textFieldEmail.setBounds(281, 250, 221, 19);
-		getContentPane().add(textFieldEmail);
+		container.add(textFieldEmail);
 		
 		String[] options = {"Animador", "Banda"};
 		dropTipoAnim = new JComboBox(options);
 		dropTipoAnim.setBounds(281, 289, 125, 24);
-		getContentPane().add(dropTipoAnim);
+		container.add(dropTipoAnim);
 		
 		lblTipoAnim = new JLabel("Tipo de Animacao");
 		lblTipoAnim.setBounds(119, 294, 147, 15);
-		getContentPane().add(lblTipoAnim);
+		container.add(lblTipoAnim);
 		
 		/* Configuracao do botao de voltar para o menu inicial */
 		btnVoltar = new JButton("<");
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				getContentPane().removeAll();
-				getContentPane().revalidate();
-				getContentPane().repaint();
+				container.removeAll();
+				container.revalidate();
+				container.repaint();
 				menuInicial();
 			}
 		});
 		btnVoltar.setBounds(12, 12, 44, 25);
-		getContentPane().add(btnVoltar);
+		container.add(btnVoltar);
 		
 		btnCadastrar = new JButton("CADASTRAR");
 		btnCadastrar.addActionListener(new ActionListener() {
@@ -168,67 +183,76 @@ public class TelaAnimador extends JFrame {
 			}
 		});
 		btnCadastrar.setBounds(526, 313, 117, 25);
-		getContentPane().add(btnCadastrar);
+		container.add(btnCadastrar);
 		
+		JButton button = new JButton("<");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Main.novaTela(container);
+				menuInicial();
+			}
+		});
+		button.setBounds(12, 12, 44, 25);
+		container.add(button);
 	}
 	
 	/* Metodo que cria a tela de alteracao de animador */
 	public void alterar() {
-		getContentPane().setLayout(null);
+		container.setLayout(null);
 		
 		/* Criacao dos objetos swing para a interface da tela */
 		lblTitulo = new JLabel("<html><body><center><h1>Tela de Alteracao de Animador</h1></center></body></html>");
 		lblTitulo.setVerticalAlignment(SwingConstants.TOP);
 		lblTitulo.setBounds(201, 12, 363, 71);
-		getContentPane().add(lblTitulo);
+		container.add(lblTitulo);
 		
 		lblNome = new JLabel("Nome");
 		lblNome.setBounds(119, 134, 70, 15);
-		getContentPane().add(lblNome);
+		container.add(lblNome);
 		
 		lblTelefone = new JLabel("Telefone");
 		lblTelefone.setBounds(119, 203, 70, 15);
-		getContentPane().add(lblTelefone);
+		container.add(lblTelefone);
 		
 		lblEmail = new JLabel("Email");
 		lblEmail.setBounds(119, 250, 70, 15);
-		getContentPane().add(lblEmail);
+		container.add(lblEmail);
 		
 		textFieldNome = new JTextField();
 		textFieldNome.setBounds(281, 132, 221, 19);
-		getContentPane().add(textFieldNome);
+		container.add(textFieldNome);
 		textFieldNome.setColumns(10);
 		
 		textFieldTelefone = new JTextField();
 		textFieldTelefone.setColumns(10);
 		textFieldTelefone.setBounds(281, 203, 221, 19);
-		getContentPane().add(textFieldTelefone);
+		container.add(textFieldTelefone);
 		
 		textFieldEmail = new JTextField();
 		textFieldEmail.setColumns(10);
 		textFieldEmail.setBounds(281, 250, 221, 19);
-		getContentPane().add(textFieldEmail);
+		container.add(textFieldEmail);
 		
 		dropTipoAnim = new JComboBox(options);
 		dropTipoAnim.setBounds(281, 289, 125, 24);
-		getContentPane().add(dropTipoAnim);
+		container.add(dropTipoAnim);
 		
 		lblTipoAnim = new JLabel("Tipo de Animacao");
 		lblTipoAnim.setBounds(119, 294, 147, 15);
-		getContentPane().add(lblTipoAnim);
+		container.add(lblTipoAnim);
 		
 		/* Configuracao do botao de voltar para o menu inicial */
 		btnVoltar = new JButton("<");
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				getContentPane().removeAll();
-				getContentPane().revalidate();
-				getContentPane().repaint();
+				container.removeAll();
+				container.revalidate();
+				container.repaint();
 				menuInicial();
 			}
 		});
 		btnVoltar.setBounds(12, 12, 44, 25);
-		getContentPane().add(btnVoltar);
+		container.add(btnVoltar);
 		
 		btnCadastrar = new JButton("ALTERAR");
 		btnCadastrar.addActionListener(new ActionListener() {
@@ -245,7 +269,7 @@ public class TelaAnimador extends JFrame {
 			}
 		});
 		btnCadastrar.setBounds(524, 312, 117, 25);
-		getContentPane().add(btnCadastrar);
+		container.add(btnCadastrar);
 		
 		/* Configuracao do botao de pesquisar animador */
 		btnPesquisarAnimador = new JButton("Pesquisar Animador");
@@ -273,7 +297,7 @@ public class TelaAnimador extends JFrame {
 			}
 		});
 		btnPesquisarAnimador.setBounds(524, 129, 181, 25);
-		getContentPane().add(btnPesquisarAnimador);
+		container.add(btnPesquisarAnimador);
 		
 		textFieldNome.addFocusListener(new FocusListener() {
 			
@@ -288,68 +312,77 @@ public class TelaAnimador extends JFrame {
 		
 		changeVisibility(false);
 		
+		JButton button = new JButton("<");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Main.novaTela(container);
+				menuInicial();
+			}
+		});
+		button.setBounds(12, 12, 44, 25);
+		container.add(button);
 	}
 	
 	/* Metodo que cria a tela de remocao de animador */
 	public void remover() {
-		getContentPane().setLayout(null);
+		container.setLayout(null);
 
 		/* Criacao dos objetos swing para a interface da tela */
 		lblTitulo = new JLabel("<html><body><center><h1>Tela de Remocao de Animador</h1></center></body></html>");
 		lblTitulo.setVerticalAlignment(SwingConstants.TOP);
 		lblTitulo.setBounds(201, 12, 363, 71);
-		getContentPane().add(lblTitulo);
+		container.add(lblTitulo);
 		
 		lblNome = new JLabel("Nome");
 		lblNome.setBounds(119, 134, 70, 15);
-		getContentPane().add(lblNome);
+		container.add(lblNome);
 		
 		lblTelefone = new JLabel("Telefone");
 		lblTelefone.setBounds(119, 203, 70, 15);
-		getContentPane().add(lblTelefone);
+		container.add(lblTelefone);
 		
 		lblEmail = new JLabel("Email");
 		lblEmail.setBounds(119, 250, 70, 15);
-		getContentPane().add(lblEmail);
+		container.add(lblEmail);
 		
 		textFieldNome = new JTextField();
 		textFieldNome.setBounds(281, 132, 221, 19);
-		getContentPane().add(textFieldNome);
+		container.add(textFieldNome);
 		textFieldNome.setColumns(10);
 		
 		textFieldTelefone = new JTextField();
 		textFieldTelefone.setColumns(10);
 		textFieldTelefone.setBounds(281, 203, 221, 19);
-		getContentPane().add(textFieldTelefone);
+		container.add(textFieldTelefone);
 		textFieldTelefone.setEditable(false);
 		
 		textFieldEmail = new JTextField();
 		textFieldEmail.setColumns(10);
 		textFieldEmail.setBounds(281, 250, 221, 19);
-		getContentPane().add(textFieldEmail);
+		container.add(textFieldEmail);
 		textFieldEmail.setEditable(false);
 		
 		dropTipoAnim = new JComboBox(options);
 		dropTipoAnim.setBounds(281, 289, 125, 24);
-		getContentPane().add(dropTipoAnim);
+		container.add(dropTipoAnim);
 		dropTipoAnim.setEnabled(false);
 		
 		lblTipoAnim = new JLabel("Tipo de Animacao");
 		lblTipoAnim.setBounds(119, 294, 147, 15);
-		getContentPane().add(lblTipoAnim);
+		container.add(lblTipoAnim);
 		
 		/* Configura botao de voltar para o menu inicial */
 		btnVoltar = new JButton("<");
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				getContentPane().removeAll();
-				getContentPane().revalidate();
-				getContentPane().repaint();
+				container.removeAll();
+				container.revalidate();
+				container.repaint();
 				menuInicial();
 			}
 		});
 		btnVoltar.setBounds(12, 12, 44, 25);
-		getContentPane().add(btnVoltar);
+		container.add(btnVoltar);
 		
 		/* Configura o botao de remocao de animador */
 		btnCadastrar = new JButton("REMOVER");
@@ -361,7 +394,7 @@ public class TelaAnimador extends JFrame {
 			}
 		});
 		btnCadastrar.setBounds(524, 312, 117, 25);
-		getContentPane().add(btnCadastrar);
+		container.add(btnCadastrar);
 		
 		/* Configuracao do botao de pesquisar animador */
 		btnPesquisarAnimador = new JButton("Pesquisar Animador");
@@ -388,7 +421,7 @@ public class TelaAnimador extends JFrame {
 			}
 		});
 		btnPesquisarAnimador.setBounds(524, 129, 181, 25);
-		getContentPane().add(btnPesquisarAnimador);
+		container.add(btnPesquisarAnimador);
 		
 		textFieldNome.addFocusListener(new FocusListener() {
 			
@@ -403,5 +436,14 @@ public class TelaAnimador extends JFrame {
 		
 		changeVisibility(false);
 		
+		JButton button = new JButton("<");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Main.novaTela(container);
+				menuInicial();
+			}
+		});
+		button.setBounds(12, 12, 44, 25);
+		container.add(button);
 	}
 }
