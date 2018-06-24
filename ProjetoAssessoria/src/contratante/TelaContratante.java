@@ -258,6 +258,14 @@ public class TelaContratante extends JFrame {
 				s[5] = textFieldNumero.getText();
 				s[6] = textFieldBairro.getText();
 				s[7] = textFieldCep.getText();
+								
+				if (s[2].charAt(13) == ' ') {
+					System.out.println("s2 antes: " + s[2]);
+					s[2] = s[2].substring(0, 9).concat("-").concat(s[2].substring(10, 13));
+					System.out.println("s2 = " + s[2]);
+				}
+					
+				
 				Contratante.insert(s);
 			}
 		});
