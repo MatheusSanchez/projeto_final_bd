@@ -166,7 +166,8 @@ public class TelaFesta extends JFrame {
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Main.novaTela(container);
-				new TelaInicio(container);
+				TelaInicio t = new TelaInicio(container);
+				t.atualizaBanco();
 			}
 		});
 		btnVoltar.setBounds(12, 12, 44, 25);
