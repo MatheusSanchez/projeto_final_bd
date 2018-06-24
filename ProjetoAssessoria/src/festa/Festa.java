@@ -4,18 +4,14 @@ import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import conexao.Conexao;
-
-
-
-
-
-
-
 
 @SuppressWarnings("serial")
 public class Festa extends JFrame {
@@ -44,27 +40,48 @@ public class Festa extends JFrame {
 		String sql = "insert into festa(nro_contrato, pdf_contrato, preco, data, tipo, contratante)"
 				+ " values(?, ?, ?, ?, ?, ?)";
 		
+		DateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
+		java.sql.Date dataa;
+		try {
+			dataa = new java.sql.Date(fmt.parse(data).getTime());
+		} catch (ParseException e2) {
+			dataa = null;
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		
 		try {
 			PreparedStatement pstm = c.prepareStatement(sql);
 			pstm.setString(1,  numeroContrato);
 			pstm.setString(2,  "NULL");
-			pstm.setString(3,  Double.toString(preco));
-			pstm.setString(4,  "to_date(" + data + ", DD/MM/YYYY)");
+			pstm.setDouble(3,  preco);
+			pstm.setDate(4,  dataa);//to_date('" + data + "', 'DD/MM/YYYY')");
 			pstm.setString(5,  tipo);
 			pstm.setString(6,  contratante);
 			pstm.execute();
-			pstm.close();
-			
 			
 			// Insere os convidados
-			sql = "insert into convidadosfesta(festa, nome) values (?, ?);";
+			sql = "insert into convidadosfesta(festa, nome) values (?, ?)";
 			pstm = c.prepareStatement(sql);
 			
 			pstm.setString(1, numeroContrato);
 			for(int i = 0; i < convidados.length; ++i) {
 				pstm.setString(2, convidados[i]);
+				System.out.println(convidados[i]);
 				pstm.execute();
 			}
+			
+			// Insere a o casamento se a festa for casamento ou no aniversario infantil se a festa for um aniversario infantl
+			if(tipo == "Casamento") {
+				sql = "insert into casamento(nro_contrato, decoracao) values (?, ?)";
+			} else {
+				sql = "insert into aniversarioinfantil(nro_contrato, decoracao) values (?, ?)";
+			}
+			
+			pstm = c.prepareStatement(sql);
+			pstm.setString(1, numeroContrato);
+			pstm.setString(2, decoracao);
+			pstm.execute();
 			
 			// Insere o buffet
 			if(tipo == "Casamento") {
@@ -73,7 +90,7 @@ public class Festa extends JFrame {
 				sql = "insert into contratobuffetinfantil(data, buffet_infantil, aniversario_infantil) values(?, ?, ?)";
 			}
 			pstm = c.prepareStatement(sql);
-			pstm.setString(1, "to_date(" + data + ", DD/MM/YYYY)");
+			pstm.setDate(1, dataa);
 			pstm.setString(2, buffet);
 			pstm.setString(3, numeroContrato);			
 			pstm.execute();
@@ -86,13 +103,13 @@ public class Festa extends JFrame {
 			}
 			
 			pstm = c.prepareStatement(sql);
-			pstm.setString(1, "to_date(" + data + ", DD/MM/YYYY)");
+			pstm.setDate(1, dataa);
 			pstm.setString(2, atracao);
 			pstm.setString(3, numeroContrato);			
 			pstm.execute();
 			
 			c.commit();
-			
+			JOptionPane.showMessageDialog(null, "Festa inserida com sucesso");
 		} catch (SQLException e) {
 			try {
 				c.rollback();

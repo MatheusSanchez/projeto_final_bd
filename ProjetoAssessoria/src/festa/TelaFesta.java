@@ -425,16 +425,17 @@ public class TelaFesta extends JFrame {
 				String cnpj = txtCnpj.getText();
 				boolean ok = true;
 				
-				if (tipo == "casamento") {
+				if (tipo == "Casamento") {
 					String[] nome = BuffetCasamento.select(cnpj);
 					if (nome != null) textFieldNome.setText(nome[1]);
 					else ok = false;
 				}
-				else if (tipo == "infantil") {
+				else if (tipo == "Aniversario Infantil") {
 					List<String> nome = BuffetInfantil.select(cnpj);
 					if (nome != null && nome.size() > 0) textFieldNome.setText(nome.get(1));
 					else ok = false;
 				}
+				
 				
 				if (!ok) {
 					textFieldNome.setVisible(false);
