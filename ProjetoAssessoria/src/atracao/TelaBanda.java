@@ -18,7 +18,7 @@ import javax.swing.SwingConstants;
 import main.Main;
 import main.TelaInicio;
 
-public class TelaBanda extends JFrame {
+public class TelaBanda {
 	
 	/* Objetos usados pelo swing para a interface da tela */
 	private JTextField textFieldNome;
@@ -38,7 +38,6 @@ public class TelaBanda extends JFrame {
 	private Container container;
 
 	public TelaBanda() {
-		this.container = getContentPane();
 	}
 
 	public TelaBanda(Container c) {

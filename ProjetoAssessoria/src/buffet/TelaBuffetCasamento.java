@@ -16,7 +16,7 @@ import main.Main;
 import main.TelaInicio;
 
 @SuppressWarnings("serial")
-public class TelaBuffetCasamento extends JFrame {
+public class TelaBuffetCasamento {
 	private JTextField textFieldCnpj;
 	private JTextField textFieldNome;
 	private JTextField textFieldRua;
@@ -35,7 +35,6 @@ public class TelaBuffetCasamento extends JFrame {
 	private Container container;
 
 	public TelaBuffetCasamento() {
-		this.container = getContentPane();
 	}
 
 	public TelaBuffetCasamento(Container c) {

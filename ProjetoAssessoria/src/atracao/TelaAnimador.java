@@ -18,7 +18,7 @@ import javax.swing.SwingConstants;
 import main.Main;
 import main.TelaInicio;
 
-public class TelaAnimador extends JFrame {
+public class TelaAnimador {
 	
 	/* Objetos usados pelo swing para a interface da tela */
 	private JTextField textFieldNome;
@@ -38,7 +38,6 @@ public class TelaAnimador extends JFrame {
 	private Container container;
 	
 	public TelaAnimador() {
-		this.container = getContentPane();		
 	}
 
 	public TelaAnimador(Container c) {

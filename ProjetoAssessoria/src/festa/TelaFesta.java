@@ -33,7 +33,7 @@ import contratante.Contratante;
 import contratante.TelaContratante;
 
 @SuppressWarnings("serial")
-public class TelaFesta extends JFrame {
+public class TelaFesta {
 	private String cpfContratante;
 	private String data;
 	private String tipo;
@@ -84,8 +84,6 @@ public class TelaFesta extends JFrame {
 	}
 
 	public TelaFesta() {	
-		this.container = getContentPane();
-		//menuInicial();
 	}
 
 	public void menuInicial() {
@@ -406,24 +404,6 @@ public class TelaFesta extends JFrame {
 		});
 		btnPesquisar3.setBounds(379, 135, 110, 23);
 		container.add(btnPesquisar3);
-		
-		btnInserirNovo = new JButton("Inserir novo");
-		btnInserirNovo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(tipo == "Casamento") {
-					TelaBuffetCasamento frame = new TelaBuffetCasamento();
-					Main.novaJanela(frame);
-					frame.cadastrarBuffetCasamento();
-				} else {
-					TelaBuffetInfantil frame = new TelaBuffetInfantil();
-					Main.novaJanela(frame);
-					frame.cadastrarBuffetInfantil();
-				}
-				
-			}
-		});
-		btnInserirNovo.setBounds(41, 285, 120, 23);
-		container.add(btnInserirNovo);
 		
 		btnNext3 = new JButton("Proxima");
 		btnNext3.addActionListener(new ActionListener() {
