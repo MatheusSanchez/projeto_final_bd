@@ -17,12 +17,16 @@ import contratante.TelaContratante;
 import decoracao.TelaDecoracaoCasamento;
 import decoracao.TelaDecoracaoInfantil;
 import festa.TelaFesta;
+import javax.swing.JLabel;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.Point;
 
 @SuppressWarnings("serial")
 public class TelaInicio extends JFrame {
 	private Container container;
 
 	public TelaInicio() {
+		setLocation(new Point(600, 300));
 		this.container = getContentPane();
 	}
 
@@ -47,27 +51,37 @@ public class TelaInicio extends JFrame {
 		JButton btnConsultar = new JButton("Consultar Banco");
 		
 		JButton btnGerar = new JButton("Gerar Relatorios");
+		
+		JLabel lblTitle = new JLabel("<html><h1>Assessoria de Eventos</h1></html>");
+		lblTitle.setLocation(new Point(500, 300));
 		GroupLayout groupLayout = new GroupLayout(container);
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
+			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(101)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(btnAtualizar, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
-						.addComponent(btnConsultar, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
-						.addComponent(btnGerar, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE))
-					.addGap(100))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(241)
+							.addComponent(lblTitle, GroupLayout.PREFERRED_SIZE, 271, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(212)
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+								.addComponent(btnAtualizar, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(btnConsultar, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(btnGerar, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 329, GroupLayout.PREFERRED_SIZE))))
+					.addContainerGap(212, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(80)
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+					.addGap(78)
+					.addComponent(lblTitle)
+					.addGap(32)
 					.addComponent(btnAtualizar)
 					.addGap(18)
 					.addComponent(btnConsultar)
 					.addGap(18)
 					.addComponent(btnGerar)
-					.addContainerGap(109, Short.MAX_VALUE))
+					.addContainerGap(177, Short.MAX_VALUE))
 		);
 		container.setLayout(groupLayout);
 	}
@@ -83,7 +97,7 @@ public class TelaInicio extends JFrame {
 				t.menuInicial();
 			}
 		});
-		btnDecoracaoCasamento.setBounds(12, 98, 198, 25);
+		btnDecoracaoCasamento.setBounds(161, 176, 198, 25);
 		container.add(btnDecoracaoCasamento);
 		
 		JButton btnDecoracaoInfantil = new JButton("Decoracao Infantil");
@@ -94,7 +108,7 @@ public class TelaInicio extends JFrame {
 				t.menuInicial();
 			}
 		});
-		btnDecoracaoInfantil.setBounds(240, 98, 198, 25);
+		btnDecoracaoInfantil.setBounds(389, 176, 198, 25);
 		container.add(btnDecoracaoInfantil);
 		
 		JButton btnFesta = new JButton("Festa");
@@ -105,7 +119,7 @@ public class TelaInicio extends JFrame {
 				t.menuInicial();
 			}
 		});
-		btnFesta.setBounds(12, 61, 198, 25);
+		btnFesta.setBounds(161, 139, 198, 25);
 		container.add(btnFesta);
 		
 		JButton btnContratante = new JButton("Contratante");
@@ -116,7 +130,7 @@ public class TelaInicio extends JFrame {
 				t.menuInicial();
 			}
 		});
-		btnContratante.setBounds(240, 61, 198, 25);
+		btnContratante.setBounds(389, 139, 198, 25);
 		container.add(btnContratante);
 		
 		JButton btnBanda = new JButton("Banda");
@@ -127,7 +141,7 @@ public class TelaInicio extends JFrame {
 				t.menuInicial();
 			}
 		});
-		btnBanda.setBounds(12, 135, 198, 25);
+		btnBanda.setBounds(161, 213, 198, 25);
 		container.add(btnBanda);
 		
 		JButton btnAnimador = new JButton("Animador");
@@ -138,7 +152,7 @@ public class TelaInicio extends JFrame {
 				t.menuInicial();
 			}
 		});
-		btnAnimador.setBounds(240, 135, 198, 25);
+		btnAnimador.setBounds(389, 213, 198, 25);
 		container.add(btnAnimador);
 		
 		JButton btnBuffetCasamento = new JButton("Buffet Casamento");
@@ -149,7 +163,7 @@ public class TelaInicio extends JFrame {
 				t.menuInicial();
 			}
 		});
-		btnBuffetCasamento.setBounds(12, 172, 198, 25);
+		btnBuffetCasamento.setBounds(161, 250, 198, 25);
 		container.add(btnBuffetCasamento);
 		
 		JButton btnBuffetInfantil = new JButton("Buffet Infantil");
@@ -160,7 +174,7 @@ public class TelaInicio extends JFrame {
 				t.menuInicial();
 			}
 		});
-		btnBuffetInfantil.setBounds(240, 172, 198, 25);
+		btnBuffetInfantil.setBounds(389, 250, 198, 25);
 		container.add(btnBuffetInfantil);
 		
 		JButton button = new JButton("<");

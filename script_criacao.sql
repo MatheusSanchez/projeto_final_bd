@@ -12,7 +12,7 @@ create table Contratante(
 	-- checando a mascara do cpf
 	constraint ck_CPF check(regexp_like(CPF, '[0-9]{3}\.[0-9]{3}\.[0-9]{3}\-[0-9]{2}')),
 	-- checando a mascara do telefone
-	constraint ck_telefone check(regexp_like(telefone, '\([0-9]{2}\)[0-9]{4,5}\-[0-9]{4}')),
+	constraint ck_telefone check(regexp_like(telefone, '\([0-9]{2}\)[0-9]{4}\-[0-9]{4}')),
 	-- checando a mascara do cep
 	constraint ck_cep check(regexp_like(cep, '[0-9]{5}\-[0-9]{3}'))
 );
@@ -23,7 +23,7 @@ create table Festa(
 	preco number(7, 2),
 	data date,
 	tipo varchar2(20) not null,
-	contratante char(14) not null,
+	contratante char(14),
 
 	constraint pk_festa primary key (nro_contrato),
 	constraint fk_festa foreign key (contratante)
@@ -259,7 +259,8 @@ CREATE TABLE ANIMADOR (
 		REFERENCES ATRACAOCRITERIO(ATRACAO) 
 		ON DELETE CASCADE,
 	-- checando a mascara do telefone
-	CONSTRAINT CK_ANIMADOR_TELEFONE CHECK(REGEXP_LIKE(TELEFONE, '\([0-9]{2}\)[0-9]{4,5}\-[0-9]{4}'))
+	CONSTRAINT CK_ANIMADOR_TELEFONE CHECK(REGEXP_LIKE(TELEFONE, '\([0-9]{2}\)[0-9]{4}\-[0-9]{4}')),
+	CONSTRAINT CK_ANIMADOR_TIPO CHECK(REGEXP_LIKE(TIPO_ANIMACAO, '\([0-9]{2}\)[0-9]{4}\-[0-9]{4}'))
 );
 
 CREATE TABLE BANDA (
@@ -272,7 +273,7 @@ CREATE TABLE BANDA (
 		REFERENCES ATRACAOCRITERIO(ATRACAO) 
 		ON DELETE CASCADE,
 	-- checando a mascara do telefone
-	CONSTRAINT CK_BANDA_TELEFONE CHECK(REGEXP_LIKE(TELEFONE, '\([0-9]{2}\)[0-9]{4,5}\-[0-9]{4}'))
+	CONSTRAINT CK_BANDA_TELEFONE CHECK(REGEXP_LIKE(TELEFONE, '\([0-9]{2}\)[0-9]{4}\-[0-9]{4}'))
 );
 
 CREATE TABLE GENEROSMUSICAIS (

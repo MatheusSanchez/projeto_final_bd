@@ -6,23 +6,27 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.text.MaskFormatter;
 
 import main.Main;
 import main.TelaInicio;
 
-public class TelaBanda {
+public class TelaBanda extends JFrame {
 	
 	/* Objetos usados pelo swing para a interface da tela */
 	private JTextField textFieldNome;
-	private JTextField textFieldTelefone;
+	private JFormattedTextField textFieldTelefone;
 	private JTextField textFieldEmail;
 	private JTextField textFieldInteg;
 	private JLabel lblTitulo;
@@ -34,14 +38,28 @@ public class TelaBanda {
 	private JButton btnCadastrar;
 	private JButton btnVoltar;
 	private JButton btnPesquisar;
-	
+	private MaskFormatter telefoneMask;
 	private Container container;
 
 	public TelaBanda() {
+		this.container = getContentPane();
+		createMasks();
 	}
 
 	public TelaBanda(Container c) {
 		this.container = c;
+		createMasks();
+	}
+	
+	private void createMasks() {
+		
+		try {
+		    telefoneMask = new MaskFormatter("(##)####-####");
+		    telefoneMask.setPlaceholderCharacter(' ');
+		    telefoneMask.setValidCharacters("0123456789");
+		} catch (ParseException e) {
+		    e.printStackTrace();
+		}
 	}
 	
 	public void menuInicial() {
@@ -140,7 +158,13 @@ public class TelaBanda {
 		container.add(textFieldNome);
 		textFieldNome.setColumns(10);
 		
-		textFieldTelefone = new JTextField();
+		//textFieldTelefone = new JTextField();
+		//textFieldTelefone.setColumns(10);
+		//textFieldTelefone.setBounds(262, 191, 205, 19);
+		//container.add(textFieldTelefone);
+		
+		textFieldTelefone = new JFormattedTextField(telefoneMask);
+		textFieldTelefone.setToolTipText("(xx)xxxxx-xxxx");
 		textFieldTelefone.setColumns(10);
 		textFieldTelefone.setBounds(262, 191, 205, 19);
 		container.add(textFieldTelefone);
@@ -173,10 +197,21 @@ public class TelaBanda {
 				String nome = textFieldNome.getText(); // pega o nome da banda
 				String telefone = textFieldTelefone.getText(); // pega o telefone da banda 
 				String email = textFieldEmail.getText(); // pega o email da banda
+				
 				String integrantes[] = textFieldInteg.getText().split(","); // pega os integrantes da banda, separando por virgulas
 				for (int i = 0; i < integrantes.length; i++) {
 					integrantes[i] = integrantes[i].trim();
 				}
+				
+				List<String> types = new ArrayList<String>();
+				for (int i = 0; i < integrantes.length; i++) {
+					if (integrantes[i].length() != 0) {
+						types.add(integrantes[i]);
+					}
+				}
+				integrantes = types.toArray(new String[0]);
+				
+				if (telefone == "(  )    -    ") telefone = null;
 				
 				Banda.insert(nome, telefone, email, integrantes); // insere no banco
 			}
@@ -237,7 +272,13 @@ public class TelaBanda {
 		container.add(textFieldNome);
 		textFieldNome.setColumns(10);
 		
-		textFieldTelefone = new JTextField();
+		//textFieldTelefone = new JTextField();
+		//textFieldTelefone.setColumns(10);
+		//textFieldTelefone.setBounds(262, 191, 205, 19);
+		//container.add(textFieldTelefone);
+		
+		textFieldTelefone = new JFormattedTextField(telefoneMask);
+		textFieldTelefone.setToolTipText("(xx)xxxxx-xxxx");
 		textFieldTelefone.setColumns(10);
 		textFieldTelefone.setBounds(262, 191, 205, 19);
 		container.add(textFieldTelefone);
@@ -274,6 +315,15 @@ public class TelaBanda {
 				for (int i = 0; i < integrantes.length; i++) {
 					integrantes[i] = integrantes[i].trim();
 				}
+				
+				List<String> types = new ArrayList<String>();
+				for (int i = 0; i < integrantes.length; i++) {
+					if (integrantes[i].length() != 0) {
+						types.add(integrantes[i]);
+					}
+				}
+				integrantes = types.toArray(new String[0]);
+				if (telefone == "(  )    -    ") telefone = null;
 				
 				Banda.update(nome, telefone, email, integrantes);
 			}
@@ -379,7 +429,14 @@ public class TelaBanda {
 		container.add(textFieldNome);
 		textFieldNome.setColumns(10);
 		
-		textFieldTelefone = new JTextField();
+		//textFieldTelefone = new JTextField();
+		//textFieldTelefone.setColumns(10);
+		//textFieldTelefone.setBounds(262, 191, 205, 19);
+		//container.add(textFieldTelefone);
+		//textFieldTelefone.setEditable(false);
+		
+		textFieldTelefone = new JFormattedTextField(telefoneMask);
+		textFieldTelefone.setToolTipText("(xx)xxxxx-xxxx");
 		textFieldTelefone.setColumns(10);
 		textFieldTelefone.setBounds(262, 191, 205, 19);
 		container.add(textFieldTelefone);
