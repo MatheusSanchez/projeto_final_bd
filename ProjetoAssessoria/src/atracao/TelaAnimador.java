@@ -5,15 +5,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.text.ParseException;
 import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.text.MaskFormatter;
 
 import main.Main;
 import main.TelaInicio;
@@ -22,7 +25,7 @@ public class TelaAnimador extends JFrame {
 	
 	/* Objetos usados pelo swing para a interface da tela */
 	private JTextField textFieldNome;
-	private JTextField textFieldTelefone;
+	private JFormattedTextField textFieldTelefone;
 	private JTextField textFieldEmail;
 	private JComboBox dropTipoAnim;
 	private JLabel lblTitulo;
@@ -37,12 +40,27 @@ public class TelaAnimador extends JFrame {
 	
 	private Container container;
 	
+	private MaskFormatter telefoneMask;
+	
 	public TelaAnimador() {
 		this.container = getContentPane();		
+		createMasks();
 	}
 
 	public TelaAnimador(Container c) {
 		this.container = c;		
+		createMasks();
+	}
+	
+	private void createMasks() {
+		
+		try {
+		    telefoneMask = new MaskFormatter("(##)####-####");
+		    telefoneMask.setPlaceholderCharacter(' ');
+		    telefoneMask.setValidCharacters("0123456789");
+		} catch (ParseException e) {
+		    e.printStackTrace();
+		}
 	}
 	
 	/* Metodo usado para esconder ou revelar o formulario de insercao ou alteracao de animador */
@@ -102,7 +120,8 @@ public class TelaAnimador extends JFrame {
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Main.novaTela(container);
-				new TelaInicio(container);
+				TelaInicio t = new TelaInicio(container);
+				t.atualizaBanco();
 			}
 		});
 		button.setBounds(12, 12, 44, 25);
@@ -136,7 +155,13 @@ public class TelaAnimador extends JFrame {
 		container.add(textFieldNome);
 		textFieldNome.setColumns(10);
 		
-		textFieldTelefone = new JTextField();
+		//textFieldTelefone = new JTextField();
+		//textFieldTelefone.setColumns(10);
+		//textFieldTelefone.setBounds(281, 203, 221, 19);
+		//container.add(textFieldTelefone);
+		
+		textFieldTelefone = new JFormattedTextField(telefoneMask);
+		textFieldTelefone.setToolTipText("(xx)xxxxx-xxxx");
 		textFieldTelefone.setColumns(10);
 		textFieldTelefone.setBounds(281, 203, 221, 19);
 		container.add(textFieldTelefone);
@@ -146,7 +171,7 @@ public class TelaAnimador extends JFrame {
 		textFieldEmail.setBounds(281, 250, 221, 19);
 		container.add(textFieldEmail);
 		
-		String[] options = {"Animador", "Banda"};
+		String[] options = {"Magico", "Palhaco"};
 		dropTipoAnim = new JComboBox(options);
 		dropTipoAnim.setBounds(281, 289, 125, 24);
 		container.add(dropTipoAnim);
@@ -178,6 +203,8 @@ public class TelaAnimador extends JFrame {
 				String telefone = textFieldTelefone.getText(); // pega o telefone do animador
 				String email = textFieldEmail.getText(); // pega o email do animador
 				String tipoAnimacao = (String) dropTipoAnim.getSelectedItem(); // pega o tipo de animacao que o animador faz
+				
+				if (telefone == "(  )    -    ") telefone = null;
 				
 				Animador.insert(nome, telefone, email, tipoAnimacao); // insere no banco
 			}
@@ -223,7 +250,13 @@ public class TelaAnimador extends JFrame {
 		container.add(textFieldNome);
 		textFieldNome.setColumns(10);
 		
-		textFieldTelefone = new JTextField();
+		//textFieldTelefone = new JTextField();
+		//textFieldTelefone.setColumns(10);
+		//textFieldTelefone.setBounds(281, 203, 221, 19);
+		//container.add(textFieldTelefone);
+		
+		textFieldTelefone = new JFormattedTextField(telefoneMask);
+		textFieldTelefone.setToolTipText("(xx)xxxxx-xxxx");
 		textFieldTelefone.setColumns(10);
 		textFieldTelefone.setBounds(281, 203, 221, 19);
 		container.add(textFieldTelefone);
@@ -264,6 +297,7 @@ public class TelaAnimador extends JFrame {
 				String telefone = textFieldTelefone.getText(); // pega o telefone do animador
 				String email = textFieldEmail.getText();// pega o email do animador
 				String tipoAnimacao = (String) dropTipoAnim.getSelectedItem(); // pega o tipo de animacao
+				if (telefone == "(  )    -    ") telefone = null;
 				
 				Animador.update(nome, telefone, email, tipoAnimacao); // atualiza o animador no banco
 			}
@@ -350,7 +384,14 @@ public class TelaAnimador extends JFrame {
 		container.add(textFieldNome);
 		textFieldNome.setColumns(10);
 		
-		textFieldTelefone = new JTextField();
+		//textFieldTelefone = new JTextField();
+		//textFieldTelefone.setColumns(10);
+		//textFieldTelefone.setBounds(281, 203, 221, 19);
+		//container.add(textFieldTelefone);
+		//textFieldTelefone.setEditable(false);
+		
+		textFieldTelefone = new JFormattedTextField(telefoneMask);
+		textFieldTelefone.setToolTipText("(xx)xxxxx-xxxx");
 		textFieldTelefone.setColumns(10);
 		textFieldTelefone.setBounds(281, 203, 221, 19);
 		container.add(textFieldTelefone);

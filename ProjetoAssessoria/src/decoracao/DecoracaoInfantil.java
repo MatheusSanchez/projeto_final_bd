@@ -49,6 +49,8 @@ public class DecoracaoInfantil {
 				e1.printStackTrace();
 			}
 			if (e.getErrorCode() == 1) JOptionPane.showMessageDialog(null, "Erro: tema ja cadastrado");
+			else if (e.getErrorCode() == 1400) JOptionPane.showMessageDialog(null, "Erro: Campo tema deve ser preenchido");
+			else if (e.getErrorCode() == 1438) JOptionPane.showMessageDialog(null, "Erro: Quantidade de flores grande demais");
 			else if (e.getErrorCode() == 1722) JOptionPane.showMessageDialog(null, "Erro: Quantidade de baloes deve ser um dado numerico e nao negativo");
 			else JOptionPane.showMessageDialog(null, "Erro ao inserir decoracao");
 		}
@@ -138,6 +140,7 @@ public class DecoracaoInfantil {
 			}
 			
 			if (e.getErrorCode() == 1722) JOptionPane.showMessageDialog(null, "Erro: Quantidade de baloes deve ser um dado numerico e nao negativo");
+			else if (e.getErrorCode() == 1438) JOptionPane.showMessageDialog(null, "Erro: Quantidade de flores grande demais");
 			else JOptionPane.showMessageDialog(null, "Erro ao inserir decoracao");
 		}
 

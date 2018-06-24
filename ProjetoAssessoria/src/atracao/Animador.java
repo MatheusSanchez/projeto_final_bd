@@ -50,6 +50,7 @@ public class Animador {
 			e.printStackTrace();
 			if (e.getErrorCode() == 1) JOptionPane.showMessageDialog(null, "Erro: Um animador com este nome ja foi cadastrado");
 			else if (e.getErrorCode() == 2290) JOptionPane.showMessageDialog(null, "Erro: O telefone do animador deve estar formatado corretamente");
+			else if (e.getErrorCode() == 1400) JOptionPane.showMessageDialog(null, "Erro: O campo nome deve ser preenchido");
 			else JOptionPane.showMessageDialog(null, "Erro ao inserir animador");
 			return false;
 		}

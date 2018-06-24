@@ -50,11 +50,9 @@ public class TelaContratante extends JFrame {
 	public TelaContratante() {
 		this.container = getContentPane();
 		createMasks();
-		//menuInicial();
 	}
 
 	public TelaContratante(Container c) {
-		//menuInicial();
 		this.container = c;
 		createMasks();
 	}
@@ -70,7 +68,7 @@ public class TelaContratante extends JFrame {
 		}
 		
 		try {
-		    telefoneMask = new MaskFormatter("(##)#####-####");
+		    telefoneMask = new MaskFormatter("(##)####-####");
 		    telefoneMask.setPlaceholderCharacter(' ');
 		    telefoneMask.setValidCharacters("0123456789");
 		} catch (ParseException e) {
@@ -78,7 +76,7 @@ public class TelaContratante extends JFrame {
 		}
 		
 		try {
-		    cepMask = new MaskFormatter("##.###-###");
+		    cepMask = new MaskFormatter("#####-###");
 		    cepMask.setPlaceholderCharacter(' ');
 		    cepMask.setValidCharacters("0123456789");
 		} catch (ParseException e) {
@@ -132,7 +130,8 @@ public class TelaContratante extends JFrame {
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Main.novaTela(container);
-				new TelaInicio(container);
+				TelaInicio t = new TelaInicio(container);
+				t.atualizaBanco();
 			}
 		});
 		button.setBounds(12, 12, 44, 25);
@@ -215,7 +214,7 @@ public class TelaContratante extends JFrame {
 		container.add(textFieldCpf);
 		
 		textFieldTelefone = new JFormattedTextField(telefoneMask);
-		textFieldTelefone.setToolTipText("(xx)xxxx-xxxx ou (xx)xxxxx-xxxx");
+		textFieldTelefone.setToolTipText("(xx)xxxxx-xxxx");
 		textFieldTelefone.setColumns(10);
 		textFieldTelefone.setBounds(234, 124, 136, 20);
 		container.add(textFieldTelefone);
@@ -228,7 +227,7 @@ public class TelaContratante extends JFrame {
 		textFieldCep = new JFormattedTextField(cepMask);
 		textFieldCep.setToolTipText("xxxxx-xxx");
 		textFieldCep.setColumns(10);
-		textFieldCpf.setBounds(234, 93, 136, 20);
+		textFieldCep.setBounds(234, 220, 136, 20);
 		container.add(textFieldCep);
 		
 		textFieldRua = new JTextField();
@@ -258,13 +257,11 @@ public class TelaContratante extends JFrame {
 				s[5] = textFieldNumero.getText();
 				s[6] = textFieldBairro.getText();
 				s[7] = textFieldCep.getText();
-								
-				if (s[2].charAt(13) == ' ') {
-					System.out.println("s2 antes: " + s[2]);
-					s[2] = s[2].substring(0, 9).concat("-").concat(s[2].substring(10, 13));
-					System.out.println("s2 = " + s[2]);
-				}
-					
+	
+				
+				if (s[2].equals("(  )    -    ")) s[2] = null;
+				if (s[7].equals("     -   ")) s[7] = null;
+				if (s[0].equals("   .   .   -  ")) s[0] = null;
 				
 				Contratante.insert(s);
 			}
@@ -388,6 +385,17 @@ public class TelaContratante extends JFrame {
 				s[5] = textFieldNumero.getText();
 				s[6] = textFieldBairro.getText();
 				s[7] = textFieldCep.getText();
+				
+				System.out.println(s[0]);
+				
+				if (s[2].equals("(  )     -    ")) s[2] = null;
+				if (s[7].equals("     -   ")) s[7] = null;
+				if (s[0].equals("   .   .   -  ")) {
+					System.out.println(s[0]);
+					s[0] = null;
+					System.out.println(s[0]);
+				}
+				
 				Contratante.update(s);
 			}
 		});

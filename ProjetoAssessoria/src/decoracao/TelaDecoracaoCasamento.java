@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -18,7 +19,7 @@ import main.Main;
 import main.TelaInicio;
 
 @SuppressWarnings("serial")
-public class TelaDecoracaoCasamento extends JFrame {
+public class TelaDecoracaoCasamento {
 	private JTextField textFieldTema;
 	private JTextField textFieldQtdeFlores;
 	private JTextField textFieldTipoFlor;
@@ -31,7 +32,6 @@ public class TelaDecoracaoCasamento extends JFrame {
 	private Container container;
 
 	public TelaDecoracaoCasamento() {
-		this.container = getContentPane();
 	}
 
 	public TelaDecoracaoCasamento(Container c) {
@@ -84,7 +84,8 @@ public class TelaDecoracaoCasamento extends JFrame {
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Main.novaTela(container);
-				new TelaInicio(container);
+				TelaInicio t = new TelaInicio(container);
+				t.atualizaBanco();
 			}
 		});
 		button.setBounds(12, 12, 44, 25);
@@ -138,6 +139,14 @@ public class TelaDecoracaoCasamento extends JFrame {
 				for (int i = 0; i < tipos.length; i++) {
 					tipos[i] = tipos[i].trim();
 				}
+				
+				List<String> types = new ArrayList<String>();
+				for (int i = 0; i < tipos.length; i++) {
+					if (tipos[i].length() != 0) {
+						types.add(tipos[i]);
+					}
+				}
+				tipos = types.toArray(new String[0]);
 				
 				DecoracaoCasamento.insert(tema, qtde, tipos);
 			}
@@ -221,6 +230,14 @@ public class TelaDecoracaoCasamento extends JFrame {
 				for (int i = 0; i < tipos.length; i++) {
 					tipos[i] = tipos[i].trim();
 				}
+				
+				List<String> types = new ArrayList<String>();
+				for (int i = 0; i < tipos.length; i++) {
+					if (tipos[i].length() != 0) {
+						types.add(tipos[i]);
+					}
+				}
+				tipos = types.toArray(new String[0]);
 				
 				String[] form = new String[2 + tipos.length];
 			

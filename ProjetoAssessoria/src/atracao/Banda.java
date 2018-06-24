@@ -57,6 +57,7 @@ public class Banda {
 			}
 			if (e.getErrorCode() == 1) JOptionPane.showMessageDialog(null, "Erro: Uma banda com este nome ja foi cadastrada");
 			else if (e.getErrorCode() == 2290) JOptionPane.showMessageDialog(null, "Erro: O telefone da banda deve estar formatado corretamente");
+			else if (e.getErrorCode() == 1400) JOptionPane.showMessageDialog(null, "Erro: O campo nome deve ser preenchido");
 			else JOptionPane.showMessageDialog(null, "Erro ao inserir banda");
 			
 			e.printStackTrace();
