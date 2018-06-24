@@ -83,7 +83,8 @@ public class TelaInicio extends JFrame {
 		btnBanda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Main.novaTela(container);
-				new TelaBanda();
+				TelaBanda t = new TelaBanda(container);
+				t.menuInicial();
 			}
 		});
 		btnBanda.setBounds(12, 135, 198, 25);
@@ -93,7 +94,8 @@ public class TelaInicio extends JFrame {
 		btnAnimador.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Main.novaTela(container);
-				new TelaAnimador();
+				TelaAnimador t = new TelaAnimador(container);
+				t.menuInicial();
 			}
 		});
 		btnAnimador.setBounds(240, 135, 198, 25);
@@ -103,7 +105,8 @@ public class TelaInicio extends JFrame {
 		btnBuffetCasamento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Main.novaTela(container);
-				new TelaBuffetCasamento();
+				TelaBuffetCasamento t = new TelaBuffetCasamento(container);
+				t.menuInicial();
 			}
 		});
 		btnBuffetCasamento.setBounds(12, 172, 198, 25);
@@ -113,7 +116,8 @@ public class TelaInicio extends JFrame {
 		btnBuffetInfantil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Main.novaTela(container);
-				new TelaBuffetInfantil();
+				TelaBuffetInfantil t = new TelaBuffetInfantil(container);
+				t.menuInicial();
 			}
 		});
 		btnBuffetInfantil.setBounds(240, 172, 198, 25);

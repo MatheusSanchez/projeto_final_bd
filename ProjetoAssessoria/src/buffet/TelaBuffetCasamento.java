@@ -1,14 +1,19 @@
 package buffet;
 
+import java.awt.Container;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.ActionEvent;
+
+import main.Main;
+import main.TelaInicio;
 
 @SuppressWarnings("serial")
 public class TelaBuffetCasamento extends JFrame {
@@ -27,51 +32,67 @@ public class TelaBuffetCasamento extends JFrame {
 	private JLabel lblCapacidade;
 	private JButton btnCadastrar;
 
+	private Container container;
+
 	public TelaBuffetCasamento() {
-		//menuInicial();
+		this.container = getContentPane();
+	}
+
+	public TelaBuffetCasamento(Container c) {
+		this.container = c;
 	}
 	
 	public void menuInicial() {
-		getContentPane().setLayout(null);
+		container.setLayout(null);
 	
 		/* Configura botao que direciona para a tela de inserir buffet Casamento */
 		JButton btnInserir = new JButton("Inserir Buffet Casamento");
 		btnInserir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				getContentPane().removeAll();
-				getContentPane().revalidate();
-				getContentPane().repaint();
+				container.removeAll();
+				container.revalidate();
+				container.repaint();
 				cadastrarBuffetCasamento();
 			}
 		});
 		btnInserir.setBounds(275, 110, 215, 49);
-		getContentPane().add(btnInserir);
+		container.add(btnInserir);
 		
 		/* Configura botao que direciona para a tela de alterar Buffet Casamento */
 		JButton btnAlterar = new JButton("Alterar Buffet Casamento");
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				getContentPane().removeAll();
-				getContentPane().revalidate();
-				getContentPane().repaint();
+				container.removeAll();
+				container.revalidate();
+				container.repaint();
 				alterarBuffetCasamento();
 			}
 		});
 		btnAlterar.setBounds(275, 199, 215, 49);
-		getContentPane().add(btnAlterar);
+		container.add(btnAlterar);
 		
 		/* Configura botao que direciona para a tela de remover Buffet Casamento */
 		JButton btnRemover = new JButton("Remover Buffet Casamento");
 		btnRemover.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				getContentPane().removeAll();
-				getContentPane().revalidate();
-				getContentPane().repaint();
+				container.removeAll();
+				container.revalidate();
+				container.repaint();
 				removerBuffetCasamento();
 			}
 		});
 		btnRemover.setBounds(275, 288, 215, 49);
-		getContentPane().add(btnRemover);
+		container.add(btnRemover);
+		
+		JButton button = new JButton("<");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Main.novaTela(container);
+				new TelaInicio(container);
+			}
+		});
+		button.setBounds(12, 12, 44, 25);
+		container.add(button);
 	}
 
 
@@ -92,67 +113,67 @@ public class TelaBuffetCasamento extends JFrame {
 	}
 
 	public void cadastrarBuffetCasamento() {
-		getContentPane().setLayout(null);
+		container.setLayout(null);
 		
 		lblCadastroDeBuffet = new JLabel("Cadastro de Buffet de Casamento");
 		lblCadastroDeBuffet.setBounds(89, 12, 282, 15);
-		getContentPane().add(lblCadastroDeBuffet);
+		container.add(lblCadastroDeBuffet);
 		
 		lblCnpj = new JLabel("CNPJ");
 		lblCnpj.setToolTipText("99.999.999/9999-99");
 		lblCnpj.setBounds(29, 60, 70, 15);
-		getContentPane().add(lblCnpj);
+		container.add(lblCnpj);
 		
 		lblNome = new JLabel("Nome");
 		lblNome.setBounds(29, 87, 70, 15);
-		getContentPane().add(lblNome);
+		container.add(lblNome);
 		
 		lblRua = new JLabel("Rua");
 		lblRua.setBounds(29, 114, 70, 15);
-		getContentPane().add(lblRua);
+		container.add(lblRua);
 		
 		lblNumero = new JLabel("Numero");
 		lblNumero.setBounds(29, 141, 70, 15);
-		getContentPane().add(lblNumero);
+		container.add(lblNumero);
 		
 		lblCep = new JLabel("CEP");
 		lblCep.setBounds(29, 168, 70, 15);
-		getContentPane().add(lblCep);
+		container.add(lblCep);
 		
 		lblCapacidade = new JLabel("Capacidade");
 		lblCapacidade.setBounds(29, 195, 89, 15);
-		getContentPane().add(lblCapacidade);
+		container.add(lblCapacidade);
 		
 		textFieldCnpj = new JTextField();
 		textFieldCnpj.setToolTipText("99.999.999/9999-99");
 		textFieldCnpj.setBounds(177, 58, 114, 19);
-		getContentPane().add(textFieldCnpj);
+		container.add(textFieldCnpj);
 		textFieldCnpj.setColumns(10);
 		
 		textFieldNome = new JTextField();
 		textFieldNome.setColumns(10);
 		textFieldNome.setBounds(177, 85, 114, 19);
-		getContentPane().add(textFieldNome);
+		container.add(textFieldNome);
 		
 		textFieldRua = new JTextField();
 		textFieldRua.setColumns(10);
 		textFieldRua.setBounds(177, 112, 114, 19);
-		getContentPane().add(textFieldRua);
+		container.add(textFieldRua);
 		
 		textFieldNumero = new JTextField();
 		textFieldNumero.setColumns(10);
 		textFieldNumero.setBounds(177, 139, 114, 19);
-		getContentPane().add(textFieldNumero);
+		container.add(textFieldNumero);
 		
 		textFieldCep = new JTextField();
 		textFieldCep.setColumns(10);
 		textFieldCep.setBounds(177, 166, 114, 19);
-		getContentPane().add(textFieldCep);
+		container.add(textFieldCep);
 		
 		textFieldCap = new JTextField();
 		textFieldCap.setColumns(10);
 		textFieldCap.setBounds(177, 193, 114, 19);
-		getContentPane().add(textFieldCap);
+		container.add(textFieldCap);
 		
 		btnCadastrar = new JButton("CADASTRAR");
 		btnCadastrar.addActionListener(new ActionListener() {
@@ -170,71 +191,81 @@ public class TelaBuffetCasamento extends JFrame {
 			}
 		});
 		btnCadastrar.setBounds(321, 224, 117, 25);
-		getContentPane().add(btnCadastrar);
+		container.add(btnCadastrar);
+		
+		JButton button = new JButton("<");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Main.novaTela(container);
+				menuInicial();
+			}
+		});
+		button.setBounds(12, 12, 44, 25);
+		container.add(button);
 	}
 
 	public void alterarBuffetCasamento() {
-		getContentPane().setLayout(null);
+		container.setLayout(null);
 		
 		lblCadastroDeBuffet = new JLabel("Alteracao de Buffet de Casamento");
 		lblCadastroDeBuffet.setBounds(89, 12, 282, 15);
-		getContentPane().add(lblCadastroDeBuffet);
+		container.add(lblCadastroDeBuffet);
 		
 		lblCnpj = new JLabel("CNPJ");
 		lblCnpj.setToolTipText("99.999.999/9999-99");
 		lblCnpj.setBounds(29, 60, 70, 15);
-		getContentPane().add(lblCnpj);
+		container.add(lblCnpj);
 		
 		lblNome = new JLabel("Nome");
 		lblNome.setBounds(29, 112, 70, 15);
-		getContentPane().add(lblNome);
+		container.add(lblNome);
 		
 		lblRua = new JLabel("Rua");
 		lblRua.setBounds(29, 139, 70, 15);
-		getContentPane().add(lblRua);
+		container.add(lblRua);
 		
 		lblNumero = new JLabel("Numero");
 		lblNumero.setBounds(29, 166, 70, 15);
-		getContentPane().add(lblNumero);
+		container.add(lblNumero);
 		
 		lblCep = new JLabel("CEP");
 		lblCep.setBounds(29, 193, 70, 15);
-		getContentPane().add(lblCep);
+		container.add(lblCep);
 		
 		lblCapacidade = new JLabel("Capacidade");
 		lblCapacidade.setBounds(29, 220, 89, 15);
-		getContentPane().add(lblCapacidade);
+		container.add(lblCapacidade);
 		
 		textFieldCnpj = new JTextField();
 		textFieldCnpj.setToolTipText("99.999.999/9999-99");
 		textFieldCnpj.setBounds(177, 58, 114, 19);
-		getContentPane().add(textFieldCnpj);
+		container.add(textFieldCnpj);
 		textFieldCnpj.setColumns(10);
 		
 		textFieldNome = new JTextField();
 		textFieldNome.setColumns(10);
 		textFieldNome.setBounds(177, 110, 114, 19);
-		getContentPane().add(textFieldNome);
+		container.add(textFieldNome);
 		
 		textFieldRua = new JTextField();
 		textFieldRua.setColumns(10);
 		textFieldRua.setBounds(177, 137, 114, 19);
-		getContentPane().add(textFieldRua);
+		container.add(textFieldRua);
 		
 		textFieldNumero = new JTextField();
 		textFieldNumero.setColumns(10);
 		textFieldNumero.setBounds(177, 164, 114, 19);
-		getContentPane().add(textFieldNumero);
+		container.add(textFieldNumero);
 		
 		textFieldCep = new JTextField();
 		textFieldCep.setColumns(10);
 		textFieldCep.setBounds(177, 191, 114, 19);
-		getContentPane().add(textFieldCep);
+		container.add(textFieldCep);
 		
 		textFieldCap = new JTextField();
 		textFieldCap.setColumns(10);
 		textFieldCap.setBounds(177, 218, 114, 19);
-		getContentPane().add(textFieldCap);
+		container.add(textFieldCap);
 		
 		btnCadastrar = new JButton("ALTERAR");
 		btnCadastrar.addActionListener(new ActionListener() {
@@ -252,7 +283,7 @@ public class TelaBuffetCasamento extends JFrame {
 			}
 		});
 		btnCadastrar.setBounds(321, 224, 117, 25);
-		getContentPane().add(btnCadastrar);
+		container.add(btnCadastrar);
 		
 		JButton btnBuscarPorCnpj = new JButton("Buscar por CNPJ");
 		btnBuscarPorCnpj.addActionListener(new ActionListener() {
@@ -275,7 +306,7 @@ public class TelaBuffetCasamento extends JFrame {
 			}
 		});
 		btnBuscarPorCnpj.setBounds(321, 55, 163, 25);
-		getContentPane().add(btnBuscarPorCnpj);
+		container.add(btnBuscarPorCnpj);
 		
 		//quando clicar no campo de escrever cnpj chama a funcao de alterar visibilidade
 		textFieldCnpj.addFocusListener(new FocusListener() {
@@ -290,71 +321,80 @@ public class TelaBuffetCasamento extends JFrame {
 		});
 
 		changeVisibility(false);
+		JButton button = new JButton("<");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Main.novaTela(container);
+				menuInicial();
+			}
+		});
+		button.setBounds(12, 12, 44, 25);
+		container.add(button);
 	}
 
 
 	public void removerBuffetCasamento() {
-		getContentPane().setLayout(null);
+		container.setLayout(null);
 		
 		lblCadastroDeBuffet = new JLabel("Remocao de Buffet de Casamento");
 		lblCadastroDeBuffet.setBounds(89, 12, 282, 15);
-		getContentPane().add(lblCadastroDeBuffet);
+		container.add(lblCadastroDeBuffet);
 		
 		lblCnpj = new JLabel("CNPJ");
 		lblCnpj.setToolTipText("99.999.999/9999-99");
 		lblCnpj.setBounds(29, 60, 70, 15);
-		getContentPane().add(lblCnpj);
+		container.add(lblCnpj);
 		
 		lblNome = new JLabel("Nome");
 		lblNome.setBounds(29, 112, 70, 15);
-		getContentPane().add(lblNome);
+		container.add(lblNome);
 		
 		lblRua = new JLabel("Rua");
 		lblRua.setBounds(29, 139, 70, 15);
-		getContentPane().add(lblRua);
+		container.add(lblRua);
 		
 		lblNumero = new JLabel("Numero");
 		lblNumero.setBounds(29, 166, 70, 15);
-		getContentPane().add(lblNumero);
+		container.add(lblNumero);
 		
 		lblCep = new JLabel("CEP");
 		lblCep.setBounds(29, 193, 70, 15);
-		getContentPane().add(lblCep);
+		container.add(lblCep);
 		
 		lblCapacidade = new JLabel("Capacidade");
 		lblCapacidade.setBounds(29, 220, 89, 15);
-		getContentPane().add(lblCapacidade);
+		container.add(lblCapacidade);
 		
 		textFieldCnpj = new JTextField();
 		textFieldCnpj.setToolTipText("99.999.999/9999-99");
 		textFieldCnpj.setBounds(177, 58, 114, 19);
-		getContentPane().add(textFieldCnpj);
+		container.add(textFieldCnpj);
 		textFieldCnpj.setColumns(10);
 		
 		textFieldNome = new JTextField();
 		textFieldNome.setColumns(10);
 		textFieldNome.setBounds(177, 110, 114, 19);
-		getContentPane().add(textFieldNome);
+		container.add(textFieldNome);
 		
 		textFieldRua = new JTextField();
 		textFieldRua.setColumns(10);
 		textFieldRua.setBounds(177, 137, 114, 19);
-		getContentPane().add(textFieldRua);
+		container.add(textFieldRua);
 		
 		textFieldNumero = new JTextField();
 		textFieldNumero.setColumns(10);
 		textFieldNumero.setBounds(177, 164, 114, 19);
-		getContentPane().add(textFieldNumero);
+		container.add(textFieldNumero);
 		
 		textFieldCep = new JTextField();
 		textFieldCep.setColumns(10);
 		textFieldCep.setBounds(177, 191, 114, 19);
-		getContentPane().add(textFieldCep);
+		container.add(textFieldCep);
 		
 		textFieldCap = new JTextField();
 		textFieldCap.setColumns(10);
 		textFieldCap.setBounds(177, 218, 114, 19);
-		getContentPane().add(textFieldCap);
+		container.add(textFieldCap);
 		
 		btnCadastrar = new JButton("REMOVER");
 		btnCadastrar.addActionListener(new ActionListener() {
@@ -364,7 +404,7 @@ public class TelaBuffetCasamento extends JFrame {
 			}
 		});
 		btnCadastrar.setBounds(321, 224, 117, 25);
-		getContentPane().add(btnCadastrar);
+		container.add(btnCadastrar);
 		
 		JButton btnBuscarPorCnpj = new JButton("Buscar por CNPJ");
 		btnBuscarPorCnpj.addActionListener(new ActionListener() {
@@ -393,7 +433,7 @@ public class TelaBuffetCasamento extends JFrame {
 			}
 		});
 		btnBuscarPorCnpj.setBounds(321, 55, 163, 25);
-		getContentPane().add(btnBuscarPorCnpj);
+		container.add(btnBuscarPorCnpj);
 		
 		//quando clica no campo de preencher cnpj chama a funcao de mudar visibilidade
 		textFieldCnpj.addFocusListener(new FocusListener() {
@@ -408,6 +448,16 @@ public class TelaBuffetCasamento extends JFrame {
 		});
 
 		changeVisibility(false);
+		
+		JButton button = new JButton("<");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Main.novaTela(container);
+				menuInicial();
+			}
+		});
+		button.setBounds(12, 12, 44, 25);
+		container.add(button);
 	}
 
 }

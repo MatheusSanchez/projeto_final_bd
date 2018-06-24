@@ -1,5 +1,6 @@
 package atracao;
 
+import java.awt.Container;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,6 +14,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+
+import main.Main;
+import main.TelaInicio;
 
 public class TelaBanda extends JFrame {
 	
@@ -31,55 +35,68 @@ public class TelaBanda extends JFrame {
 	private JButton btnVoltar;
 	private JButton btnPesquisar;
 	
+	private Container container;
+
 	public TelaBanda() {
-		//inserir();
-		//menuInicial();
-		alterar();
-		//remover();
+		this.container = getContentPane();
+	}
+
+	public TelaBanda(Container c) {
+		this.container = c;
 	}
 	
 	public void menuInicial() {
-		getContentPane().setLayout(null);
+		container.setLayout(null);
 		
 		
 		/* Configura botao que direciona para a tela de inserir banda */
 		JButton btnInserir = new JButton("Inserir Banda");
 		btnInserir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				getContentPane().removeAll();
-				getContentPane().revalidate();
-				getContentPane().repaint();
+				container.removeAll();
+				container.revalidate();
+				container.repaint();
 				inserir();
 			}
 		});
 		btnInserir.setBounds(275, 110, 215, 49);
-		getContentPane().add(btnInserir);
+		container.add(btnInserir);
 		
 		/* Configura botao que direciona para a tela de alterar banda */
 		JButton btnAlterar = new JButton("Alterar Banda");
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				getContentPane().removeAll();
-				getContentPane().revalidate();
-				getContentPane().repaint();
+				container.removeAll();
+				container.revalidate();
+				container.repaint();
 				alterar();
 			}
 		});
 		btnAlterar.setBounds(275, 199, 215, 49);
-		getContentPane().add(btnAlterar);
+		container.add(btnAlterar);
 		
 		/* Configura botao que direciona para a tela de remover banda */
 		JButton btnRemover = new JButton("Remover Banda");
 		btnRemover.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				getContentPane().removeAll();
-				getContentPane().revalidate();
-				getContentPane().repaint();
+				container.removeAll();
+				container.revalidate();
+				container.repaint();
 				remover();
 			}
 		});
 		btnRemover.setBounds(275, 288, 215, 49);
-		getContentPane().add(btnRemover);
+		container.add(btnRemover);
+		
+		JButton button = new JButton("<");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Main.novaTela(container);
+				new TelaInicio(container);
+			}
+		});
+		button.setBounds(12, 12, 44, 25);
+		container.add(button);
 	}
 	
 	
@@ -97,55 +114,55 @@ public class TelaBanda extends JFrame {
 	
 	/* Metodo que cria a tela de insercao de banda */
 	public void inserir() {
-		getContentPane().setLayout(null);
+		container.setLayout(null);
 		
 		/* Criacao dos objetos swing para a interface da tela */
 		lblTitulo = new JLabel("<html><body><center><h1>Tela de Insercao de Banda</h1></center></body></html>");
 		lblTitulo.setVerticalAlignment(SwingConstants.TOP);
 		lblTitulo.setFont(new Font("Dialog", Font.PLAIN, 20));
 		lblTitulo.setBounds(218, 12, 330, 78);
-		getContentPane().add(lblTitulo);
+		container.add(lblTitulo);
 		
 		lblNome = new JLabel("Nome");
 		lblNome.setBounds(137, 154, 70, 15);
-		getContentPane().add(lblNome);
+		container.add(lblNome);
 		
 		lblTelefone = new JLabel("Telefone");
 		lblTelefone.setBounds(137, 193, 70, 15);
-		getContentPane().add(lblTelefone);
+		container.add(lblTelefone);
 		
 		lblEmail = new JLabel("Email");
 		lblEmail.setBounds(137, 232, 70, 15);
-		getContentPane().add(lblEmail);
+		container.add(lblEmail);
 		
 		textFieldNome = new JTextField();
 		textFieldNome.setBounds(262, 152, 205, 19);
-		getContentPane().add(textFieldNome);
+		container.add(textFieldNome);
 		textFieldNome.setColumns(10);
 		
 		textFieldTelefone = new JTextField();
 		textFieldTelefone.setColumns(10);
 		textFieldTelefone.setBounds(262, 191, 205, 19);
-		getContentPane().add(textFieldTelefone);
+		container.add(textFieldTelefone);
 		
 		textFieldEmail = new JTextField();
 		textFieldEmail.setColumns(10);
 		textFieldEmail.setBounds(262, 230, 205, 19);
-		getContentPane().add(textFieldEmail);
+		container.add(textFieldEmail);
 		
 		lblIntegrantes = new JLabel("Integrantes");
 		lblIntegrantes.setBounds(137, 274, 100, 15);
-		getContentPane().add(lblIntegrantes);
+		container.add(lblIntegrantes);
 		
 		textFieldInteg = new JTextField();
 		textFieldInteg.setColumns(10);
 		textFieldInteg.setBounds(262, 272, 205, 19);
-		getContentPane().add(textFieldInteg);
+		container.add(textFieldInteg);
 		
 		lblDigiteTodosOs = new JLabel("(Digite todos os integrantes separados por virgulas)");
 		lblDigiteTodosOs.setFont(new Font("Dialog", Font.PLAIN, 9));
 		lblDigiteTodosOs.setBounds(137, 303, 308, 20);
-		getContentPane().add(lblDigiteTodosOs);
+		container.add(lblDigiteTodosOs);
 		
 		btnCadastrar = new JButton("CADASTRAR");
 		btnCadastrar.addActionListener(new ActionListener() {
@@ -165,75 +182,84 @@ public class TelaBanda extends JFrame {
 			}
 		});
 		btnCadastrar.setBounds(515, 318, 117, 25);
-		getContentPane().add(btnCadastrar);
+		container.add(btnCadastrar);
 		
 		/* Configuracao do botao de voltar para o menu inicial */
 		btnVoltar = new JButton("<");
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				getContentPane().removeAll();
-				getContentPane().revalidate();
-				getContentPane().repaint();
+				container.removeAll();
+				container.revalidate();
+				container.repaint();
 				menuInicial();
 			}
 		});
 		
 		btnVoltar.setBounds(12, 12, 44, 25);
-		getContentPane().add(btnVoltar);
+		container.add(btnVoltar);
 		
+		JButton button = new JButton("<");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Main.novaTela(container);
+				menuInicial();
+			}
+		});
+		button.setBounds(12, 12, 44, 25);
+		container.add(button);
 	}
 	
 	/* Metodo que cria a tela de alteracao de banda */
 	public void alterar() {
-		getContentPane().setLayout(null);
+		container.setLayout(null);
 		
 		/* Criacao dos objetos swing para a interface da tela */
 		lblTitulo = new JLabel("<html><body><center><h1>Tela de Alteracao de Banda</h1></center></body></html>");
 		lblTitulo.setVerticalAlignment(SwingConstants.TOP);
 		lblTitulo.setFont(new Font("Dialog", Font.PLAIN, 20));
 		lblTitulo.setBounds(218, 12, 330, 78);
-		getContentPane().add(lblTitulo);
+		container.add(lblTitulo);
 		
 		lblNome = new JLabel("Nome");
 		lblNome.setBounds(137, 137, 70, 15);
-		getContentPane().add(lblNome);
+		container.add(lblNome);
 		
 		lblTelefone = new JLabel("Telefone");
 		lblTelefone.setBounds(137, 193, 70, 15);
-		getContentPane().add(lblTelefone);
+		container.add(lblTelefone);
 		
 		lblEmail = new JLabel("Email");
 		lblEmail.setBounds(137, 232, 70, 15);
-		getContentPane().add(lblEmail);
+		container.add(lblEmail);
 		
 		textFieldNome = new JTextField();
 		textFieldNome.setBounds(262, 135, 205, 19);
-		getContentPane().add(textFieldNome);
+		container.add(textFieldNome);
 		textFieldNome.setColumns(10);
 		
 		textFieldTelefone = new JTextField();
 		textFieldTelefone.setColumns(10);
 		textFieldTelefone.setBounds(262, 191, 205, 19);
-		getContentPane().add(textFieldTelefone);
+		container.add(textFieldTelefone);
 		
 		textFieldEmail = new JTextField();
 		textFieldEmail.setColumns(10);
 		textFieldEmail.setBounds(262, 230, 205, 19);
-		getContentPane().add(textFieldEmail);
+		container.add(textFieldEmail);
 		
 		lblIntegrantes = new JLabel("Integrantes");
 		lblIntegrantes.setBounds(137, 274, 100, 15);
-		getContentPane().add(lblIntegrantes);
+		container.add(lblIntegrantes);
 		
 		textFieldInteg = new JTextField();
 		textFieldInteg.setColumns(10);
 		textFieldInteg.setBounds(262, 272, 205, 19);
-		getContentPane().add(textFieldInteg);
+		container.add(textFieldInteg);
 		
 		lblDigiteTodosOs = new JLabel("(Digite todos os integrantes separados por virgulas)");
 		lblDigiteTodosOs.setFont(new Font("Dialog", Font.PLAIN, 9));
 		lblDigiteTodosOs.setBounds(137, 303, 308, 20);
-		getContentPane().add(lblDigiteTodosOs);
+		container.add(lblDigiteTodosOs);
 		
 		btnCadastrar = new JButton("ALTERAR");
 		btnCadastrar.addActionListener(new ActionListener() {
@@ -253,21 +279,21 @@ public class TelaBanda extends JFrame {
 			}
 		});
 		btnCadastrar.setBounds(515, 318, 117, 25);
-		getContentPane().add(btnCadastrar);
+		container.add(btnCadastrar);
 		
 		/* Configuracao do botao de voltar para o menu inicial */
 		btnVoltar = new JButton("<");
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				getContentPane().removeAll();
-				getContentPane().revalidate();
-				getContentPane().repaint();
+				container.removeAll();
+				container.revalidate();
+				container.repaint();
 				menuInicial();
 			}
 		});
 		
 		btnVoltar.setBounds(12, 12, 44, 25);
-		getContentPane().add(btnVoltar);
+		container.add(btnVoltar);
 		
 		/* Configuracao do botao de pesquisar banda */
 		btnPesquisar = new JButton("Pesquisar banda");
@@ -299,7 +325,7 @@ public class TelaBanda extends JFrame {
 			}
 		});
 		btnPesquisar.setBounds(515, 132, 163, 25);
-		getContentPane().add(btnPesquisar);
+		container.add(btnPesquisar);
 		
 		changeVisibility(false);
 		
@@ -313,63 +339,73 @@ public class TelaBanda extends JFrame {
 				changeVisibility(false);
 			}
 		});
+		
+		JButton button = new JButton("<");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Main.novaTela(container);
+				menuInicial();
+			}
+		});
+		button.setBounds(12, 12, 44, 25);
+		container.add(button);
 	}
 	
 	/* Metodo que cria a tela de remocao de banda */
 	public void remover() {
-		getContentPane().setLayout(null);
+		container.setLayout(null);
 		
 		/* Criacao dos objetos swing para a interface da tela */
 		lblTitulo = new JLabel("<html><body><center><h1>Tela de Remocao de Banda</h1></center></body></html>");
 		lblTitulo.setVerticalAlignment(SwingConstants.TOP);
 		lblTitulo.setFont(new Font("Dialog", Font.PLAIN, 20));
 		lblTitulo.setBounds(218, 12, 330, 78);
-		getContentPane().add(lblTitulo);
+		container.add(lblTitulo);
 		
 		lblNome = new JLabel("Nome");
 		lblNome.setBounds(137, 137, 70, 15);
-		getContentPane().add(lblNome);
+		container.add(lblNome);
 		
 		lblTelefone = new JLabel("Telefone");
 		lblTelefone.setBounds(137, 193, 70, 15);
-		getContentPane().add(lblTelefone);
+		container.add(lblTelefone);
 		
 		lblEmail = new JLabel("Email");
 		lblEmail.setBounds(137, 232, 70, 15);
-		getContentPane().add(lblEmail);
+		container.add(lblEmail);
 		
 		textFieldNome = new JTextField();
 		textFieldNome.setBounds(262, 135, 205, 19);
-		getContentPane().add(textFieldNome);
+		container.add(textFieldNome);
 		textFieldNome.setColumns(10);
 		
 		textFieldTelefone = new JTextField();
 		textFieldTelefone.setColumns(10);
 		textFieldTelefone.setBounds(262, 191, 205, 19);
-		getContentPane().add(textFieldTelefone);
+		container.add(textFieldTelefone);
 		textFieldTelefone.setEditable(false);
 		
 		textFieldEmail = new JTextField();
 		textFieldEmail.setColumns(10);
 		textFieldEmail.setBounds(262, 230, 205, 19);
-		getContentPane().add(textFieldEmail);
+		container.add(textFieldEmail);
 		textFieldEmail.setEditable(false);
 		
 		lblIntegrantes = new JLabel("Integrantes");
 		lblIntegrantes.setBounds(137, 274, 100, 15);
-		getContentPane().add(lblIntegrantes);
+		container.add(lblIntegrantes);
 		
 		
 		textFieldInteg = new JTextField();
 		textFieldInteg.setColumns(10);
 		textFieldInteg.setBounds(262, 272, 205, 19);
-		getContentPane().add(textFieldInteg);
+		container.add(textFieldInteg);
 		textFieldInteg.setEditable(false);
 		
 		lblDigiteTodosOs = new JLabel("(Digite todos os integrantes separados por virgulas)");
 		lblDigiteTodosOs.setFont(new Font("Dialog", Font.PLAIN, 9));
 		lblDigiteTodosOs.setBounds(137, 303, 308, 20);
-		getContentPane().add(lblDigiteTodosOs);
+		container.add(lblDigiteTodosOs);
 		
 		btnCadastrar = new JButton("REMOVER");
 		btnCadastrar.addActionListener(new ActionListener() {
@@ -382,21 +418,21 @@ public class TelaBanda extends JFrame {
 			}
 		});
 		btnCadastrar.setBounds(515, 318, 117, 25);
-		getContentPane().add(btnCadastrar);
+		container.add(btnCadastrar);
 		
 		/* Configura o botao de voltar para o menu inicial */
 		btnVoltar = new JButton("<");
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				getContentPane().removeAll();
-				getContentPane().revalidate();
-				getContentPane().repaint();
+				container.removeAll();
+				container.revalidate();
+				container.repaint();
 				menuInicial();
 			}
 		});
 		
 		btnVoltar.setBounds(12, 12, 44, 25);
-		getContentPane().add(btnVoltar);
+		container.add(btnVoltar);
 		
 		/* Configura o botao de selecionar a banda */
 		btnPesquisar = new JButton("Pesquisar banda");
@@ -428,7 +464,7 @@ public class TelaBanda extends JFrame {
 			}
 		});
 		btnPesquisar.setBounds(515, 132, 163, 25);
-		getContentPane().add(btnPesquisar);
+		container.add(btnPesquisar);
 		
 		changeVisibility(false);
 		
@@ -442,5 +478,15 @@ public class TelaBanda extends JFrame {
 				changeVisibility(false);
 			}
 		});
+		
+		JButton button = new JButton("<");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Main.novaTela(container);
+				menuInicial();
+			}
+		});
+		button.setBounds(12, 12, 44, 25);
+		container.add(button);
 	}
 }
