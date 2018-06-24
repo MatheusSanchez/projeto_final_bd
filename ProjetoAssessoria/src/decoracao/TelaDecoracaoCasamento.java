@@ -83,7 +83,8 @@ public class TelaDecoracaoCasamento {
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Main.novaTela(container);
-				new TelaInicio(container);
+				TelaInicio t = new TelaInicio(container);
+				t.atualizaBanco();
 			}
 		});
 		button.setBounds(12, 12, 44, 25);

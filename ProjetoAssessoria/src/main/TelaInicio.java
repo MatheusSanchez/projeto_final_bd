@@ -24,15 +24,55 @@ public class TelaInicio extends JFrame {
 
 	public TelaInicio() {
 		this.container = getContentPane();
-		display();
 	}
 
 	public TelaInicio(Container c) {
 		this.container = c;
-		display();
 	}
 
 	public void display() {
+		
+	}
+	
+	public void telaInicial() {
+		
+		JButton btnAtualizar = new JButton("Atualizar Banco");
+		btnAtualizar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Main.novaTela(container);
+				atualizaBanco();
+			}
+		});
+		
+		JButton btnConsultar = new JButton("Consultar Banco");
+		
+		JButton btnGerar = new JButton("Gerar Relatorios");
+		GroupLayout groupLayout = new GroupLayout(container);
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(101)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnAtualizar, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
+						.addComponent(btnConsultar, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
+						.addComponent(btnGerar, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE))
+					.addGap(100))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(80)
+					.addComponent(btnAtualizar)
+					.addGap(18)
+					.addComponent(btnConsultar)
+					.addGap(18)
+					.addComponent(btnGerar)
+					.addContainerGap(109, Short.MAX_VALUE))
+		);
+		container.setLayout(groupLayout);
+	}
+
+	public void atualizaBanco() {
 		container.setLayout(null);
 		
 		JButton btnDecoracaoCasamento = new JButton("Decoracao Casamento");
@@ -122,49 +162,15 @@ public class TelaInicio extends JFrame {
 		});
 		btnBuffetInfantil.setBounds(240, 172, 198, 25);
 		container.add(btnBuffetInfantil);
-		//telaInicial();
-		atualizaBanco();
-	}
-	
-	public void telaInicial() {
 		
-		JButton btnAtualizar = new JButton("Atualizar Banco");
-		btnAtualizar.addActionListener(new ActionListener() {
+		JButton button = new JButton("<");
+		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Main.novaTela(container);
-				atualizaBanco();
+				telaInicial();
 			}
 		});
-		
-		JButton btnConsultar = new JButton("Consultar Banco");
-		
-		JButton btnGerar = new JButton("Gerar Relatorios");
-		GroupLayout groupLayout = new GroupLayout(container);
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(101)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(btnAtualizar, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
-						.addComponent(btnConsultar, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
-						.addComponent(btnGerar, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE))
-					.addGap(100))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(80)
-					.addComponent(btnAtualizar)
-					.addGap(18)
-					.addComponent(btnConsultar)
-					.addGap(18)
-					.addComponent(btnGerar)
-					.addContainerGap(109, Short.MAX_VALUE))
-		);
-		container.setLayout(groupLayout);
-	}
-
-	public void atualizaBanco() {
-		
+		button.setBounds(12, 12, 44, 25);
+		container.add(button);
 	}
 }

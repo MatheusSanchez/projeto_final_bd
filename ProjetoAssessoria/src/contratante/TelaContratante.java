@@ -50,11 +50,9 @@ public class TelaContratante extends JFrame {
 	public TelaContratante() {
 		this.container = getContentPane();
 		createMasks();
-		//menuInicial();
 	}
 
 	public TelaContratante(Container c) {
-		//menuInicial();
 		this.container = c;
 		createMasks();
 	}
@@ -132,7 +130,8 @@ public class TelaContratante extends JFrame {
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Main.novaTela(container);
-				new TelaInicio(container);
+				TelaInicio t = new TelaInicio(container);
+				t.atualizaBanco();
 			}
 		});
 		button.setBounds(12, 12, 44, 25);

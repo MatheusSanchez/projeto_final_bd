@@ -24,14 +24,15 @@ public class Main {
 		Conexao.getInstance(); // pede os dados da conexao antes de rodar
 
 		//TelaFesta c = new TelaFesta();
-		TelaInicio c = new TelaInicio();
-
 		// TelaContratante c = new TelaContratante();
 		// TelaDecoracaoCasamento c = new TelaDecoracaoCasamento();
 		//TelaDecoracaoInfantil c = new TelaDecoracaoInfantil();
 		// TelaBuffetCasamento c = new TelaBuffetCasamento();
 		//TelaBuffetInfantil c = new TelaBuffetInfantil();
 		//TelaBanda c = new TelaBanda();
+		
+		TelaInicio c = new TelaInicio();
+		c.telaInicial();
 		c.setSize(768, 480);
 		c.setVisible(true);
 		
