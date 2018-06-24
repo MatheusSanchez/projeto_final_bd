@@ -21,7 +21,7 @@ import main.Main;
 import main.TelaInicio;
 
 @SuppressWarnings("serial")
-public class TelaDecoracaoInfantil extends JFrame {
+public class TelaDecoracaoInfantil {
 	private JTextField textFieldTema;
 	private JTextField textFieldQtdeBaloes;
 	
@@ -38,7 +38,7 @@ public class TelaDecoracaoInfantil extends JFrame {
 	private Container container;
 
 	public TelaDecoracaoInfantil() {
-		this.container = getContentPane();
+		
 	}
 	
 	public TelaDecoracaoInfantil(Container c) {
