@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
@@ -41,11 +42,20 @@ public class TelaFesta extends JFrame {
 	private String decoracao;
 	private double preco = 0.0;
 	private Container container;
+	private Boolean alterando = false;
+	private String numeroContrato;
 	
 	/* Tela inicio */
 	private JButton btnInserir;
 	private JButton btnAlterar;
 	private JButton btnVoltar;
+	
+	/* Tela 0 */
+	private JLabel lblNumCont;
+	private JLabel lblTitle0;
+	private JTextField textNumCont;
+	private JButton btnVoltar0;
+	private JButton btnNext0;
 	
 	/* Tela 1*/
 	private JTextField textCPF;
@@ -99,9 +109,10 @@ public class TelaFesta extends JFrame {
 	public TelaFesta() {	
 		this.container = getContentPane();
 		//menuInicial();
+		tela0();
 		//tela1();
 		//tela2();
-		tela3();
+		//tela3();
 		//tela4();
 	}
 
@@ -115,6 +126,7 @@ public class TelaFesta extends JFrame {
 				container.removeAll();
 				container.revalidate();
 				container.repaint();
+				alterando = false;
 				tela1();
 			}
 		});
@@ -128,7 +140,8 @@ public class TelaFesta extends JFrame {
 				container.removeAll();
 				container.revalidate();
 				container.repaint();
-				tela1();
+				alterando = true;
+				tela0();
 				//TODO coisas de alter
 			}
 		});
@@ -158,10 +171,66 @@ public class TelaFesta extends JFrame {
 		btnVoltar.setBounds(12, 12, 44, 25);
 		container.add(btnVoltar);
 	}
-
-
 	
-	
+	// h5fgnmhi1uKdLVcornRgPWCtH
+	public boolean seleciona() {
+		System.out.println(numeroContrato);
+		String[] res = Festa.select(numeroContrato);
+		if(res != null) {
+			for(int i = 0; i < res.length; ++i) {
+				System.out.println(res[i]);
+			}
+			preco = res[0] == null? 0.0 : Double.parseDouble(res[0]);
+			data = res[1];
+			tipo = res[2];
+			cpfContratante = res[3];
+			buffet = res[4];
+			decoracao = res[5];
+			atracao = res[6];
+		} else return false;
+		convidados = (String[]) Festa.selectConvidados(numeroContrato).toArray(new String[0]);
+		return true;
+	}
+
+	public void tela0() {
+		container.setLayout(null);
+		lblTitle0 = new JLabel("<html> <h1>  Escolha a festa para ser alterada</h1> </html>");
+		lblTitle0.setBounds(31, 60, 547, 51);
+		container.add(lblTitle0);
+		
+		textNumCont = new JTextField();
+		textNumCont.setBounds(239, 154, 114, 19);
+		container.add(textNumCont);
+		textNumCont.setText(numeroContrato);
+		
+		lblNumCont = new JLabel("Numero de contrato");
+		lblNumCont.setBounds(31, 156, 149, 15);
+		container.add(lblNumCont);
+		
+		btnVoltar0 = new JButton("<");
+		btnVoltar0.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Main.novaTela(container);
+				menuInicial();
+			}
+		});
+		btnVoltar0.setBounds(10, 11, 52, 23);
+		container.add(btnVoltar0);
+		
+		btnNext0 = new JButton("Proxima");
+		btnNext0.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				numeroContrato = textNumCont.getText();
+				if(seleciona()) {
+					Main.novaTela(container);
+					tela1();
+				}
+			}
+		});
+		btnNext0.setBounds(612, 389, 117, 25);
+		container.add(btnNext0);
+	}
+
 	public void tela1() {
 		container.setLayout(null);
 		
@@ -169,7 +238,8 @@ public class TelaFesta extends JFrame {
 		btnVoltar1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Main.novaTela(container);
-				menuInicial();
+				if(alterando == false) menuInicial();
+				else tela0();
 			}
 		});
 		btnVoltar1.setBounds(10, 11, 52, 23);
@@ -317,7 +387,7 @@ public class TelaFesta extends JFrame {
 		comboBox.setModel(new DefaultComboBoxModel<Object>(new String[] {"Casamento", "Aniversario Infantil"}));
 		comboBox.setBounds(243, 179, 137, 20);
 		container.add(comboBox);
-		comboBox.setSelectedIndex((tipo == null || tipo == "Casamento")? 0 : 1);
+		comboBox.setSelectedIndex((tipo == null || tipo.equals("Casamento"))? 0 : 1);
 		
 		lblConvidados = new JLabel("Convidados");
 		lblConvidados.setFont(new Font("Dialog", Font.BOLD, 12));
@@ -425,12 +495,12 @@ public class TelaFesta extends JFrame {
 				String cnpj = txtCnpj.getText();
 				boolean ok = true;
 				
-				if (tipo == "Casamento") {
+				if (tipo.equals("Casamento")) {
 					String[] nome = BuffetCasamento.select(cnpj);
 					if (nome != null) textFieldNome.setText(nome[1]);
 					else ok = false;
 				}
-				else if (tipo == "Aniversario Infantil") {
+				else if (tipo.equals("Aniversario Infantil")) {
 					List<String> nome = BuffetInfantil.select(cnpj);
 					if (nome != null && nome.size() > 0) textFieldNome.setText(nome.get(1));
 					else ok = false;
@@ -492,7 +562,7 @@ public class TelaFesta extends JFrame {
 		btnVoltar4.setBounds(10, 11, 53, 23);
 		container.add(btnVoltar4);
 		
-		lblTitle4 = new JLabel("<html><h1> 4. Escolha a Decoracao e " + (tipo == null || tipo == "Casamento"? "a Banda" : "o Animador") + "</h1></html>");
+		lblTitle4 = new JLabel("<html><h1> 4. Escolha a Decoracao e " + (tipo == null || tipo.equals("Casamento")? "a Banda" : "o Animador") + "</h1></html>");
 		lblTitle4.setBounds(41, 58, 500, 39);
 		container.add(lblTitle4);
 		
@@ -519,12 +589,13 @@ public class TelaFesta extends JFrame {
 		txtNomeAt.setColumns(10);
 		txtNomeAt.setText(atracao);
 		
-		btnNext4 = new JButton("Criar festa");
+		btnNext4 = new JButton("Finalizar");
 		btnNext4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				atracao = txtNomeAt.getText();
 				decoracao = txtTema.getText();
-				Festa.insert(preco, data, tipo, cpfContratante, buffet, decoracao, atracao, convidados);
+				if(alterando == false) Festa.insert(preco, data, tipo, cpfContratante, buffet, decoracao, atracao, convidados);
+				else Festa.update(numeroContrato, preco, data, tipo, cpfContratante, buffet, decoracao, atracao, convidados);
 			}
 		});
 		btnNext4.setBounds(622, 407, 120, 23);
