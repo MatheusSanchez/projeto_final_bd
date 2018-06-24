@@ -6,12 +6,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.text.ParseException;
 
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.text.MaskFormatter;
 
 import main.Main;
 import main.TelaInicio;
@@ -19,10 +22,10 @@ import main.TelaInicio;
 @SuppressWarnings("serial")
 public class TelaContratante extends JFrame {
 	private JTextField textFieldNome;
-	private JTextField textFieldCpf;
-	private JTextField textFieldTelefone;
+	private JFormattedTextField textFieldCpf;
+	private JFormattedTextField textFieldTelefone;
 	private JTextField textFieldBairro;
-	private JTextField textFieldCep;
+	private JFormattedTextField textFieldCep;
 	private JTextField textFieldRua;
 	private JTextField textFieldNumero;
 	private JTextField textFieldEmail;
@@ -39,16 +42,48 @@ public class TelaContratante extends JFrame {
 	private JButton btnCadastrar;
 	
 	private Container container;
+	
+	private MaskFormatter cpfMask;
+	private MaskFormatter telefoneMask;
+	private MaskFormatter cepMask;
 
 	public TelaContratante() {
 		this.container = getContentPane();
-		
+		createMasks();
 		//menuInicial();
 	}
 
 	public TelaContratante(Container c) {
 		//menuInicial();
 		this.container = c;
+		createMasks();
+	}
+	
+	private void createMasks() {
+		
+		try {
+		    cpfMask = new MaskFormatter("###.###.###-##");
+		    cpfMask.setPlaceholderCharacter(' ');
+		    cpfMask.setValidCharacters("0123456789");
+		} catch (ParseException e) {
+		    e.printStackTrace();
+		}
+		
+		try {
+		    telefoneMask = new MaskFormatter("(##)#####-####");
+		    telefoneMask.setPlaceholderCharacter(' ');
+		    telefoneMask.setValidCharacters("0123456789");
+		} catch (ParseException e) {
+		    e.printStackTrace();
+		}
+		
+		try {
+		    cepMask = new MaskFormatter("##.###-###");
+		    cepMask.setPlaceholderCharacter(' ');
+		    cepMask.setValidCharacters("0123456789");
+		} catch (ParseException e) {
+		    e.printStackTrace();
+		}
 	}
 	
 	public void menuInicial() {
@@ -173,13 +208,13 @@ public class TelaContratante extends JFrame {
 		lblBairro.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		container.add(lblBairro);
 		
-		textFieldCpf = new JTextField();
+		textFieldCpf = new JFormattedTextField(cpfMask);
 		textFieldCpf.setToolTipText("xxx.xxx.xxx-xx");
 		textFieldCpf.setColumns(10);
 		textFieldCpf.setBounds(234, 93, 136, 20);
 		container.add(textFieldCpf);
 		
-		textFieldTelefone = new JTextField();
+		textFieldTelefone = new JFormattedTextField(telefoneMask);
 		textFieldTelefone.setToolTipText("(xx)xxxx-xxxx ou (xx)xxxxx-xxxx");
 		textFieldTelefone.setColumns(10);
 		textFieldTelefone.setBounds(234, 124, 136, 20);
@@ -190,10 +225,10 @@ public class TelaContratante extends JFrame {
 		textFieldBairro.setBounds(234, 190, 136, 20);
 		container.add(textFieldBairro);
 		
-		textFieldCep = new JTextField();
+		textFieldCep = new JFormattedTextField(cepMask);
 		textFieldCep.setToolTipText("xxxxx-xxx");
 		textFieldCep.setColumns(10);
-		textFieldCep.setBounds(234, 221, 136, 20);
+		textFieldCpf.setBounds(234, 93, 136, 20);
 		container.add(textFieldCep);
 		
 		textFieldRua = new JTextField();
@@ -294,13 +329,13 @@ public class TelaContratante extends JFrame {
 		lblBairro.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		container.add(lblBairro);
 		
-		textFieldCpf = new JTextField();
+		textFieldCpf = new JFormattedTextField(cpfMask);
 		textFieldCpf.setToolTipText("xxx.xxx.xxx-xx");
 		textFieldCpf.setColumns(10);
 		textFieldCpf.setBounds(234, 47, 136, 20);
 		container.add(textFieldCpf);
 		
-		textFieldTelefone = new JTextField();
+		textFieldTelefone = new JFormattedTextField(telefoneMask);
 		textFieldTelefone.setToolTipText("(xx)xxxx-xxxx ou (xx)xxxxx-xxxx");
 		textFieldTelefone.setColumns(10);
 		textFieldTelefone.setBounds(234, 124, 136, 20);
@@ -311,7 +346,7 @@ public class TelaContratante extends JFrame {
 		textFieldBairro.setBounds(234, 190, 136, 20);
 		container.add(textFieldBairro);
 		
-		textFieldCep = new JTextField();
+		textFieldCep = new JFormattedTextField(cepMask);
 		textFieldCep.setToolTipText("xxxxx-xxx");
 		textFieldCep.setColumns(10);
 		textFieldCep.setBounds(234, 221, 136, 20);
@@ -461,13 +496,13 @@ public class TelaContratante extends JFrame {
 		lblBairro.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		container.add(lblBairro);
 		
-		textFieldCpf = new JTextField();
+		textFieldCpf = new JFormattedTextField(cpfMask);
 		textFieldCpf.setToolTipText("xxx.xxx.xxx-xx");
 		textFieldCpf.setColumns(10);
 		textFieldCpf.setBounds(234, 47, 136, 20);
 		container.add(textFieldCpf);
 		
-		textFieldTelefone = new JTextField();
+		textFieldTelefone = new JFormattedTextField(telefoneMask);
 		textFieldTelefone.setToolTipText("(xx)xxxx-xxxx ou (xx)xxxxx-xxxx");
 		textFieldTelefone.setColumns(10);
 		textFieldTelefone.setBounds(234, 124, 136, 20);
@@ -480,7 +515,7 @@ public class TelaContratante extends JFrame {
 		textFieldBairro.setEditable(false);
 		container.add(textFieldBairro);
 		
-		textFieldCep = new JTextField();
+		textFieldCep = new JFormattedTextField(cepMask);
 		textFieldCep.setToolTipText("xxxxx-xxx");
 		textFieldCep.setColumns(10);
 		textFieldCep.setBounds(234, 221, 136, 20);

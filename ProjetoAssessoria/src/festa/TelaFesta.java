@@ -8,26 +8,29 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.text.ParseException;
 import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JEditorPane;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.text.MaskFormatter;
 
+import main.Main;
+import main.TelaInicio;
 import buffet.BuffetCasamento;
 import buffet.BuffetInfantil;
 import buffet.TelaBuffetCasamento;
 import buffet.TelaBuffetInfantil;
 import contratante.Contratante;
 import contratante.TelaContratante;
-import main.Main;
-import main.TelaInicio;
 
 @SuppressWarnings("serial")
 public class TelaFesta extends JFrame {
@@ -53,7 +56,7 @@ public class TelaFesta extends JFrame {
 	private JTextField textFieldNomeCont;
 	
 	/* Tela 2*/
-	private JTextField txtData;
+	private JFormattedTextField txtData;
 	private JLabel lblTitle2;
 	private JLabel lblData;
 	private JLabel lblTipo;
@@ -248,11 +251,18 @@ public class TelaFesta extends JFrame {
 		lblData.setBounds(81, 132, 46, 14);
 		container.add(lblData);
 		
-		txtData = new JTextField();
+		MaskFormatter dateMask = null;
+		try {
+		    dateMask = new MaskFormatter("##/##/####");
+		    dateMask.setPlaceholderCharacter(' ');
+		    dateMask.setValidCharacters("0123456789");
+		} catch (ParseException e) {
+		    e.printStackTrace();
+		}
+		txtData = new JFormattedTextField(dateMask); 
 		txtData.setToolTipText("99/99/9999");
 		txtData.setBounds(243, 130, 137, 20);
 		container.add(txtData);
-		txtData.setColumns(10);
 		txtData.setText(data);
 		
 		lblTipo = new JLabel("Tipo");
