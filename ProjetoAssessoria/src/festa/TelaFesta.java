@@ -141,6 +141,7 @@ public class TelaFesta extends JFrame {
 				container.revalidate();
 				container.repaint();
 				alterando = true;
+				Main.novaTela(container);
 				tela0();
 				//TODO coisas de alter
 			}
