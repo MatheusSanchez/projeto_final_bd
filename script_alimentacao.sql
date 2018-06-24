@@ -144,14 +144,30 @@ insert into EmpresaCriterio(empresa, tipo) values('21.245.025/0001-48', 'SEGURAN
 insert into EmpresaCriterio(empresa, tipo) values('43.456.123/0001-58', 'SEGURANCA'); 
 
 insert into EmpresaCriterio(empresa, tipo) values('12.246.015/0001-53', 'FOTOGRAFIA');  
-insert into EmpresaCriterio(empresa, tipo) values('34.245.025/0001-48', 'FOTOGRAFIA'); 
-insert into EmpresaCriterio(empresa, tipo) values('56.456.123/0001-58', 'FOTOGRAFIA'); 	
+insert into EmpresaCriterio(empresa, tipo) values('34.246.015/0001-53', 'FOTOGRAFIA'); 
+insert into EmpresaCriterio(empresa, tipo) values('56.246.015/0001-53', 'FOTOGRAFIA'); 	
 
 insert into EmpresaSeguranca(cnpj, nome) values('28.246.015/0001-53', 'Grupo Souza Lima');
 insert into EmpresaSeguranca(cnpj, nome) values('21.245.025/0001-48', 'Grupo Sanchez Proteções');
 insert into EmpresaSeguranca(cnpj, nome) values('43.456.123/0001-58', 'Grupo de Proteção contra Terroristas');
     
 insert into EmpresaFotografia(cnpj, nome) values('12.246.015/0001-53', 'Carol da B. fotografias e edições');
-insert into EmpresaFotografia(cnpj, nome) values('34.245.025/0001-48', 'Momentos Fotógrafos');
-insert into EmpresaFotografia(cnpj, nome) values('56.456.123/0001-58', 'Grupo de Proteção contra Terroristas');
+insert into EmpresaFotografia(cnpj, nome) values('34.246.015/0001-53', 'Momentos Fotógrafos');
+insert into EmpresaFotografia(cnpj, nome) values('56.246.015/0001-53', 'Grupo de Proteção contra Terroristas');
 
+insert into FuncionarioCriterio(funcionario, tipo) values('513.731.800-05', 'SEGURANCA');  
+insert into FuncionarioCriterio(funcionario, tipo) values('446.823.720-17', 'SEGURANCA');  
+insert into FuncionarioCriterio(funcionario, tipo) values('925.050.230-34', 'SEGURANCA');  
+
+insert into FuncionarioCriterio(funcionario, tipo) values('111.878.540-18', 'FOTOGRAFO');  
+insert into FuncionarioCriterio(funcionario, tipo) values('805.439.600-72', 'FOTOGRAFO');  
+insert into FuncionarioCriterio(funcionario, tipo) values('205.513.460-43', 'FOTOGRAFO'); 	
+
+insert into Seguranca(Cpf, nome) values('513.731.800-05', 'Otávio Costa Barros');  
+insert into Seguranca(Cpf, nome) values('446.823.720-17', 'Leonardo Carvalho Rocha');  
+insert into Seguranca(Cpf, nome) values('925.050.230-34', 'Diego Azevedo Ferreira'); 
+
+insert into Fotografo(Cpf, nome) values('111.878.540-18', 'Diego Azevedo Rocha');  
+insert into Fotografo(Cpf, nome) values('805.439.600-72', 'Otávio Costa Carvalho');  
+insert into Fotografo(Cpf, nome) values('205.513.460-43', 'Leonardo Barros Ferreira'); 
+	
