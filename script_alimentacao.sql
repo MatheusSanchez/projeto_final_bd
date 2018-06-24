@@ -180,13 +180,14 @@ insert into ContratoSeguranca(nro_contrato, empresa_seguranca,casamento,preco,pd
 insert into ContratoSeguranca(nro_contrato, empresa_seguranca,casamento,preco,pdf_contrato) 
 		values('3','43.456.123/0001-58','5',768.45,null); 
 
-insert into ServicoSeguranca(data, seguranca,contrato_seguranca) values(to_date('24/06/18', 'dd/mm/yy'),'513.731.800-05','1'); 
-	
+insert into ServicoSeguranca(data, seguranca,contrato_seguranca) values(to_date('24/06/18', 'dd/mm/yy'),'513.731.800-05','1'); 	
 insert into ServicoSeguranca(data, seguranca,contrato_seguranca) values(to_date('24/06/18', 'dd/mm/yy'),'446.823.720-17','2');
-
 insert into ServicoSeguranca(data, seguranca,contrato_seguranca) values(to_date('24/06/18', 'dd/mm/yy'),'925.050.230-34','3');	
-
 	
 insert into ContratoFotografia(nro_contrato, empresa_fotografia,festa,preco,pdf_contrato,qtde_fotos) values('1','12.246.015/0001-53','1',250.02,null,3);  
 insert into ContratoFotografia(nro_contrato, empresa_fotografia,festa,preco,pdf_contrato,qtde_fotos) values('2','34.246.015/0001-53','2',1000.02,null,45); 
 insert into ContratoFotografia(nro_contrato, empresa_fotografia,festa,preco,pdf_contrato,qtde_fotos) values('3','56.246.015/0001-53','3',768.45,null,45); 
+
+insert into ServicoFotografo(data,fotografo,contrato_fotografia) values(to_date('15/09/19', 'dd/mm/yy'),'111.878.540-18','1');
+insert into ServicoFotografo(data,fotografo,contrato_fotografia) values(to_date('15/09/19', 'dd/mm/yy'),'805.439.600-72','2');	
+insert into ServicoFotografo(data,fotografo,contrato_fotografia) values(to_date('15/09/19', 'dd/mm/yy'),'205.513.460-43','3');		
