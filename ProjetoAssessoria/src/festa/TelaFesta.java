@@ -40,7 +40,7 @@ public class TelaFesta extends JFrame {
 	private String buffet;
 	private String atracao;
 	private String decoracao;
-	private double preco;
+	private double preco = 0.0;
 	private Container container;
 	
 	/* Tela inicio */
@@ -84,12 +84,13 @@ public class TelaFesta extends JFrame {
 	
 	/* Tela 4*/
 	private JTextField txtTema;
-	private JTextField txtNomeDec;
+	private JTextField txtNomeAt;
 	private JButton btnVoltar4;
 	private JButton btnNext4;
 	private JLabel lblTitle4;
 	private JLabel lblTema;
 	private JLabel lblNomeAt;
+	private JTextField textFieldPreco;
 	
 	public TelaFesta(Container c) {	
 		this.container = c;
@@ -101,8 +102,8 @@ public class TelaFesta extends JFrame {
 		//menuInicial();
 		//tela1();
 		//tela2();
-		//tela3();
-		tela4();
+		tela3();
+		//tela4();
 	}
 
 	public void menuInicial() {
@@ -207,6 +208,11 @@ public class TelaFesta extends JFrame {
 		btnNext1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cpfContratante = textCPF.getText();
+				try{
+					preco = Double.parseDouble(textFieldPreco.getText());
+				} catch (Exception ex) {
+					preco = 0.0;
+				}
 				Main.novaTela(container);
 				tela2();
 			}
@@ -252,6 +258,17 @@ public class TelaFesta extends JFrame {
 		});
 		btnPesquisar1.setBounds(379, 154, 114, 19);
 		container.add(btnPesquisar1);
+		
+		textFieldPreco = new JTextField();
+		textFieldPreco.setToolTipText("XXX.XXX.XXX-X");
+		textFieldPreco.setText(preco == 0.0? "" : Double.toString(preco));
+		textFieldPreco.setColumns(10);
+		textFieldPreco.setBounds(239, 326, 114, 19);
+		container.add(textFieldPreco);
+		
+		JLabel lblPreco = new JLabel("Preco");
+		lblPreco.setBounds(31, 328, 149, 15);
+		container.add(lblPreco);
 		
 		textCPF.addFocusListener(new FocusListener() {
 			
@@ -438,6 +455,8 @@ public class TelaFesta extends JFrame {
 		btnNext3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				buffet = txtCnpj.getText();
+				Main.novaTela(container);
+				tela4();
 			}
 		});
 		btnNext3.setBounds(622, 407, 120, 23);
@@ -464,7 +483,7 @@ public class TelaFesta extends JFrame {
 		btnVoltar4 = new JButton("<");
 		btnVoltar4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				atracao = txtNomeDec.getText();
+				atracao = txtNomeAt.getText();
 				decoracao = txtTema.getText();
 				Main.novaTela(container);
 				tela3();
@@ -487,24 +506,23 @@ public class TelaFesta extends JFrame {
 		txtTema.setBounds(143, 272, 163, 20);
 		container.add(txtTema);
 		txtTema.setColumns(10);
-		txtTema.setText(buffet);
+		txtTema.setText(decoracao);
 		
 		lblNomeAt = new JLabel("Nome");
 		lblNomeAt.setFont(new Font("Dialog", Font.BOLD, 12));
 		lblNomeAt.setBounds(41, 178, 46, 14);
 		container.add(lblNomeAt);
 		
-		txtNomeDec = new JTextField();
-		txtNomeDec.setToolTipText("99.999.999/9999-99");
-		txtNomeDec.setBounds(143, 176, 163, 20);
-		container.add(txtNomeDec);
-		txtNomeDec.setColumns(10);
-		txtNomeDec.setText(buffet);
+		txtNomeAt = new JTextField();
+		txtNomeAt.setBounds(143, 176, 163, 20);
+		container.add(txtNomeAt);
+		txtNomeAt.setColumns(10);
+		txtNomeAt.setText(atracao);
 		
 		btnNext4 = new JButton("Criar festa");
 		btnNext4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				atracao = txtNomeDec.getText();
+				atracao = txtNomeAt.getText();
 				decoracao = txtTema.getText();
 				// inserir no SQL
 			}
@@ -515,11 +533,11 @@ public class TelaFesta extends JFrame {
 		JLabel lblTitleAt = new JLabel("<html> <h2>" + (tipo == null || tipo == "Casamento"? "Banda" : "Animador") + "<h2> </html>");
 		lblTitleAt.setFont(new Font("Dialog", Font.BOLD, 12));
 		lblTitleAt.setBounds(41, 135, 163, 31);
-		getContentPane().add(lblTitleAt);
+		container.add(lblTitleAt);
 		
 		JLabel lblTituloDec = new JLabel("<html> <h2> Decoracao </h2> </html>");
 		lblTituloDec.setFont(new Font("Dialog", Font.BOLD, 12));
 		lblTituloDec.setBounds(41, 231, 163, 31);
-		getContentPane().add(lblTituloDec);
+		container.add(lblTituloDec);
 	}
 }
