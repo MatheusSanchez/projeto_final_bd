@@ -23,7 +23,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
 
-import atracao.Banda;
 import buffet.BuffetCasamento;
 import buffet.BuffetInfantil;
 import contratante.Contratante;
@@ -524,7 +523,7 @@ public class TelaFesta extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				atracao = txtNomeAt.getText();
 				decoracao = txtTema.getText();
-				// inserir no SQL
+				Festa.insert(preco, data, tipo, cpfContratante, buffet, decoracao, atracao, convidados);
 			}
 		});
 		btnNext4.setBounds(622, 407, 120, 23);
