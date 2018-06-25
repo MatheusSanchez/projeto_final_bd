@@ -204,7 +204,7 @@ public class TelaAnimador extends JFrame {
 				String email = textFieldEmail.getText(); // pega o email do animador
 				String tipoAnimacao = (String) dropTipoAnim.getSelectedItem(); // pega o tipo de animacao que o animador faz
 				
-				if (telefone == "(  )    -    ") telefone = null;
+				if (telefone.equals("(  )    -    ")) telefone = null;
 				
 				Animador.insert(nome, telefone, email, tipoAnimacao); // insere no banco
 			}
@@ -297,7 +297,7 @@ public class TelaAnimador extends JFrame {
 				String telefone = textFieldTelefone.getText(); // pega o telefone do animador
 				String email = textFieldEmail.getText();// pega o email do animador
 				String tipoAnimacao = (String) dropTipoAnim.getSelectedItem(); // pega o tipo de animacao
-				if (telefone == "(  )    -    ") telefone = null;
+				if (telefone.equals("(  )    -    ")) telefone = null;
 				
 				Animador.update(nome, telefone, email, tipoAnimacao); // atualiza o animador no banco
 			}
