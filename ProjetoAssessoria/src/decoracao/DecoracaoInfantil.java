@@ -10,13 +10,16 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import conexao.Conexao;
-
+/*
+ * Classe de operacoes SQL de DecoracaoInfantil
+ */
 public class DecoracaoInfantil {
 	
 	public DecoracaoInfantil(){
 		
 	}
 	
+	/* Insercao de uma decoracao infantil */
 	static public void insert(String tema, String qtdeBaloes, boolean pinata, String[] cores) {
 		Connection c = Conexao.getInstance(); //inicia a conexao
 		
@@ -48,6 +51,8 @@ public class DecoracaoInfantil {
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
+			
+			// Tratamento de erros da insercao da decoracao infantil
 			if (e.getErrorCode() == 1) JOptionPane.showMessageDialog(null, "Erro: tema ja cadastrado");
 			else if (e.getErrorCode() == 1400) JOptionPane.showMessageDialog(null, "Erro: Campo tema deve ser preenchido");
 			else if (e.getErrorCode() == 1438) JOptionPane.showMessageDialog(null, "Erro: Quantidade de flores grande demais");
@@ -56,9 +61,10 @@ public class DecoracaoInfantil {
 		}
 	}
 	
+	/* Selecao de uma decoracao infantil */
 	public static List<String> select(String tema) {
 		Connection c = Conexao.getInstance();	
-		String sql = "select * from decoracaoinfantil where tema = (?)";
+		String sql = "select * from decoracaoinfantil where tema = (?)"; // comando SQL
 		
 		List<String> s = new ArrayList<String>();
 
@@ -68,11 +74,11 @@ public class DecoracaoInfantil {
 			
 			ResultSet rs = pstm.executeQuery();
 			while (rs.next()){
-				s.add(rs.getString(2)); //adiciona qtdeBaloes
-				s.add(rs.getString(3).trim()); //adiciona pinata
+				s.add(rs.getString(2)); //adiciona qtdeBaloes na resposta
+				s.add(rs.getString(3).trim()); //adiciona pinata na resposta
 			}
 			
-		
+			// Seleciona as cores dos baloes
 			sql = "select cor from corbaloes where decoracao = (?)";
 			pstm = c.prepareStatement(sql);
 			pstm.setString(1, tema);
@@ -97,17 +103,17 @@ public class DecoracaoInfantil {
 		return s; //retorna uma lista com as colunas obtidas ou null quando nao encontrou
 	}
 	
+	
+	/* Atualiza uma decoracao infantil */
 	public static void update(String[] form) {
 		Connection c = Conexao.getInstance();
 		
 		try {
-			String sql = "delete from corbaloes where decoracao = ?";
+			String sql = "delete from corbaloes where decoracao = ?"; // remove as tuplas do atributo multivalorado corbaloes
 			
 			PreparedStatement pstm = c.prepareStatement(sql);
 			pstm.setString(1, form[0]);
-			pstm.execute(); //apaga as cores que ja existiam
-			
-			for(int i = 0; i < form.length; ++i) System.out.println(form[i]);
+			pstm.execute();
 			
 			//atualiza decoracaoinfantil
 			sql = "update decoracaoinfantil set qtde_baloes = ?, pinata = ? where tema = ?";
@@ -117,7 +123,7 @@ public class DecoracaoInfantil {
 			pstm.setString(3, form[0]);
 			pstm.execute();
 			
-			sql = "insert into corbaloes(decoracao, cor) values(?, ?)";
+			sql = "insert into corbaloes(decoracao, cor) values(?, ?)"; // reinsere as cores, atualizadas
 			pstm = c.prepareStatement(sql);
 			
 			pstm.setString(1, form[0]);
@@ -135,10 +141,10 @@ public class DecoracaoInfantil {
 			try {
 				c.rollback();
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			
+			// Tratamento de erros da alteracao de decoracao infantil
 			if (e.getErrorCode() == 1722) JOptionPane.showMessageDialog(null, "Erro: Quantidade de baloes deve ser um dado numerico e nao negativo");
 			else if (e.getErrorCode() == 1438) JOptionPane.showMessageDialog(null, "Erro: Quantidade de flores grande demais");
 			else JOptionPane.showMessageDialog(null, "Erro ao inserir decoracao");
@@ -146,10 +152,11 @@ public class DecoracaoInfantil {
 
 	}
 	
+	/* Remove uma decoracao infantil */
 	public static void remove(String tema) {
 		Connection c = Conexao.getInstance();
 		
-		String sql = "delete from decoracaoinfantil where tema = ?";
+		String sql = "delete from decoracaoinfantil where tema = ?"; // comando sql
 		
 		try {
 			PreparedStatement pstm = c.prepareStatement(sql);

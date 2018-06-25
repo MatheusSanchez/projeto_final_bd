@@ -18,12 +18,17 @@ import javax.swing.JTextField;
 import main.Main;
 import main.TelaInicio;
 
+/*
+ * Tela de CRUD de Decoracao Casamento 
+ */
+
 @SuppressWarnings("serial")
 public class TelaDecoracaoCasamento {
+	
+	/* Componentes da interface, relativos ao swing */
 	private JTextField textFieldTema;
 	private JTextField textFieldQtdeFlores;
 	private JTextField textFieldTipoFlor;
-	
 	private JLabel lblDigiteTodosOs;
 	private JButton btnCadastrar;
 	private JLabel lblTipoDeFlor;
@@ -38,7 +43,9 @@ public class TelaDecoracaoCasamento {
 		this.container = c;
 	}
 	
+	/* Funcao que apresenta a tela de menu inicial */
 	public void menuInicial() {
+		/* Funcoes relativas ao swing */
 		container.setLayout(null);
 	
 		/* Configura botao que direciona para a tela de inserir decoracao Casamento */
@@ -92,8 +99,9 @@ public class TelaDecoracaoCasamento {
 		container.add(button);
 	}
 
-	
+	/* Funcao que apresenta a tela de insercao de decoracao casamento */
 	public void inserirDecoracaoCasamento() {
+		/* Funcoes relativas ao swing */
 		container.setLayout(null);
 		
 		JLabel lblCadastroDeNova = new JLabel("Cadastro de decoracao de casamento");
@@ -132,6 +140,7 @@ public class TelaDecoracaoCasamento {
 		JButton btnCadastrar = new JButton("CADASTRAR");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				/* Configura atributos da insercao de decoracao casamento */
 				String tema = textFieldTema.getText();
 				String qtde = textFieldQtdeFlores.getText();
 			
@@ -148,6 +157,7 @@ public class TelaDecoracaoCasamento {
 				}
 				tipos = types.toArray(new String[0]);
 				
+				// Insere a decoracao casamento no banco
 				DecoracaoCasamento.insert(tema, qtde, tipos);
 			}
 		});
@@ -170,7 +180,7 @@ public class TelaDecoracaoCasamento {
 		container.add(button);
 	}
 
-	//altera a visibilidade de determiandos atributos de acordo com a flag
+	// Altera a visibilidade de componentes swing
 	private void changeVisibility(boolean flag) {
 		lblDigiteTodosOs.setVisible(flag);
 		textFieldTipoFlor.setVisible(flag);
@@ -180,7 +190,9 @@ public class TelaDecoracaoCasamento {
 		lblQuantidadeDeFlores.setVisible(flag);
 	}
 	
+	/* Funcao que apresenta a tela de alteracao de decoracao casamento */
 	public void alterarDecoracaoCasamento() {
+		/* Funcoes relativas ao swing */
 		container.setLayout(null);
 		
 		JLabel lblCadastroDeNova = new JLabel("Alteracao de decoracao de casamento");
@@ -223,6 +235,7 @@ public class TelaDecoracaoCasamento {
 		btnCadastrar = new JButton("ALTERAR");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				/* Configura atributos relativos a decoracao casamento, para a sua posterior alteracao */
 				String tema = textFieldTema.getText();
 				String qtde = textFieldQtdeFlores.getText();
 				
@@ -248,6 +261,7 @@ public class TelaDecoracaoCasamento {
 					form[i] = tipos[i - 2];
 				}
 				
+				// Altera a decoracao casamento no banco
 				DecoracaoCasamento.update(form);
 			}
 		});
@@ -278,7 +292,9 @@ public class TelaDecoracaoCasamento {
 			public void actionPerformed(ActionEvent e) {
 				
 				String tema = textFieldTema.getText();
-				List<String> rs = DecoracaoCasamento.select(tema);
+				List<String> rs = DecoracaoCasamento.select(tema); // realiza a selecao de uma decoracao pelo seu tema
+				
+				// Altera os valores dos atributos da decoracao na interface
 				if (rs != null && rs.size() > 0) {
 					textFieldQtdeFlores.setText(rs.get(0));
 					String tipos = "";
@@ -312,7 +328,9 @@ public class TelaDecoracaoCasamento {
 		container.add(button);
 	}
 
+	/* Funcao que apresenta a tela de remocao de decoracao casamento */
 	public void apagarDecoracaoCasamento() {
+		/* Funcoes relativas ao swing */
 		container.setLayout(null);
 		
 		JLabel lblCadastroDeNova = new JLabel("Remocao de decoracao de casamento");
@@ -389,7 +407,9 @@ public class TelaDecoracaoCasamento {
 			public void actionPerformed(ActionEvent e) {
 				
 				String tema = textFieldTema.getText();
-				List<String> rs = DecoracaoCasamento.select(tema); //busca no banco pelo tema
+				List<String> rs = DecoracaoCasamento.select(tema); // busca no banco pelo tema
+				
+				/* Altera os valores relativos a decoracao nos componentes da interface */
 				if (rs != null && rs.size() > 0) {
 					textFieldQtdeFlores.setText(rs.get(0));
 					String tipos = "";
