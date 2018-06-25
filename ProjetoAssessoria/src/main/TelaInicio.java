@@ -359,7 +359,7 @@ public class TelaInicio extends JFrame {
 		col[1] = "media_preco";
 		JFrame f = new JFrame("aaa");
 		Main.novaJanela(f);
-		new TelaConsulta(f.getContentPane(), null, "consulta 1",
+		new TelaConsulta(f.getContentPane(), null, "Media de preco da festa por cep do contratante",
 				"select c.cep, avg(preco)as media_preco\r\n" + "	from festa f\r\n" + "	join contratante c\r\n"
 						+ "	on f.contratante = c.cpf\r\n" + "	group by c.cep\r\n" + "	order by c.cep",
 				col);
@@ -400,7 +400,7 @@ public class TelaInicio extends JFrame {
 				"		left join contratoanimador bb \r\n" + 
 				"		on bb.aniversario_infantil = c.nro_contrato)";
 		
-		new TelaConsulta(f.getContentPane(), null, "consulta 2", s, col);
+		new TelaConsulta(f.getContentPane(), null, "Listar festa, contratante, decoracao, buffet e atracao", s, col);
 	}
 	
 	private static void consulta3() {
@@ -422,7 +422,7 @@ public class TelaInicio extends JFrame {
 				"		having count(*) > 100\r\n" + 
 				"	order by f.preco";
 		
-		new TelaConsulta(f.getContentPane(), null, "consulta 3", s, col);
+		new TelaConsulta(f.getContentPane(), null, "Para todas com as festas com mais de 100 convidados, selecionar contratante, nro_contrato e nro_convidados", s, col);
 	}
 	
 	private static void consulta4() {
@@ -441,7 +441,7 @@ public class TelaInicio extends JFrame {
 				"	group by b.nome\r\n" + 
 				"	    having count (*) = (select max(count(*)) from casamento c join contratobanda cb on cb.casamento = c.nro_contrato join banda b on cb.banda = b.nome group by b.nome)";
 	
-		new TelaConsulta(f.getContentPane(), null, "consulta 4", s, col);
+		new TelaConsulta(f.getContentPane(), null, "Encontrar banda mais popular", s, col);
 	}
 
 	private static void consulta5() {
@@ -455,7 +455,7 @@ public class TelaInicio extends JFrame {
 				+ "	on ca.aniversario_infantil = ai.nro_contrato\r\n" + "	join animador a\r\n"
 				+ "	on ca.animador = a.nome\r\n" + "	group by a.nome\r\n"
 				+ "	    having count (*) = (select max(count(*)) from aniversarioinfantil ai join contratoanimador ca on ca.aniversario_infantil = ai.nro_contrato join animador a on ca.animador = a.nome group by a.nome)";
-		new TelaConsulta(f.getContentPane(), null, "consulta 5", s, col);
+		new TelaConsulta(f.getContentPane(), null, "Encontrar animador mais popular", s, col);
 	}
 	
 	private static void consulta6() {
@@ -499,6 +499,6 @@ public class TelaInicio extends JFrame {
 				"		)\r\n" + 
 				"	)\r\n" + 
 				"";
-		new TelaConsulta(f.getContentPane(), null, "consulta 6", s, col);
+		new TelaConsulta(f.getContentPane(), null, "Encontrar buffet mais popular", s, col);
 	}
 }
