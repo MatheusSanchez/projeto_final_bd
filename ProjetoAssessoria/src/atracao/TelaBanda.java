@@ -211,7 +211,7 @@ public class TelaBanda extends JFrame {
 				}
 				integrantes = types.toArray(new String[0]);
 				
-				if (telefone == "(  )    -    ") telefone = null;
+				if (telefone.equals("(  )    -    ")) telefone = null;
 				
 				Banda.insert(nome, telefone, email, integrantes); // insere no banco
 			}
@@ -323,7 +323,7 @@ public class TelaBanda extends JFrame {
 					}
 				}
 				integrantes = types.toArray(new String[0]);
-				if (telefone == "(  )    -    ") telefone = null;
+				if (telefone.equals("(  )    -    ")) telefone = null;
 				
 				Banda.update(nome, telefone, email, integrantes);
 			}

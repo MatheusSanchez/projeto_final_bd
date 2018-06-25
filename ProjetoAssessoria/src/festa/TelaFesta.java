@@ -603,7 +603,7 @@ public class TelaFesta extends JFrame {
 		btnNext4.setBounds(622, 407, 120, 23);
 		container.add(btnNext4);
 		
-		JLabel lblTitleAt = new JLabel("<html> <h2>" + (tipo == null || tipo == "Casamento"? "Banda" : "Animador") + "<h2> </html>");
+		JLabel lblTitleAt = new JLabel("<html> <h2>" + (tipo == null || tipo.equals("Casamento")? "Banda" : "Animador") + "<h2> </html>");
 		lblTitleAt.setFont(new Font("Dialog", Font.BOLD, 12));
 		lblTitleAt.setBounds(41, 135, 163, 31);
 		container.add(lblTitleAt);
