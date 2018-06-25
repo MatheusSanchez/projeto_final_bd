@@ -1,5 +1,11 @@
 package main;
 
+/*
+ * Classe que implementa a tela de inicio do programa
+ * 
+ */
+
+
 import java.awt.Container;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -35,6 +41,7 @@ public class TelaInicio extends JFrame {
 
 	public static void telaInicial() {
 
+		/* Funcoes swing para a criacao da interface da tela inicial */
 		JButton btnAtualizar = new JButton("Atualizar Banco");
 		btnAtualizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -86,6 +93,7 @@ public class TelaInicio extends JFrame {
 	public static void atualizaBanco() {
 		container.setLayout(null);
 
+		/* Funcoes swing para a criacao da interface da tela de atualizar banco */
 		JButton btnDecoracaoCasamento = new JButton("Decoracao Casamento");
 		btnDecoracaoCasamento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -188,6 +196,7 @@ public class TelaInicio extends JFrame {
 	public static void consultaBanco() {
 		container.setLayout(null);
 
+		/* Funcoes swing para a criacao da interface da tela de consultar banco */
 		JButton btnDecoracaoCasamento = new JButton("Decoracao Casamento");
 		btnDecoracaoCasamento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -282,6 +291,7 @@ public class TelaInicio extends JFrame {
 	private static void geraRelatorios() {
 		container.setLayout(null);
 
+		/* Funcoes swing para a criacao da interface da tela de gerar relatorios */
 		JButton btnConsulta = new JButton("Media de preco da festa por cep do contratante");
 		btnConsulta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -352,18 +362,20 @@ public class TelaInicio extends JFrame {
 		container.add(lblRelatorios);
 	}
 
+	/* Realiza a consulta de Media de preco das festas realizadas por cep de contratante */
 	private static void consulta1() {
 		String[] col = new String[2];
 		col[0] = "CEP";
 		col[1] = "media_preco";
-		JFrame f = new JFrame("aaa");
+		JFrame f = new JFrame("Consulta");
 		Main.novaJanela(f);
-		new TelaConsulta(f.getContentPane(), null, "Media de preco da festa por cep do contratante",
+		new TelaConsulta(f.getContentPane(), null, "Media de preco das festas realizadas por cep de contratante",
 				"select c.cep, avg(preco)as media_preco\r\n" + "	from festa f\r\n" + "	join contratante c\r\n"
 						+ "	on f.contratante = c.cpf\r\n" + "	group by c.cep\r\n" + "	order by c.cep",
 				col);
 	}
 
+	/* Realiza a consulta de todos os numeros de contrato, contratantes, decoracao, buffet, banda/animador por festa */
 	private static void consulta2() {
 		String[] col = new String[5];
 		col[0] = "nro_contrato";
@@ -371,7 +383,7 @@ public class TelaInicio extends JFrame {
 		col[2] = "decoracao";
 		col[3] = "buffet";
 		col[4] = "animador_banda";
-		JFrame f = new JFrame("aaa");
+		JFrame f = new JFrame("Consulta");
 		Main.novaJanela(f);
 		
 		String s = "select * from\r\n" + 
@@ -402,13 +414,14 @@ public class TelaInicio extends JFrame {
 		new TelaConsulta(f.getContentPane(), null, "Listar festa, contratante, decoracao, buffet e atracao", s, col);
 	}
 	
+	/* Realiza a consulta de, para todas as festas com mais de 100 convidados, contratante, numero de contrato e numero de convidados */
 	private static void consulta3() {
 		String[] col = new String[4];
 		col[0] = "nro_contrato";
 		col[1] = "contratante";
 		col[2] = "nro_convidados";
 		col[3] = "preco";
-		JFrame f = new JFrame("aaa");
+		JFrame f = new JFrame("Consulta");
 		Main.novaJanela(f);
 		
 		String s = "select f.nro_contrato, c.nome, count(*) as numero_de_convidados, f.preco\r\n" + 
@@ -424,11 +437,12 @@ public class TelaInicio extends JFrame {
 		new TelaConsulta(f.getContentPane(), null, "Para todas com as festas com mais de 100 convidados, selecionar contratante, nro_contrato e nro_convidados", s, col);
 	}
 	
+	/* Realiza a consulta da banda mais popular */
 	private static void consulta4() {
 		String[] col = new String[2];
 		col[0] = "nome";
 		col[1] = "vezes";
-		JFrame f = new JFrame("aaa");
+		JFrame f = new JFrame("Consulta");
 		Main.novaJanela(f);
 		String s = "\r\n" + 
 				"select b.nome, count(*) as vezes\r\n" + 
@@ -443,11 +457,12 @@ public class TelaInicio extends JFrame {
 		new TelaConsulta(f.getContentPane(), null, "Encontrar banda mais popular", s, col);
 	}
 
+	/* Realiza a consulta do animador mais popular */
 	private static void consulta5() {
 		String[] col = new String[2];
 		col[0] = "nome";
 		col[1] = "vezes";
-		JFrame f = new JFrame("aaa");
+		JFrame f = new JFrame("Consulta");
 		Main.novaJanela(f);
 		String s = "select a.nome, count(*) as vezes\r\n"
 				+ "    from aniversarioinfantil ai\r\n" + "	join contratoanimador ca\r\n"
@@ -457,11 +472,12 @@ public class TelaInicio extends JFrame {
 		new TelaConsulta(f.getContentPane(), null, "Encontrar animador mais popular", s, col);
 	}
 	
+	/* Realiza a consulta do buffet mais popular */
 	private static void consulta6() {
 		String[] col = new String[2];
 		col[0] = "nome";
 		col[1] = "vezes";
-		JFrame f = new JFrame("aaa");
+		JFrame f = new JFrame("Consulta");
 		Main.novaJanela(f);
 		String s = "select * from\r\n" + 
 				"	(\r\n" + 
