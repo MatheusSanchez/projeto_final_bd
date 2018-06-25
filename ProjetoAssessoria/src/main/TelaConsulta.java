@@ -130,7 +130,7 @@ public class TelaConsulta extends JFrame {
 
 	private void realizarConsulta(String nomeConsulta, String sqlConsulta, String[] nomeColunas) {
 		
-		JLabel lblTitle_1 = new JLabel("<html><h1>"+ nomeConsulta + "</h1></html>");
+		JLabel lblTitle_1 = new JLabel("<html><h2>"+ nomeConsulta + "</h2></html>");
 		lblTitle_1.setBounds(10, 25, 732, 42);
 		container.add(lblTitle_1);
 		String s = "";
