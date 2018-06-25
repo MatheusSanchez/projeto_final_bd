@@ -20,6 +20,11 @@ import javax.swing.SwingConstants;
 import main.Main;
 import main.TelaInicio;
 
+
+/*
+ * Tela de CRUD de Decoracao Infantil 
+ */
+
 @SuppressWarnings("serial")
 public class TelaDecoracaoInfantil {
 	private JTextField textFieldTema;
@@ -37,14 +42,12 @@ public class TelaDecoracaoInfantil {
 	
 	private Container container;
 
-	public TelaDecoracaoInfantil() {
-		
-	}
 	
 	public TelaDecoracaoInfantil(Container c) {
 		this.container = c;
 	}
 	
+	/* Funcao que apresenta tela do menu inicial */
 	public void menuInicial() {
 		container.setLayout(null);
 	
@@ -99,6 +102,7 @@ public class TelaDecoracaoInfantil {
 		container.add(button);
 	}
 
+	/* Funcao que apresenta tela de insercao de decoracao infantil */
 	public void inserirDecoracaoInfantil() {
 		container.setLayout(null);
 		
@@ -183,6 +187,7 @@ public class TelaDecoracaoInfantil {
 		container.add(button);
 	}
 
+	/* Funcao que muda a visibilidade de componentes swing */
 	private void changeVisibility(boolean flag) {
 		textFieldQtdeBaloes.setVisible(flag);
 		btnCadastrar.setVisible(flag);
@@ -193,6 +198,7 @@ public class TelaDecoracaoInfantil {
 		lblDigiteTodosOs.setVisible(flag);
 	}
 	
+	/* Funcao que apresenta tela de alteracao de decoracao infantil */
 	public void alterarDecoracaoInfantil() {
 		container.setLayout(null);
 		
@@ -331,6 +337,7 @@ public class TelaDecoracaoInfantil {
 		changeVisibility(false);
 	}
 
+	/* Funcao que apresenta tela de remocao de decoracao infantil */
 	public void removerDecoracaoInfantil() {
 		container.setLayout(null);
 		

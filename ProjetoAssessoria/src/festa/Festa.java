@@ -23,6 +23,7 @@ public class Festa extends JFrame {
 	static final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 	static SecureRandom rnd = new SecureRandom();
 
+	/* Funcao que cria um numero de contrato aleatorio unico */
 	public static String randomString( int len ){
 	   StringBuilder sb = new StringBuilder( len );
 	   for( int i = 0; i < len; i++ ) 
@@ -30,27 +31,23 @@ public class Festa extends JFrame {
 	   return sb.toString();
 	}
 	
-	public Festa() {
-				
-	}
-	
+	/* Insere uma festa */
 	public static void insert(double preco, String data, String tipo, String contratante, String buffet, String decoracao, String atracao, String[] convidados) {
 		Connection c = Conexao.getInstance();
 		
-		// Pega o maior valor de nro_contrato
-		
-		String numeroContrato = randomString(25);
+		String numeroContrato = randomString(25); // cria um numero de contrato unico
 		
 		String sql = "insert into festa(nro_contrato, pdf_contrato, preco, data, tipo, contratante)"
 				+ " values(?, ?, ?, ?, ?, ?)";
 		
+		
+		// Transforma a string data passada para o tipo Date
 		DateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
 		java.sql.Date dataa;
 		try {
 			dataa = new java.sql.Date(fmt.parse(data).getTime());
 		} catch (ParseException e2) {
 			dataa = null;
-			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
 		
@@ -59,7 +56,7 @@ public class Festa extends JFrame {
 			pstm.setString(1,  numeroContrato);
 			pstm.setString(2,  "NULL");
 			pstm.setDouble(3,  preco);
-			pstm.setDate(4,  dataa);//to_date('" + data + "', 'DD/MM/YYYY')");
+			pstm.setDate(4,  dataa);
 			pstm.setString(5,  tipo);
 			pstm.setString(6,  contratante);
 			pstm.execute();
@@ -122,6 +119,7 @@ public class Festa extends JFrame {
 		}
 	}
 	
+	/* Insere tuplas em tabelas de atributos multivalorados que referenciam festa (convidadosfesta) */
 	public static void insereTabelasExternas(String numeroContrato, double preco, Date dataa, String tipo, String contratante, String buffet, String decoracao, String atracao, String[] convidados) throws SQLException {
 		Connection c = Conexao.getInstance();
 		
@@ -138,14 +136,14 @@ public class Festa extends JFrame {
 		
 	}
 	
-	/*double preco, String data, String tipo, String contratante, String buffet, String decoracao, String atracao */
+	/* Seleciona atributos de festa */
 	public static String[] select(String numeroContrato) {
 		Connection c = Conexao.getInstance();	
 		
 		String[] s = new String[7]; // resultado do select
 
 		try {
-			String sql = "select preco, data, tipo, contratante from festa where nro_contrato = (?)";
+			String sql = "select preco, data, tipo, contratante from festa where nro_contrato = (?)"; // comando SQL
 			PreparedStatement pstm = c.prepareStatement(sql);
 			pstm.setString(1, numeroContrato);
 			
@@ -226,6 +224,7 @@ public class Festa extends JFrame {
 		return s;
 	}
 	
+	/* Seleciona os convidados da festa com numero de contrato numeroContrato */
 	public static ArrayList<String> selectConvidados(String numeroContrato) {
 		Connection c = Conexao.getInstance();	
 
@@ -233,7 +232,7 @@ public class Festa extends JFrame {
 		ArrayList<String> s = new ArrayList<String>(); // resultado do select
 
 		try {
-			String sql = "select nome from convidadosfesta where festa = ?";
+			String sql = "select nome from convidadosfesta where festa = ?"; // comando SQL
 			PreparedStatement pstm = c.prepareStatement(sql);
 			pstm.setString(1, numeroContrato);
 			
@@ -257,30 +256,27 @@ public class Festa extends JFrame {
 		return s;
 	}
 	
+	/* Faz o update da festa com numero de contrato = numeroContrato */
 	public static void update(String numeroContrato, double preco, String data, String tipo, String contratante, String buffet, String decoracao, String atracao, String[] convidados) {
 		Connection c = Conexao.getInstance();
 		
-		// Pega o maior valor de nro_contrato
-		
-		
-		
+		// Transforma a string data passada para o tipo Date
 		DateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
 		java.sql.Date dataa;
 		try {
 			dataa = new java.sql.Date(fmt.parse(data).getTime());
 		} catch (ParseException e2) {
 			dataa = null;
-			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
 		
 		try {
-			String sql = "delete from convidadosfesta where festa = ?";
+			String sql = "delete from convidadosfesta where festa = ?"; // deleta todos os convidados da festa a ser atualizada
 			PreparedStatement pstm = c.prepareStatement(sql);
 			pstm.setString(1, numeroContrato);
 			pstm.execute();
 			
-			sql = "update festa set preco = ?, data = ?, tipo = ?, contratante = ? where nro_contrato = ?";
+			sql = "update festa set preco = ?, data = ?, tipo = ?, contratante = ? where nro_contrato = ?"; // atualiza a festa
 			pstm = c.prepareStatement(sql);
 			pstm.setDouble(1, preco);
 			pstm.setDate(2, dataa);//to_date('" + data + "', 'DD/MM/YYYY')");
@@ -289,7 +285,7 @@ public class Festa extends JFrame {
 			pstm.setString(5, numeroContrato);
 			pstm.execute();
 			
-			// updata decoracao
+			// altera decoracao
 			if(tipo.equals("Casamento")) {
 				sql = "update casamento set decoracao = ? where nro_contrato = ?";
 			} else {
@@ -300,7 +296,7 @@ public class Festa extends JFrame {
 			pstm.setString(2, numeroContrato);
 			pstm.execute();
 			
-			
+			// altera casamento
 			if(tipo.equals("Casamento")) {
 				sql = "update contratobuffetcasamento set data = ?, buffet_casamento = ? where casamento = ?";
 			} else {
@@ -313,7 +309,7 @@ public class Festa extends JFrame {
 			pstm.execute();
 
 			
-			// Updata atracao
+			// Altera atracao
 			if(tipo.equals("Casamento")) {
 				sql = "update contratobanda set data = ?, banda = ? where casamento = ?";
 			} else {
@@ -335,7 +331,6 @@ public class Festa extends JFrame {
 			try {
 				c.rollback();
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			e.printStackTrace();

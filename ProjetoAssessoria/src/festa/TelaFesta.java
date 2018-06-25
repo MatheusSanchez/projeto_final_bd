@@ -33,6 +33,8 @@ import main.TelaInicio;
 
 @SuppressWarnings("serial")
 public class TelaFesta extends JFrame {
+	
+	/* Atributos da festa */
 	private String cpfContratante;
 	private String data;
 	private String tipo;
@@ -41,23 +43,25 @@ public class TelaFesta extends JFrame {
 	private String atracao;
 	private String decoracao;
 	private double preco = 0.0;
-	private Container container;
-	private Boolean alterando = false;
-	private String numeroContrato;
 	
-	/* Tela inicio */
+	
+	private Container container;
+	private Boolean alterando = false; // bool para saber se o usuario escolheu a opcao de alterar uma festa ou inserir
+	private String numeroContrato; // numero de contrato da festa que esta sendo alterada, caso o usario tenha escolhido alterar uma festa
+	
+	/* Atributos relativos ao swing da tela inicio */
 	private JButton btnInserir;
 	private JButton btnAlterar;
 	private JButton btnVoltar;
 	
-	/* Tela 0 */
+	/*  Atributos relativos ao swing da Tela 0 */
 	private JLabel lblNumCont;
 	private JLabel lblTitle0;
 	private JTextField textNumCont;
 	private JButton btnVoltar0;
 	private JButton btnNext0;
 	
-	/* Tela 1*/
+	/*  Atributos relativos ao swing da tela 1*/
 	private JTextField textCPF;
 	private JLabel lblContratante;
 	private JButton btnNext1;
@@ -69,7 +73,7 @@ public class TelaFesta extends JFrame {
 	private JLabel lblNomeContratante;
 	private JTextField textFieldNomeCont;
 	
-	/* Tela 2*/
+	/*  Atributos relativos ao swing da tela 2*/
 	private JFormattedTextField txtData;
 	private JLabel lblTitle2;
 	private JLabel lblData;
@@ -81,7 +85,7 @@ public class TelaFesta extends JFrame {
 	private JButton btnNext2;
 	private JEditorPane editorPane;
 
-	/* Tela 3*/
+	/* Atributos relativos ao swing da tela 3*/
 	private JTextField txtCnpj;
 	private JTextField textFieldNome;
 	private JButton btnVoltar3;
@@ -91,7 +95,7 @@ public class TelaFesta extends JFrame {
 	private JLabel lblCnpj;
 	private JLabel lblNomeBuffet;
 	
-	/* Tela 4*/
+	/* Atributos relativos ao swing da tela 4*/
 	private JTextField txtTema;
 	private JTextField txtNomeAt;
 	private JButton btnVoltar4;
@@ -103,19 +107,13 @@ public class TelaFesta extends JFrame {
 	
 	public TelaFesta(Container c) {	
 		this.container = c;
-		//menuInicial();
 	}
 
 	public TelaFesta() {	
 		this.container = getContentPane();
-		//menuInicial();
-		tela0();
-		//tela1();
-		//tela2();
-		//tela3();
-		//tela4();
 	}
 
+	/* Apresenta o menu inicial da tela de festa */
 	public void menuInicial() {
 		container.setLayout(null);
 	
@@ -149,19 +147,6 @@ public class TelaFesta extends JFrame {
 		btnAlterar.setBounds(275, 199, 215, 49);
 		container.add(btnAlterar);
 		
-		/* Configura botao que direciona para a tela de remover Contratante 
-		JButton btnRemover = new JButton("Remover Contratante");
-		btnRemover.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				container.removeAll();
-				container.revalidate();
-				container.repaint();
-				remocaoContratante();
-			}
-		});
-		btnRemover.setBounds(275, 288, 215, 49);
-		container.add(btnRemover);*/
-		
 		btnVoltar = new JButton("<");
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -174,19 +159,16 @@ public class TelaFesta extends JFrame {
 		container.add(btnVoltar);
 	}
 	
-	// h5fgnmhi1uKdLVcornRgPWCtH
+	/* Seleciona os atributos da festa e retorna se encontrou uma tupla */
 	public boolean seleciona() {
 		System.out.println(numeroContrato);
-		String[] res = Festa.select(numeroContrato);
+		String[] res = Festa.select(numeroContrato); // seleciona pelo numero de contrato
 		if(res != null) {
-			for(int i = 0; i < res.length; ++i) {
-				System.out.println(res[i]);
-			}
 			preco = res[0] == null? 0.0 : Double.parseDouble(res[0]);
 			data = res[1];
 			
-			data = data.substring(8, 10) + "/" + data.substring(5, 7) + "/" + data.substring(0, 4);
-			System.out.println(data);
+			data = data.substring(8, 10) + "/" + data.substring(5, 7) + "/" + data.substring(0, 4); // altera a formatacao da data
+
 			tipo = res[2];
 			cpfContratante = res[3];
 			buffet = res[4];
@@ -197,8 +179,11 @@ public class TelaFesta extends JFrame {
 		return true;
 	}
 
+	/* Apresenta a tela 0 (tela de escolha da festa a ser alterada) */
 	public void tela0() {
 		container.setLayout(null);
+		
+		/* Funcoes relativas ao swing */
 		lblTitle0 = new JLabel("<html> <h1>  Escolha a festa para ser alterada</h1> </html>");
 		lblTitle0.setBounds(31, 60, 547, 51);
 		container.add(lblTitle0);
@@ -236,7 +221,9 @@ public class TelaFesta extends JFrame {
 		container.add(btnNext0);
 	}
 
+	/* Apresenta a tela 1 (tela de escolha do contratante e do preco da festa) */
 	public void tela1() {
+		/* Funcoes relativas ao swing */
 		container.setLayout(null);
 		
 		btnVoltar1 = new JButton("<");
@@ -311,6 +298,8 @@ public class TelaFesta extends JFrame {
 		
 		btnPesquisar1 = new JButton("Pesquisar");
 		btnPesquisar1.addActionListener(new ActionListener() {
+			
+			/* Pesquisa o o contratante pelo seu CPF */
 			public void actionPerformed(ActionEvent e) {
 				String cpf = textCPF.getText();
 				boolean ok = true;
@@ -334,7 +323,6 @@ public class TelaFesta extends JFrame {
 		container.add(btnPesquisar1);
 		
 		textFieldPreco = new JTextField();
-		textFieldPreco.setToolTipText("XXX.XXX.XXX-X");
 		textFieldPreco.setText(preco == 0.0? "" : Double.toString(preco));
 		textFieldPreco.setColumns(10);
 		textFieldPreco.setBounds(239, 326, 114, 19);
@@ -357,7 +345,9 @@ public class TelaFesta extends JFrame {
 		});
 	}
 	
+	/* Apresenta a tela 2 (tela de escolha da data, tipo e convidados) */
 	public void tela2() {
+		/* Funcoes relativas ao swing */
 		container.setLayout(null);
 		
 		lblTitle2 = new JLabel("<html><h1>2. Escolha a data, o tipo da festa e os convidados</h1></html>");
@@ -459,7 +449,9 @@ public class TelaFesta extends JFrame {
 		container.add(btnNext2);
 	}
 	
+	/* Apresenta a tela 3 (tela de escolha da do buffet da festa) */
 	private void tela3() {
+		/* Funcoes relativas ao swing */
 		container.setLayout(null);
 		
 		btnVoltar3 = new JButton("<");
@@ -560,7 +552,9 @@ public class TelaFesta extends JFrame {
 		
 	}
 	
+	/* Apresenta a tela 4 (tela de escolha da da decoracao e atracao da festa) */
 	public void tela4() {
+		/* Funcoes relativas ao swing */
 		container.setLayout(null);
 		
 		btnVoltar4 = new JButton("<");
@@ -607,6 +601,8 @@ public class TelaFesta extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				atracao = txtNomeAt.getText();
 				decoracao = txtTema.getText();
+				
+				// se o usuario havia escolhido a opcao de inserir a festa, invoca a funcao de insercao. Senao, a de alteracao
 				if(alterando == false) Festa.insert(preco, data, tipo, cpfContratante, buffet, decoracao, atracao, convidados);
 				else Festa.update(numeroContrato, preco, data, tipo, cpfContratante, buffet, decoracao, atracao, convidados);
 			}
