@@ -62,7 +62,7 @@ public class TelaFesta extends JFrame {
 	private JButton btnNext0;
 	
 	/*  Atributos relativos ao swing da tela 1*/
-	private JTextField textCPF;
+	private JFormattedTextField textCPF;
 	private JLabel lblContratante;
 	private JButton btnNext1;
 	private JButton btnNovoContratante;
@@ -86,7 +86,7 @@ public class TelaFesta extends JFrame {
 	private JEditorPane editorPane;
 
 	/* Atributos relativos ao swing da tela 3*/
-	private JTextField txtCnpj;
+	private JFormattedTextField txtCnpj;
 	private JTextField textFieldNome;
 	private JButton btnVoltar3;
 	private JButton btnPesquisar3;
@@ -105,12 +105,34 @@ public class TelaFesta extends JFrame {
 	private JLabel lblNomeAt;
 	private JTextField textFieldPreco;
 	
+	private MaskFormatter cpfMask;
+	private MaskFormatter cnpjMask;
+	
 	public TelaFesta(Container c) {	
 		this.container = c;
+		createMasks();
 	}
 
 	public TelaFesta() {	
 		this.container = getContentPane();
+		createMasks();
+	}
+	
+	private void createMasks() {
+		try {
+		    cpfMask = new MaskFormatter("###.###.###-##");
+		    cpfMask.setPlaceholderCharacter(' ');
+		    cpfMask.setValidCharacters("0123456789");
+		} catch (ParseException e) {
+		    e.printStackTrace();
+		}
+		try {
+		    cnpjMask = new MaskFormatter("##.###.###/####-##");
+		    cnpjMask.setPlaceholderCharacter(' ');
+		    cnpjMask.setValidCharacters("0123456789");
+		} catch (ParseException e) {
+		    e.printStackTrace();
+		}
 	}
 
 	/* Apresenta o menu inicial da tela de festa */
@@ -125,7 +147,7 @@ public class TelaFesta extends JFrame {
 				container.revalidate();
 				container.repaint();
 				alterando = false;
-				tela1();
+				tela1(true);
 			}
 		});
 		btnInserir.setBounds(275, 110, 215, 49);
@@ -161,7 +183,6 @@ public class TelaFesta extends JFrame {
 	
 	/* Seleciona os atributos da festa e retorna se encontrou uma tupla */
 	public boolean seleciona() {
-		System.out.println(numeroContrato);
 		String[] res = Festa.select(numeroContrato); // seleciona pelo numero de contrato
 		if(res != null) {
 			preco = res[0] == null? 0.0 : Double.parseDouble(res[0]);
@@ -213,7 +234,7 @@ public class TelaFesta extends JFrame {
 				numeroContrato = textNumCont.getText();
 				if(seleciona()) {
 					Main.novaTela(container);
-					tela1();
+					tela1(false);
 				}
 			}
 		});
@@ -222,7 +243,7 @@ public class TelaFesta extends JFrame {
 	}
 
 	/* Apresenta a tela 1 (tela de escolha do contratante e do preco da festa) */
-	public void tela1() {
+	public void tela1(boolean podeEditar) {
 		/* Funcoes relativas ao swing */
 		container.setLayout(null);
 		
@@ -241,11 +262,11 @@ public class TelaFesta extends JFrame {
 		lblTitle1.setBounds(31, 60, 362, 51);
 		container.add(lblTitle1);
 		
-		textCPF = new JTextField();
-		textCPF.setToolTipText("XXX.XXX.XXX-X");
+		textCPF = new JFormattedTextField(cpfMask);
+		textCPF.setToolTipText("xxx.xxx.xxx-xx");
+		textCPF.setColumns(10);
 		textCPF.setBounds(239, 154, 114, 19);
 		container.add(textCPF);
-		textCPF.setColumns(10);
 		textCPF.setText(cpfContratante);
 		
 		lblContratante = new JLabel("CPF do contratante");
@@ -275,7 +296,7 @@ public class TelaFesta extends JFrame {
 					preco = 0.0;
 				}
 				Main.novaTela(container);
-				tela2();
+				tela2(podeEditar);
 			}
 		});
 		btnNext1.setBounds(612, 389, 117, 25);
@@ -346,9 +367,11 @@ public class TelaFesta extends JFrame {
 	}
 	
 	/* Apresenta a tela 2 (tela de escolha da data, tipo e convidados) */
-	public void tela2() {
+	public void tela2(boolean podeEditar) {
 		/* Funcoes relativas ao swing */
 		container.setLayout(null);
+		
+		System.out.println(podeEditar);
 		
 		lblTitle2 = new JLabel("<html><h1>2. Escolha a data, o tipo da festa e os convidados</h1></html>");
 		lblTitle2.setBounds(81, 48, 602, 49);
@@ -382,7 +405,8 @@ public class TelaFesta extends JFrame {
 		comboBox.setModel(new DefaultComboBoxModel<Object>(new String[] {"Casamento", "Aniversario Infantil"}));
 		comboBox.setBounds(243, 179, 137, 20);
 		container.add(comboBox);
-		comboBox.setSelectedIndex((tipo == null || tipo.equals("Casamento"))? 0 : 1);
+		comboBox.setSelectedIndex((tipo == null || tipo.toUpperCase().equals("CASAMENTO"))? 0 : 1);
+		comboBox.setEnabled(podeEditar);
 		
 		lblConvidados = new JLabel("Convidados");
 		lblConvidados.setFont(new Font("Dialog", Font.BOLD, 12));
@@ -398,7 +422,7 @@ public class TelaFesta extends JFrame {
 				for (int i = 0; i < convidados.length; i++) convidados[i] = convidados[i].trim();
 				
 				Main.novaTela(container);
-				tela1();
+				tela1(podeEditar);
 			}
 		});
 		btnVoltar2.setBounds(10, 11, 52, 23);
@@ -442,7 +466,7 @@ public class TelaFesta extends JFrame {
 				convidados = conv.toArray(new String[0]);
 				
 				Main.novaTela(container);
-				tela3();
+				tela3(podeEditar);
 			}
 		});
 		btnNext2.setBounds(635, 396, 103, 23);
@@ -450,7 +474,7 @@ public class TelaFesta extends JFrame {
 	}
 	
 	/* Apresenta a tela 3 (tela de escolha da do buffet da festa) */
-	private void tela3() {
+	private void tela3(boolean podeEditar) {
 		/* Funcoes relativas ao swing */
 		container.setLayout(null);
 		
@@ -459,7 +483,7 @@ public class TelaFesta extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				buffet = txtCnpj.getText();
 				Main.novaTela(container);
-				tela2();
+				tela2(podeEditar);
 			}
 		});
 		btnVoltar3.setBounds(10, 11, 53, 23);
@@ -474,11 +498,11 @@ public class TelaFesta extends JFrame {
 		lblCnpj.setBounds(41, 138, 46, 14);
 		container.add(lblCnpj);
 		
-		txtCnpj = new JTextField();
-		txtCnpj.setToolTipText("99.999.999/9999-99");
+		txtCnpj = new JFormattedTextField(cnpjMask);
+		txtCnpj.setToolTipText("xx.xxx.xxx/xxxx-xx");
+		txtCnpj.setColumns(10);
 		txtCnpj.setBounds(143, 136, 163, 20);
 		container.add(txtCnpj);
-		txtCnpj.setColumns(10);
 		txtCnpj.setText(buffet);
 		
 		lblNomeBuffet = new JLabel("Nome");
@@ -531,7 +555,7 @@ public class TelaFesta extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				buffet = txtCnpj.getText();
 				Main.novaTela(container);
-				tela4();
+				tela4(podeEditar);
 			}
 		});
 		btnNext3.setBounds(622, 407, 120, 23);
@@ -553,7 +577,7 @@ public class TelaFesta extends JFrame {
 	}
 	
 	/* Apresenta a tela 4 (tela de escolha da da decoracao e atracao da festa) */
-	public void tela4() {
+	public void tela4(boolean podeEditar) {
 		/* Funcoes relativas ao swing */
 		container.setLayout(null);
 		
@@ -563,7 +587,7 @@ public class TelaFesta extends JFrame {
 				atracao = txtNomeAt.getText();
 				decoracao = txtTema.getText();
 				Main.novaTela(container);
-				tela3();
+				tela3(podeEditar);
 			}
 		});
 		btnVoltar4.setBounds(10, 11, 53, 23);
