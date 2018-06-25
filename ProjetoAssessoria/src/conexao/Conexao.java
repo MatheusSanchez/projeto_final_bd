@@ -27,14 +27,11 @@ public class Conexao extends JFrame {
 	private static String port;
 	private static String user;
 	private static String password;
-
-	public Conexao() {
-		//tela();
-	}
 	
 	public synchronized static Connection getInstance() {
 		if (conn == null) {
 			try {
+				//recebendo dados de conexao do ususario
 				if (host == null) {
 					host = JOptionPane.showInputDialog(null, "Host: ");
 					port = JOptionPane.showInputDialog(null, "Port: ");
@@ -42,12 +39,12 @@ public class Conexao extends JFrame {
 					password = JOptionPane.showInputDialog(null, "Password: ");
 				}
 				
-				conn = DriverManager.getConnection("jdbc:oracle:thin:@" + host + ":" + port + ":orcl", user, password);
+				conn = DriverManager.getConnection("jdbc:oracle:thin:@" + host + ":" + port + ":orcl", user, password); //conecta com o banco
 				conn.setAutoCommit(false);
 				System.out.println("Conexao estabelecida");
 			} catch (Exception e) {
-				JOptionPane.showMessageDialog(null, "Nao foi possivel conectar");
-				host = null;
+				JOptionPane.showMessageDialog(null, "Nao foi possivel conectar"); //mensagem de erro
+				host = null; // para pedir os dados de novo
 			}
 		}
 		return conn;
@@ -61,67 +58,4 @@ public class Conexao extends JFrame {
 		}
 	}
 	
-	public void tela() {
-		this.setVisible(true);
-		this.setSize(768, 480);
-		
-		setSize(new Dimension(768, 480));
-		getContentPane().setLayout(null);
-		
-		JLabel lblConexoComO = new JLabel("<html><h1>Conexao com o banco</h1></html>");
-		lblConexoComO.setBounds(10, 11, 528, 51);
-		getContentPane().add(lblConexoComO);
-		
-		JLabel lblHost = new JLabel("Host");
-		lblHost.setFont(new Font("Dialog", Font.BOLD, 12));
-		lblHost.setBounds(153, 126, 46, 14);
-		getContentPane().add(lblHost);
-		
-		JLabel lblPort = new JLabel("Port");
-		lblPort.setFont(new Font("Dialog", Font.BOLD, 12));
-		lblPort.setBounds(153, 165, 46, 14);
-		getContentPane().add(lblPort);
-		
-		JLabel lblUser = new JLabel("User");
-		lblUser.setFont(new Font("Dialog", Font.BOLD, 12));
-		lblUser.setBounds(153, 202, 46, 14);
-		getContentPane().add(lblUser);
-		
-		JLabel lblPassword = new JLabel("Password");
-		lblPassword.setFont(new Font("Dialog", Font.BOLD, 12));
-		lblPassword.setBounds(153, 239, 64, 14);
-		getContentPane().add(lblPassword);
-		
-		txtHost = new JTextField();
-		txtHost.setBounds(263, 124, 183, 20);
-		getContentPane().add(txtHost);
-		txtHost.setColumns(10);
-		
-		txtPort = new JTextField();
-		txtPort.setBounds(263, 163, 183, 20);
-		getContentPane().add(txtPort);
-		txtPort.setColumns(10);
-		
-		txtUser = new JTextField();
-		txtUser.setBounds(263, 200, 183, 20);
-		getContentPane().add(txtUser);
-		txtUser.setColumns(10);
-		
-		pwdPassword = new JPasswordField();
-		pwdPassword.setBounds(263, 237, 183, 20);
-		getContentPane().add(pwdPassword);
-		
-		JButton btnConectar = new JButton("Conectar");
-		btnConectar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				host = txtHost.getText();
-				port = txtPort.getText();
-				user = txtUser.getText();
-				password = pwdPassword.getText();
-				
-			}
-		});
-		btnConectar.setBounds(528, 323, 89, 23);
-		getContentPane().add(btnConectar);
-	}
 }
