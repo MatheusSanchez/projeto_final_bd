@@ -52,7 +52,6 @@ public class Banda {
 			try {
 				c.rollback();
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			if (e.getErrorCode() == 1) JOptionPane.showMessageDialog(null, "Erro: Uma banda com este nome ja foi cadastrada");
@@ -98,7 +97,6 @@ public class Banda {
 			try {
 				c.rollback(); // faz o rollback das alteracoes
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			JOptionPane.showMessageDialog(null, "Erro ao procurar banda");
@@ -142,7 +140,6 @@ public class Banda {
 			try {
 				c.rollback();
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			
@@ -173,7 +170,6 @@ public class Banda {
 			try {
 				c.rollback();
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			e.printStackTrace();

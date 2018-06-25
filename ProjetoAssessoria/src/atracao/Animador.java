@@ -43,7 +43,6 @@ public class Animador {
 			try {
 				c.rollback();
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			
@@ -81,7 +80,6 @@ public class Animador {
 			try {
 				c.rollback();
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			JOptionPane.showMessageDialog(null, "Erro ao procurar animador");
@@ -112,7 +110,6 @@ public class Animador {
 			try {
 				c.rollback();
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			/* Tratamento de erro */
