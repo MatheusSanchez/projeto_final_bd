@@ -19,7 +19,6 @@ import buffet.TelaBuffetInfantil;
 import decoracao.TelaDecoracaoCasamento;
 import decoracao.TelaDecoracaoInfantil;
 import festa.TelaFesta;
-import oracle.jrockit.jfr.JFR;
 
 @SuppressWarnings("serial")
 public class TelaInicio extends JFrame {

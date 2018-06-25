@@ -184,6 +184,9 @@ public class TelaFesta extends JFrame {
 			}
 			preco = res[0] == null? 0.0 : Double.parseDouble(res[0]);
 			data = res[1];
+			
+			data = data.substring(8, 10) + "/" + data.substring(5, 7) + "/" + data.substring(0, 4);
+			System.out.println(data);
 			tipo = res[2];
 			cpfContratante = res[3];
 			buffet = res[4];
@@ -439,6 +442,14 @@ public class TelaFesta extends JFrame {
 				
 				convidados = editorPane.getText().split(",");
 				for (int i = 0; i < convidados.length; i++) convidados[i] = convidados[i].trim();
+				
+				List<String> conv = new ArrayList<String>();
+				for (int i = 0; i < convidados.length; i++) {
+					if (convidados[i].length() != 0) {
+						conv.add(convidados[i]);
+					}
+				}
+				convidados = conv.toArray(new String[0]);
 				
 				Main.novaTela(container);
 				tela3();

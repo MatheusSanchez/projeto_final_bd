@@ -152,7 +152,7 @@ public class Festa extends JFrame {
 			ResultSet rs = pstm.executeQuery();
 			
 			if(!rs.next()) return s;
-			for(int i = 1; i < 4; ++i)
+			for(int i = 0; i < 4; ++i)
 				s[i] = rs.getString(i+1);
 
 			// Pega a decoracao
