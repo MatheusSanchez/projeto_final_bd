@@ -443,6 +443,14 @@ public class TelaFesta extends JFrame {
 				convidados = editorPane.getText().split(",");
 				for (int i = 0; i < convidados.length; i++) convidados[i] = convidados[i].trim();
 				
+				List<String> conv = new ArrayList<String>();
+				for (int i = 0; i < convidados.length; i++) {
+					if (convidados[i].length() != 0) {
+						conv.add(convidados[i]);
+					}
+				}
+				convidados = conv.toArray(new String[0]);
+				
 				Main.novaTela(container);
 				tela3();
 			}
