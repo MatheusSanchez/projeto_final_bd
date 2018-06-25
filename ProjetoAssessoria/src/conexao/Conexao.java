@@ -34,14 +34,27 @@ public class Conexao extends JFrame {
 				//recebendo dados de conexao do ususario
 				if (host == null) {
 					host = JOptionPane.showInputDialog(null, "Host: ");
+					if (host == null) {
+						System.exit(0);
+					}
 					port = JOptionPane.showInputDialog(null, "Port: ");
+					if (port == null) {
+						System.exit(0);
+					}
 					user = JOptionPane.showInputDialog(null, "User: ");
+					if (user == null) {
+						System.exit(0);
+					}
 					password = JOptionPane.showInputDialog(null, "Password: ");
+					if (password == null) {
+						System.exit(0);
+					}
 				}
 				
 				conn = DriverManager.getConnection("jdbc:oracle:thin:@" + host + ":" + port + ":orcl", user, password); //conecta com o banco
 				conn.setAutoCommit(false);
 				System.out.println("Conexao estabelecida");
+			
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(null, "Nao foi possivel conectar"); //mensagem de erro
 				host = null; // para pedir os dados de novo
