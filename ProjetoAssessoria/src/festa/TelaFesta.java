@@ -184,6 +184,9 @@ public class TelaFesta extends JFrame {
 			}
 			preco = res[0] == null? 0.0 : Double.parseDouble(res[0]);
 			data = res[1];
+			
+			data = data.substring(8, 10) + "/" + data.substring(5, 7) + "/" + data.substring(0, 4);
+			System.out.println(data);
 			tipo = res[2];
 			cpfContratante = res[3];
 			buffet = res[4];
