@@ -27,9 +27,10 @@ import main.TelaInicio;
 
 @SuppressWarnings("serial")
 public class TelaDecoracaoInfantil {
+	
+	/* Objetos usados pelo swing para a interface da tela */
 	private JTextField textFieldTema;
 	private JTextField textFieldQtdeBaloes;
-	
 	JCheckBox chckbxPinata;
 	private JButton btnCadastrar;
 	private JLabel lblQtdeBaloes;
@@ -41,7 +42,6 @@ public class TelaDecoracaoInfantil {
 	private JLabel lblCorBaloes;
 	
 	private Container container;
-
 	
 	public TelaDecoracaoInfantil(Container c) {
 		this.container = c;
@@ -49,6 +49,7 @@ public class TelaDecoracaoInfantil {
 	
 	/* Funcao que apresenta tela do menu inicial */
 	public void menuInicial() {
+		/* Funcoes relativas ao swing */
 		container.setLayout(null);
 	
 		/* Configura botao que direciona para a tela de inserir decoracao infantil */
@@ -104,6 +105,7 @@ public class TelaDecoracaoInfantil {
 
 	/* Funcao que apresenta tela de insercao de decoracao infantil */
 	public void inserirDecoracaoInfantil() {
+		/* Funcoes relativas ao swing */
 		container.setLayout(null);
 		
 		lblCadastroDeNovaDecoracaoInfantil = new JLabel("<html> <center> <p>Cadastro de decoracao de Aniversario Infantil</p> </center> </html>");
@@ -148,6 +150,7 @@ public class TelaDecoracaoInfantil {
 		JButton btnCadastrar = new JButton("CADASTRAR");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				/* Configura os atributos para a insercao de decoracao infantil */
 				String tema = textFieldTema.getText();
 				String qtdeBaloes = textFieldQtdeBaloes.getText();
 				boolean pinata = chckbxPinata.isSelected(); 
@@ -165,7 +168,7 @@ public class TelaDecoracaoInfantil {
 				}
 				tipos = types.toArray(new String[0]);
 				
-				//insere no banco
+				// insere no banco
 				DecoracaoInfantil.insert(tema, qtdeBaloes, pinata, tipos);
 			}
 		});
@@ -200,6 +203,7 @@ public class TelaDecoracaoInfantil {
 	
 	/* Funcao que apresenta tela de alteracao de decoracao infantil */
 	public void alterarDecoracaoInfantil() {
+		/* Funcoes relativas ao swing */
 		container.setLayout(null);
 		
 		JLabel lblAltTitle = new JLabel("<html><center>Alteracao de decoracao de Aniversario Infantil</center></html>");
@@ -249,6 +253,7 @@ public class TelaDecoracaoInfantil {
 		btnCadastrar = new JButton("ALTERAR");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				/* Configura os atributos para a alteracao de decoracao infantil */
 				String tema = textFieldTema.getText();
 				String qtde = textFieldQtdeBaloes.getText();
 				String pinata = chckbxPinata.isSelected()? "1" : "0";
@@ -276,7 +281,7 @@ public class TelaDecoracaoInfantil {
 					form[i] = tipos[i - 3];
 				}
 
-				//atualiza o banco
+				// Altera no banco
 				DecoracaoInfantil.update(form);
 			}
 		});
@@ -339,6 +344,7 @@ public class TelaDecoracaoInfantil {
 
 	/* Funcao que apresenta tela de remocao de decoracao infantil */
 	public void removerDecoracaoInfantil() {
+		/* Funcoes relativas ao swing */
 		container.setLayout(null);
 		
 		JLabel lblAltTitle = new JLabel("<html><center>Remocao de decoracao de Aniversario Infantil</center></html>");

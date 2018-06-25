@@ -53,6 +53,7 @@ public class TelaBuffetInfantil extends JFrame {
 		this.container = c;
 	}
 	
+	/* Cria as mascaras de textFields para atributos como CNPJ e CEP */
 	private void createMasks() {
 		
 		try {
@@ -127,6 +128,7 @@ public class TelaBuffetInfantil extends JFrame {
 	}
 
 	
+	/* Muda a visibilidade de componentes swing */
 	private void changeVisibility(boolean flag) {
 		textFieldNome.setVisible(flag);
 		textFieldRua.setVisible(flag);
@@ -176,12 +178,6 @@ public class TelaBuffetInfantil extends JFrame {
 		lblCapacidade.setBounds(29, 195, 89, 15);
 		container.add(lblCapacidade);
 		
-		//textFieldCnpj = new JTextField();
-		//textFieldCnpj.setToolTipText("99.999.999/9999-99");
-		//textFieldCnpj.setBounds(177, 58, 114, 19);
-		//container.add(textFieldCnpj);
-		//textFieldCnpj.setColumns(10);
-		
 		textFieldCnpj = new JFormattedTextField(cnpjMask);
 		textFieldCnpj.setToolTipText("99.999.999/9999-99");
 		textFieldCnpj.setColumns(10);
@@ -202,12 +198,7 @@ public class TelaBuffetInfantil extends JFrame {
 		textFieldNumero.setColumns(10);
 		textFieldNumero.setBounds(177, 139, 114, 19);
 		container.add(textFieldNumero);
-		
-		//textFieldCep = new JTextField();
-		//textFieldCep.setColumns(10);
-		//textFieldCep.setBounds(177, 166, 114, 19);
-		//container.add(textFieldCep);
-		
+
 		textFieldCep = new JFormattedTextField(cepMask);
 		textFieldCep.setToolTipText("99999-999");
 		textFieldCep.setColumns(10);
@@ -222,6 +213,8 @@ public class TelaBuffetInfantil extends JFrame {
 		btnCadastrar = new JButton("CADASTRAR");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				/* Configura atributos para a insercao de buffet infantil */
 				String s[] = new String[6];
 				s[0] = textFieldCnpj.getText();
 				s[1] = textFieldNome.getText();
@@ -248,7 +241,7 @@ public class TelaBuffetInfantil extends JFrame {
 				if (s[4].equals("     -   ")) s[4] = null;
 				
 				
-				BuffetInfantil.insert(s, brinquedos);
+				BuffetInfantil.insert(s, brinquedos); // insere no banco
 			}
 		});
 		btnCadastrar.setBounds(321, 224, 117, 25);
@@ -311,12 +304,6 @@ public class TelaBuffetInfantil extends JFrame {
 		lblCapacidade.setBounds(29, 220, 89, 15);
 		container.add(lblCapacidade);
 		
-		//textFieldCnpj = new JTextField();
-		//textFieldCnpj.setToolTipText("99.999.999/9999-99");
-		//textFieldCnpj.setBounds(177, 58, 114, 19);
-		//container.add(textFieldCnpj);
-		//textFieldCnpj.setColumns(10);
-		
 		textFieldCnpj = new JFormattedTextField(cnpjMask);
 		textFieldCnpj.setToolTipText("99.999.999/9999-99");
 		textFieldCnpj.setColumns(10);
@@ -337,11 +324,6 @@ public class TelaBuffetInfantil extends JFrame {
 		textFieldNumero.setColumns(10);
 		textFieldNumero.setBounds(177, 164, 114, 19);
 		container.add(textFieldNumero);
-		
-		//textFieldCep = new JTextField();
-		//textFieldCep.setColumns(10);
-		//textFieldCep.setBounds(177, 191, 114, 19);
-		//container.add(textFieldCep);
 		
 		textFieldCep = new JFormattedTextField(cepMask);
 		textFieldCep.setToolTipText("99999-999");
@@ -389,7 +371,7 @@ public class TelaBuffetInfantil extends JFrame {
 				if (s[0].equals("  .   .   /    -  ")) s[0] = null;
 				if (s[4].equals("     -   ")) s[4] = null;
 				
-				BuffetInfantil.update(s, brinquedos);
+				BuffetInfantil.update(s, brinquedos); // altera buffet infantil no banco
 			}
 		});
 		btnCadastrar.setBounds(321, 224, 117, 25);
@@ -398,7 +380,7 @@ public class TelaBuffetInfantil extends JFrame {
 		JButton btnBuscarPorCnpj = new JButton("Buscar por CNPJ");
 		btnBuscarPorCnpj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				List <String> s = BuffetInfantil.select(textFieldCnpj.getText());
+				List <String> s = BuffetInfantil.select(textFieldCnpj.getText()); // realiza a selecao de um buffet infantil pelo seu cnpj
 				
 				if (s != null) {
 					textFieldNome.setText(s.get(1));
@@ -481,13 +463,7 @@ public class TelaBuffetInfantil extends JFrame {
 		lblCapacidade = new JLabel("Capacidade");
 		lblCapacidade.setBounds(29, 220, 89, 15);
 		container.add(lblCapacidade);
-		
-		//textFieldCnpj = new JTextField();
-		//textFieldCnpj.setToolTipText("99.999.999/9999-99");
-		//textFieldCnpj.setBounds(177, 58, 114, 19);
-		//container.add(textFieldCnpj);
-		//textFieldCnpj.setColumns(10);
-		
+
 		textFieldCnpj = new JFormattedTextField(cnpjMask);
 		textFieldCnpj.setToolTipText("99.999.999/9999-99");
 		textFieldCnpj.setColumns(10);
@@ -508,11 +484,6 @@ public class TelaBuffetInfantil extends JFrame {
 		textFieldNumero.setColumns(10);
 		textFieldNumero.setBounds(177, 164, 114, 19);
 		container.add(textFieldNumero);
-		
-		//textFieldCep = new JTextField();
-		//textFieldCep.setColumns(10);
-		//textFieldCep.setBounds(177, 191, 114, 19);
-		//container.add(textFieldCep);
 		
 		textFieldCep = new JFormattedTextField(cepMask);
 		textFieldCep.setToolTipText("99999-999");
@@ -537,7 +508,7 @@ public class TelaBuffetInfantil extends JFrame {
 		btnCadastrar = new JButton("REMOVER");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				BuffetInfantil.remove(textFieldCnpj.getText());
+				BuffetInfantil.remove(textFieldCnpj.getText()); // remocao de buffet infantil do banco
 			}
 		});
 		btnCadastrar.setBounds(321, 242, 117, 25);

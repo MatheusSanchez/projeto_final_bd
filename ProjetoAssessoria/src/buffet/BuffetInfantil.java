@@ -12,6 +12,8 @@ import javax.swing.JOptionPane;
 import conexao.Conexao;
 
 public class BuffetInfantil{
+	
+	/* Cadastro de Buffet Infantil no banco */
 	public static void insert(String s[], String brinquedos[]) {
 		Connection c = Conexao.getInstance();
 		
@@ -25,7 +27,7 @@ public class BuffetInfantil{
 					+ "values(?, ?, ?, ?, ?, ?)";
 			pstm = c.prepareStatement(sql);
 			
-			for (int i = 0; i < s.length; i++) {
+			for (int i = 0; i < s.length; i++) { // substitui os parâmetros no lugar dos pontos de interrogação na query
 				pstm.setString(i+1, s[i]);
 			}
 			pstm.execute();
@@ -43,12 +45,11 @@ public class BuffetInfantil{
 			c.commit();
 
 			JOptionPane.showMessageDialog(null, "Buffet infantil inserido com sucesso");
-		} catch (SQLException e) {
+		} catch (SQLException e) { // tratamento de possíveis erros
 			e.printStackTrace();
 			try {
 				c.rollback();
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			
@@ -61,6 +62,8 @@ public class BuffetInfantil{
 		}
 	}
 	
+	
+	//faz o select na tabela de buffetinfantil pela sua chave primária
 	public static List<String> select(String cnpj) {
 		Connection c = Conexao.getInstance();
 		List<String> s = null;
@@ -91,7 +94,7 @@ public class BuffetInfantil{
 			pstm.close();
 			c.commit();
 
-		} catch (SQLException e) {
+		} catch (SQLException e) { // tratamento de erros
 			try {
 				c.rollback();
 			} catch (SQLException e1) {
@@ -105,6 +108,8 @@ public class BuffetInfantil{
 		return s;
 	}
 	
+	
+	//update do buffet também por sua chave primaria
 	public static void update(String s[], String brinq[]) {
 		Connection c = Conexao.getInstance();
 		
@@ -137,12 +142,12 @@ public class BuffetInfantil{
 			c.commit();
 
 			JOptionPane.showMessageDialog(null, "Buffet infantil alterado com sucesso");
-		} catch (SQLException e) {
+		} catch (SQLException e) { // tratamento de erros
 			e.printStackTrace();
 			try {
 				c.rollback();
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
+				
 				e1.printStackTrace();
 			}
 			
@@ -151,6 +156,10 @@ public class BuffetInfantil{
 			else JOptionPane.showMessageDialog(null, "Erro ao alterar buffet");
 		}
 	}
+	
+	
+	// remoção do buffet pela sua chave primária
+	// repare que na tabela buffetinfantil e brinquedos o buffet é deletado automaticamente pela constraint criada na criacao do banco
 	
 	public static void remove(String cnpj) {
 		Connection c = Conexao.getInstance();
@@ -169,8 +178,8 @@ public class BuffetInfantil{
 		} catch (SQLException e) {
 			try {
 				c.rollback();
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
+			} catch (SQLException e1) { // tratamento de erros 
+				
 				e1.printStackTrace();
 			}
 			e.printStackTrace();
