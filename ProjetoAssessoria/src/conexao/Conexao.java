@@ -4,15 +4,17 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Scanner;
-
 import javax.swing.JOptionPane;
-
+/*
+ * Classe singleton que conecta a aplicacao ao banco
+ */
 public class Conexao {
 	private static Connection conn;
 
 	private Conexao() {
 	}
 
+	/* Cria uma instancia ou retorna a existente */
 	public synchronized static Connection getInstance() {
 		if (conn == null) {
 			try {
@@ -28,7 +30,7 @@ public class Conexao {
 				String password = s.nextLine();
 				s.close();
 				
-				conn = DriverManager.getConnection("jdbc:oracle:thin:@" + host + ":" + port + ":orcl", user, password);
+				conn = DriverManager.getConnection("jdbc:oracle:thin:@" + host + ":" + port + ":orcl", user, password); // conecta ao banco
 				conn.setAutoCommit(false);
 				System.out.println("Conexao estabelecida");
 			} catch (Exception e) {
@@ -38,6 +40,7 @@ public class Conexao {
 		return conn;
 	}
 
+	/* Fecha a conexao */
 	public synchronized static void fecharConnexao() {
 		try {
 			conn.close();

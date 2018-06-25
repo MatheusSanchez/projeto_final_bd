@@ -9,21 +9,25 @@ import javax.swing.JOptionPane;
 
 import conexao.Conexao;
 
+/*
+ * Comandos SQL de Contratante
+ */
+
 public class Contratante {
+	
+	/* Comando de insercao de contratante  */
 	static public void insert(String[] form) {
 		
 			Connection c = Conexao.getInstance();
 			
-			String sql = "insert into contratante(cpf, nome, telefone, email, rua, numero, bairro, cep) values(?, ?, ?, ?, ?, ?, ?, ?)";
+			String sql = "insert into contratante(cpf, nome, telefone, email, rua, numero, bairro, cep) values(?, ?, ?, ?, ?, ?, ?, ?)"; // comando sql
 			
 			try {
 				PreparedStatement pstm = c.prepareStatement(sql);
-				System.out.println("preparando");
 				for (int i = 0; i < 8; i++) {
 					pstm.setString(i + 1, form[i]);
 				}
-				pstm.execute();
-				
+				pstm.execute();			
 				pstm.close();
 
 				JOptionPane.showMessageDialog(null, "Contratante inserido com sucesso");
@@ -36,6 +40,7 @@ public class Contratante {
 				}
 				e.printStackTrace();
 				
+				// Tratamento de erros de insercao de contratante
 				if (e.getErrorCode() == 1) JOptionPane.showMessageDialog(null, "Erro: CPF ja cadastrado");
 				if (e.getErrorCode() == 1400) JOptionPane.showMessageDialog(null, "Erro: CPF deve ser preenchido");
 				else if (e.getErrorCode() == 1722) JOptionPane.showMessageDialog(null, "Erro: Numero deve ser um dado numerico");
@@ -44,11 +49,12 @@ public class Contratante {
 			}
 	}
 	
+	/* Alteracao de contratante */
 	static public void update(String[] form) {
 		
 		Connection c = Conexao.getInstance();
 		
-		String sql = "UPDATE CONTRATANTE SET NOME = ?, TELEFONE = ?, EMAIL = ?, RUA = ?, NUMERO = ?, BAIRRO = ?, CEP = ? WHERE CPF = ?";
+		String sql = "UPDATE CONTRATANTE SET NOME = ?, TELEFONE = ?, EMAIL = ?, RUA = ?, NUMERO = ?, BAIRRO = ?, CEP = ? WHERE CPF = ?"; // comando SQL
 		
 		try {
 			PreparedStatement pstm = c.prepareStatement(sql);
@@ -69,16 +75,18 @@ public class Contratante {
 				e1.printStackTrace();
 			}
 			
+			// Tratamento de erros de alteracao de contratante
 			if (e.getErrorCode() == 1722) JOptionPane.showMessageDialog(null, "Erro: Numero deve ser um dado numerico");
 			else if (e.getErrorCode() == 2290) JOptionPane.showMessageDialog(null, "Erro: Telefone, CPF e CEP devem estar formatados corretamente");
 			else JOptionPane.showMessageDialog(null, "Erro ao inserir buffet");
 		}
 	}
 	
+	/* Selecao de um contratante pelo seu CPF */
 	static public String[] select(String Cpf){
 		
 		Connection c = Conexao.getInstance();	
-		String sql = "select * from contratante where cpf = (?)";
+		String sql = "select * from contratante where cpf = (?)"; // comando SQL
 		
 		
 		try {
@@ -87,6 +95,8 @@ public class Contratante {
 			
 			ResultSet rs = pstm.executeQuery();
 			String[] s = null;
+			
+			// Monta o resultado
 			while (rs.next()){
 				s = new String[7];
 				for (int i = 0; i < 7; i++) {
@@ -110,18 +120,17 @@ public class Contratante {
 		return null;
 	}
 	
+	/* Remocao de um contratante pelo seu CPF */
 	static public void remove(String Cpf){
 		
 		Connection c = Conexao.getInstance();	
-		String sql = "delete from contratante where cpf = (?)";
+		String sql = "delete from contratante where cpf = (?)"; // comando SQL
 		
 		
 		try {
 			PreparedStatement pstm = c.prepareStatement(sql);
 			pstm.setString(1,Cpf);
-			
 			pstm.execute();
-			
 			pstm.close();
 
 			JOptionPane.showMessageDialog(null, "Contratante removido com sucesso");
