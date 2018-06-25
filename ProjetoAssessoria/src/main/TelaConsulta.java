@@ -24,17 +24,23 @@ import conexao.Conexao;
 @SuppressWarnings("serial")
 public class TelaConsulta extends JFrame {
 
+	private JTable table;
 	private Container container;
 
 	public TelaConsulta(Container container, String tabela) {
 		this.container = container;
-		telaConsulta(tabela);
+		telaConsulta(tabela, null, null, null);
 	}
 
-	public void telaConsulta(String tabela) {
+	public TelaConsulta(Container container, String tabela, String consulta, String sqlConsulta, String[] nomeColunas) {
+		this.container = container;
+		telaConsulta(tabela, consulta, sqlConsulta, nomeColunas);
+	}
+
+	public void telaConsulta(String tabela, String nomeConsulta, String sqlConsulta, String[] nomeColunas) {
 		container.setLayout(null);
 
-		JTable table = new JTable() {
+		table = new JTable() {
 
 			public String getToolTipText(MouseEvent e) {
 				String tip = null;
@@ -54,25 +60,31 @@ public class TelaConsulta extends JFrame {
 		table.setBounds(10, 78, 732, 316);
 
 		container.add(table);
-
-		JLabel lblTitle_1 = new JLabel("<html><h1>Cadastros de " + tabela
-				+ "</h1></html>");
-		lblTitle_1.setBounds(10, 25, 732, 42);
-		container.add(lblTitle_1);
-
 		final JScrollPane scrollPane = new JScrollPane(table);
 		container.add(scrollPane);
 		scrollPane.setBounds(10, 78, 732, 316);
-		scrollPane
-				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setHorizontalScrollBarPolicy(HORIZONTAL_SCROLLBAR_NEVER);
+		
+		if (nomeConsulta != null) {
+			realizarConsulta(nomeConsulta, sqlConsulta, nomeColunas);
+			return;
+		}
+
+
+		JLabel lblTitle_1 = new JLabel("<html><h1>Cadastros de " + tabela + "</h1></html>");
+		lblTitle_1.setBounds(10, 25, 732, 42);
+		container.add(lblTitle_1);
+
 
 		String s = "";
 
 		Connection c = Conexao.getInstance();
 
-		tabela = tabela.replaceAll(" ", "");
-		tabela = tabela.toUpperCase();
+		if (tabela != null) {
+			tabela = tabela.replaceAll(" ", "");
+			tabela = tabela.toUpperCase();
+		}
 
 		try {
 			String sql = "select column_name from user_tab_columns where table_name = ?";
@@ -98,12 +110,8 @@ public class TelaConsulta extends JFrame {
 				s = "";
 			}
 
-			TableModel model = new TableModel(colunas.toArray(new String[0]),
-					resultado);
+			TableModel model = new TableModel(colunas.toArray(new String[0]), resultado);
 			table.setModel(model);
-
-			// model.updateModel(objects);
-			// editorPane.setText(s);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -118,6 +126,39 @@ public class TelaConsulta extends JFrame {
 		});
 		button.setBounds(12, 12, 44, 25);
 		container.add(button);
+	}
+
+	private void realizarConsulta(String nomeConsulta, String sqlConsulta, String[] nomeColunas) {
+		
+		JLabel lblTitle_1 = new JLabel("<html><h1>"+ nomeConsulta + "</h1></html>");
+		lblTitle_1.setBounds(10, 25, 732, 42);
+		container.add(lblTitle_1);
+		String s = "";
+
+		Connection c = Conexao.getInstance();
+
+
+		try {
+			PreparedStatement pstm = c.prepareStatement(sqlConsulta);
+			ResultSet rs = pstm.executeQuery();
+
+			List<String> resultado = new ArrayList<String>();
+			while (rs.next()) {
+
+				for (String string : nomeColunas) {
+					s += rs.getString(string) + "\n";
+				}
+				resultado.add(s);
+				s = "";
+			}
+
+			TableModel model = new TableModel(nomeColunas, resultado);
+			table.setModel(model);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 }
